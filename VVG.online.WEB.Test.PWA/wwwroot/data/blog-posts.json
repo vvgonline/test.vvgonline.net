@@ -1,0 +1,28 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "Using AI to Accelerate Digital Transformation",
+      "slug": "ai-accelerate-digital-transformation",
+      "author": "VVG Team",
+      "date": "2025-11-28",
+      "readTime": 8,
+      "tags": ["ai", "transformation"],
+      "excerpt": "How companies can leverage machine learning to optimize product and customer experiences.",
+      "content": "This is a sample article about AI in digital transformation.",
+      "featuredImage": "ai-article.svg"
+    },
+    {
+      "id": 2,
+      "title": "Designing for Trust: Security-first UX",
+      "slug": "security-first-ux",
+      "author": "VVG Team",
+      "date": "2025-11-15",
+      "readTime": 6,
+      "tags": ["ux", "security"],
+      "excerpt": "Design patterns that improve user confidence while keeping interfaces simple.",
+      "content": "This is a sample article about secure UX patterns.",
+      "featuredImage": "ux-article.svg"
+    }
+  ]
+}

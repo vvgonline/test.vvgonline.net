@@ -1,0 +1,89 @@
+@* Scroll to top button *@
+@if (ShowButton)
+{
+    <button class="scroll-to-top" @onclick="ScrollToTopButton_Click" title="Scroll to top" aria-label="Scroll to top">
+        <span>↑</span>
+    </button>
+}
+
+@code {
+    private bool ShowButton = false;
+    private bool IsScrolling = false;
+    private DotNetObjectReference<ScrollToTop>? objRef;
+
+    [Inject]
+    public IJSRuntime JS { get; set; } = default!;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            // Add scroll event listener via JS interop and pass a .NET reference
+            objRef = DotNetObjectReference.Create(this);
+            await JS.InvokeVoidAsync("addScrollListener", objRef);
+            ShowButton = true;
+        }
+    }
+
+    async Task ScrollToTopButton_Click()
+    {
+        // Smooth scroll to top using JS interop
+        await JS.InvokeVoidAsync("scrollToTop");
+    }
+
+    [JSInvokable]
+    public async Task OnScroll()
+    {
+        if (!IsScrolling)
+        {
+            IsScrolling = true;
+            var scrollY = await JS.InvokeAsync<double>("getScrollY");
+            ShowButton = scrollY > 100;
+            StateHasChanged();
+            await Task.Delay(100); // Debounce
+            IsScrolling = false;
+        }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        try
+        {
+            await JS.InvokeVoidAsync("removeScrollListener");
+            // ensure any DotNetObjectReference is disposed
+            objRef?.Dispose();
+        }
+        catch
+        {
+        }
+    }
+}
+}
+
+<style>
+    .scroll-to-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        background: #ffdd33;
+        color: #0f172a;
+        border: none;
+        border-radius: 50%;
+        font-size: 24px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 999;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .scroll-to-top:hover {
+        background: #ffcc00;
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(255, 221, 51, 0.3);
+    }
+</style>

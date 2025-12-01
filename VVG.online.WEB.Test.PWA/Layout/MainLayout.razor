@@ -1,16 +1,65 @@
 ﻿@inherits LayoutComponentBase
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+@inject ThemeService ThemeService
+@inject IJSRuntime JS
+@inject NavigationManager NavManager
+@using VVG.online.WEB.Test.PWA.Components
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
+<div class="main-wrapper">
+    <Header />
 
-        <article class="content px-4">
-            @Body
-        </article>
+    <main class="main-content">
+        @Body
     </main>
+
+    <Footer />
 </div>
+
+<CookieConsent />
+<ScrollToTop />
+<WhatsAppButton />
+
+@code {
+    protected override void OnInitialized()
+    {
+        ThemeService.OnThemeChanged += ThemeChangedHandler;
+    }
+
+    public void Dispose()
+    {
+        ThemeService.OnThemeChanged -= ThemeChangedHandler;
+    }
+
+    private void ThemeChangedHandler()
+    {
+        _ = ApplyThemeAsync();
+        StateHasChanged();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            try
+            {
+                var saved = await JS.InvokeAsync<string>("getTheme");
+                if (!string.IsNullOrEmpty(saved) && !string.Equals(saved, ThemeService.CurrentTheme, StringComparison.OrdinalIgnoreCase))
+                {
+                    ThemeService.CurrentTheme = saved;
+                }
+                else
+                {
+                    await JS.InvokeVoidAsync("setTheme", ThemeService.CurrentTheme);
+                }
+            }
+            catch
+            {
+                // ignore - best effort
+            }
+        }
+    }
+
+    private async Task ApplyThemeAsync()
+    {
+        try { await JS.InvokeVoidAsync("setTheme", ThemeService.CurrentTheme); } catch { }
+    }
+}

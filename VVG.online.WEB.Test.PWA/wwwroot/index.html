@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>VVG.online.WEB.Test.PWA</title>
     <base href="/" />
-    <link rel="preload" id="webassembly" />
-    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="preload" href="_framework/blazor.boot.json" as="fetch" crossorigin="anonymous" />
+    <link rel="preload" href="_framework/dotnet.wasm" as="fetch" crossorigin="anonymous" />
     <link rel="stylesheet" href="css/app.css" />
-    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="icon" type="image/png" href="https://avatars.githubusercontent.com/u/47851006?v=4&size=16" />
     <link href="VVG.online.WEB.Test.PWA.styles.css" rel="stylesheet" />
     <link href="manifest.webmanifest" rel="manifest" />
-    <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png" />
-    <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png" />
-    <script type="importmap"></script>
+    <link rel="apple-touch-icon" sizes="128x128" href="https://avatars.githubusercontent.com/u/47851006?v=4&size=128" />
+    <link rel="apple-touch-icon" sizes="192x192" href="https://avatars.githubusercontent.com/u/47851006?v=4&size=192" />
 </head>
 
 <body>
@@ -26,12 +25,13 @@
         <div class="loading-progress-text"></div>
     </div>
 
-    <div id="blazor-error-ui">
+    <!-- <div id="blazor-error-ui">
         An unhandled error has occurred.
         <a href="." class="reload">Reload</a>
         <span class="dismiss">🗙</span>
-    </div>
-    <script src="_framework/blazor.webassembly#[.{fingerprint}].js"></script>
+    </div> -->
+    <script src="js/interop.js"></script>
+    <script src="_framework/blazor.webassembly.js"></script>
     <script>navigator.serviceWorker.register('service-worker.js', { updateViaCache: 'none' });</script>
 </body>
 

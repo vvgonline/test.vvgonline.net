@@ -1,0 +1,37 @@
+@* SEO Meta Tags Component *@
+<HeadContent>
+    <title>@Title</title>
+    <meta name="description" content="@Description" />
+    <meta name="keywords" content="@Keywords" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="@CanonicalUrl" />
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:type" content="@OgType" />
+    <meta property="og:title" content="@Title" />
+    <meta property="og:description" content="@Description" />
+    <meta property="og:url" content="@CanonicalUrl" />
+    <meta property="og:image" content="@OgImage" />
+    <meta property="og:site_name" content="VVG Digital Consulting" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="@Title" />
+    <meta name="twitter:description" content="@Description" />
+    <meta name="twitter:image" content="@OgImage" />
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+        @((MarkupString)JsonLd)
+    </script>
+</HeadContent>
+
+@code {
+    [Parameter] public string Title { get; set; } = "VVG Digital Consulting";
+    [Parameter] public string Description { get; set; } = "Digital Business Consulting Services";
+    [Parameter] public string Keywords { get; set; } = "";
+    [Parameter] public string CanonicalUrl { get; set; } = "";
+    [Parameter] public string OgImage { get; set; } = "/images/og-image.svg";
+    [Parameter] public string OgType { get; set; } = "website";
+    [Parameter] public string JsonLd { get; set; } = "{}";
+}

@@ -7,7 +7,7 @@
     <OverrideHtmlAssetPlaceholders>true</OverrideHtmlAssetPlaceholders>
     <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
     <BlazorWebAssemblyLoadAllGlobalizationData>true</BlazorWebAssemblyLoadAllGlobalizationData>
-    <StaticWebAssetBasePath>/</StaticWebAssetBasePath>
+    <StaticWebAssetBasePath>/test.vvgonline.net</StaticWebAssetBasePath>
   </PropertyGroup>
 
   <ItemGroup>

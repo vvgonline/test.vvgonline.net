@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>VVG.online.WEB.Test.PWA</title>
-    <base href="/test.vvgonline.net/" />
+    <base href="/" />
     <link rel="preload" href="_framework/blazor.boot.json" as="fetch" crossorigin="anonymous" />
     <link rel="preload" href="_framework/dotnet.wasm" as="fetch" crossorigin="anonymous" />
     <link rel="stylesheet" href="css/app.css" />
@@ -18,11 +18,12 @@
 
 <body>
     <div id="app">
-        <svg class="loading-progress">
+        <!-- <svg class="loading-progress">
             <circle r="40%" cx="50%" cy="50%" />
             <circle r="40%" cx="50%" cy="50%" />
         </svg>
-        <div class="loading-progress-text"></div>
+        <div class="loading-progress-text"></div> -->
+        <Preloader />
     </div>
 
     <!-- <div id="blazor-error-ui">

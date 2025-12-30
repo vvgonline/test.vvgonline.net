@@ -26,7 +26,12 @@ else
 }
 
 @code {
-    class Service { public int id; public string? title; public string? description; }
+    class Service
+    {
+        public int id { get; set; }
+        public string? title { get; set; }
+        public string? description { get; set; }
+    }
     Service[]? services;
 
     protected override async Task OnInitializedAsync()
@@ -35,5 +40,5 @@ else
         services = doc?.services;
     }
 
-    class ServiceDoc { public Service[]? services; }
+    class ServiceDoc { public Service[]? services { get; set; } }
 }

@@ -43,7 +43,7 @@ Project goals:
 
 - setup a Blazor WASM app with SEO optimization in mind, a dynamic head tag with keywords, description, Open Graph metadata, Twitter card, JSON-LD, and a blog.
 - Design should be elegant, clean, minimal, and modern.
-- App will be hosted it on GitHub Pages And, its' [url](test.vvgonline.net)
+- App will be hosted it on GitHub Pages And, its' [url](https://vvgonline.github.io/test.vvgonline.net/)
 
 ## Blazor WebAssembly PWA Project Structure
 

@@ -21,7 +21,16 @@ else
 }
 
 @code {
-    class Post { public int id; public string? title; public string? slug; public string? date; public int readTime; }
+    class Post
+    {
+        public int id { get; set; }
+        public string? title { get; set; }
+        public string? slug { get; set; }
+        public
+    string? date
+        { get; set; }
+        public int readTime { get; set; }
+    }
     Post[]? posts;
 
     protected override async Task OnInitializedAsync()
@@ -30,5 +39,5 @@ else
         posts = doc?.posts;
     }
 
-    class BlogDoc { public Post[]? posts; }
+    class BlogDoc { public Post[]? posts { get; set; } }
 }

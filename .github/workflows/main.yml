@@ -1,4 +1,4 @@
-name: Publish Blazor WASM to GitHub Pages
+name: Deploy VVG System to GitHub Pages
 
 on:
   push:
@@ -6,32 +6,33 @@ on:
       - main
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 jobs:
-  publish:
+  build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
+      - name: Checkout Code
         uses: actions/checkout@v4
 
       - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: "10.0.x"
+          dotnet-version: '10.0.101'
 
-      - name: Restore
-        run: dotnet restore VVG.online.WEB.Test.PWA/VVG.online.WEB.Test.PWA.csproj
+      - name: Publish Project
+        run: dotnet publish src/VVG.Web.csproj -c Release -o release --nologo
 
-      - name: Publish Blazor WebAssembly (Release)
+      - name: Fix GitHub Pages Compatibility
         run: |
-          dotnet publish VVG.online.WEB.Test.PWA/VVG.online.WEB.Test.PWA.csproj -c Release -o ./publish
+          # Ensure folders starting with '_' are served
+          touch release/wwwroot/.nojekyll
+          # Copy index for SPA routing fallback
+          cp release/wwwroot/index.html release/wwwroot/404.html
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./publish/wwwroot
-          publish_branch: gh-pages
+          folder: release/wwwroot
+          branch: gh-pages

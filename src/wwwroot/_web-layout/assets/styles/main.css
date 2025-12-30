@@ -1,0 +1,8 @@
+/* Theme sample main.css (placeholder) */
+:root{
+  --bg: #ffffff;
+  --text: #0f172a;
+  --accent: #ffdd33;
+}
+body{background:var(--bg);color:var(--text);font-family:IBM Plex Sans, sans-serif}
+h1{font-family:EB Garamond, serif;color:var(--accent)}

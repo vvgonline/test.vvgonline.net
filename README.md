@@ -47,119 +47,6 @@ Project goals:
 
 ## Blazor WebAssembly PWA Project Structure
 
-```md
-VVG.online.WEB.Test.PWA/
-├── .github/
-│ └── workflows/
-│ └── deploy.yml
-├── VVG.online.WEB.Test.PWA.csproj
-├── Program.cs
-├── App.razor
-├── appsettings.json
-├── wwwroot/
-│ ├── index.html
-│ ├── css/
-│ │ ├── bootstrap.min.css (v5.3) Use CDN
-│ │ └── app.scss (custom styles with golden ratio)
-│ ├── js/
-│ │ ├── interop.js (language translation, scroll, WhatsApp)
-│ │ └── service-worker.js (PWA)
-│ ├── data/
-│ │ ├── services.json (metadata for 10 services)
-│ │ ├── blog-posts.json (blog metadata)
-│ │ └── facts-figures.json (statistics for charts)
-│ ├── manifest.json (PWA manifest)
-│ ├── icons/ (SVG icons)
-│ └── favicon.ico
-├── Pages/
-│ ├── Home.razor
-│ ├── Services.razor
-│ ├── Blog.razor
-│ ├── BlogPost.razor
-│ ├── Contact.razor
-│ ├── Presentations.razor
-│ └── NotFound.razor
-├── Components/
-│ ├── Header.razor
-│ ├── Footer.razor
-│ ├── HeroBanner.razor (animated, 100vh)
-│ ├── ServiceCard.razor
-│ ├── BlogCard.razor
-│ ├── MetaTags.razor (SEO, OpenGraph, JSON-LD)
-│ ├── CookieConsent.razor
-│ ├── Preloader.razor
-│ ├── ScrollToTop.razor
-│ ├── WhatsAppButton.razor
-│ ├── LanguageToggle.razor
-│ ├── Chart.razor (for data visualization)
-│ └── LazyImage.razor
-└── Models/
-├── Service.cs
-├── BlogPost.cs
-├── Statistics.cs
-└── SEOData.cs
-```
-
-```mermaid
-
-Notes: example static data files have been added to the project under VVG.online.WEB.Test.PWA/wwwroot/data (services.json, blog-posts.json, facts-figures.json) so you can iterate on pages using this local static DB.
-graph TD
-    A[Project Root] --> B[Pages]
-    A --> C[Components]
-    A --> D[Models]
-    A --> E[wwwroot]
-    A --> F[Properties]
-    A --> G[.github/workflows]
-
-    B --> B1[Home.razor]
-    B --> B2[Services.razor]
-    B --> B3[Blog.razor]
-    B --> B4[BlogPost.razor]
-    B --> B5[Contact.razor]
-    B --> B6[Presentations.razor]
-    B --> B7[NotFound.razor]
-
-    C --> C1[Header.razor]
-    C --> C2[Footer.razor]
-    C --> C3[HeroBanner.razor]
-    C --> C4[ServiceCard.razor]
-    C --> C5[BlogCard.razor]
-    C --> C6[MetaTags.razor]
-    C --> C7[CookieConsent.razor]
-    C --> C8[Preloader.razor]
-    C --> C9[ScrollToTop.razor]
-    C --> C10[WhatsAppButton.razor]
-    C --> C11[LanguageToggle.razor]
-    C --> C12[Chart.razor]
-    C --> C13[LazyImage.razor]
-
-    D --> D1[Service.cs]
-    D --> D2[BlogPost.cs]
-    D --> D3[Statistics.cs]
-    D --> D4[SEOData.cs]
-
-    E --> E1[css]
-    E --> E2[js]
-    E --> E3[data]
-    E --> E4[icons]
-    E --> E5[manifest.json]
-    E --> E6[favicon.ico]
-
-    E1 --> E11[app.scss]
-    E1 --> E12[bootstrap.css]
-
-    E2 --> E21[interop.js]
-    E2 --> E22[service-worker.js]
-
-    E3 --> E31[services.json]
-    E3 --> E32[blog-posts.json]
-    E3 --> E33[facts-figures.json]
-
-    F --> F1[launchSettings.json]
-
-    G --> G1[deploy.yml]
-```
-
 ### Key Features
 
 - Responsive Design
@@ -231,23 +118,9 @@ graph TD
 
 ### Prerequisites
 
-- .NET 8 SDK or higher
+- .NET 8.0.405 SDK or higher
 - Visual Studio 2022 or VS Code
 - Git
-
-### Create Project
-
-```bash
-dotnet new blazorwasm -n VVG.online.WEB.Test.PWA --pwa
-cd VVG.online.WEB.Test.PWA
-```
-
-### Add NuGet Packages
-
-```bash
-dotnet add package Microsoft.AspNetCore.Components.WebAssembly
-dotnet add package System.Net.Http.Json
-```
 
 ## GitHub Pages Deployment
 
@@ -358,17 +231,17 @@ See separate deploy.yml file for GitHub Actions configuration.
 
 ## SEO Checklist
 
-- [x] Meta tags (title, description, keywords)
-- [x] OpenGraph tags for social sharing
-- [x] Twitter Card metadata
-- [x] JSON-LD structured data
-- [x] Canonical URLs
-- [x] Mobile-responsive design
-- [x] Fast page load (critical CSS)
-- [x] Sitemap (future)
-- [x] Robots.txt (future)
-- [x] Alt text for all images
-- [x] Semantic HTML
+- [ ] Meta tags (title, description, keywords)
+- [ ] OpenGraph tags for social sharing
+- [ ] Twitter Card metadata
+- [ ] JSON-LD structured data
+- [ ] Canonical URLs
+- [ ] Mobile-responsive design
+- [ ] Fast page load (critical CSS)
+- [ ] Sitemap (future)
+- [ ] Robots.txt (future)
+- [ ] Alt text for all images
+- [ ] Semantic HTML
 
 ## Components Overview
 
@@ -426,8 +299,4 @@ dotnet publish -c Release
 
 ---
 
-**Next Steps:**
-
-1. Review this structure
-2. Confirm all requirements are met
-3. Proceed with file-by-file implementation
+© 2025 VVG ONLINE. All rights reserved.

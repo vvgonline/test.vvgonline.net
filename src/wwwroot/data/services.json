@@ -1,0 +1,18 @@
+{
+  "services": [
+    {
+      "id": 1,
+      "title": "Digital Strategy",
+      "description": "Develop tailored strategies and roadmaps that align with your business goals.",
+      "icon": "strategy.svg",
+      "details": "Full-service digital strategy and transformation planning."
+    },
+    {
+      "id": 2,
+      "title": "Digital Transformation",
+      "description": "Leverage technology to implement and sustain transformations.",
+      "icon": "transformation.svg",
+      "details": "Architecture, platforms, and operating-model redesign."
+    }
+  ]
+}

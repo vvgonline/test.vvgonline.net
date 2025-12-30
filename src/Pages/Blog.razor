@@ -1,0 +1,34 @@
+@page "/blog"
+@using System.Net.Http.Json
+@inject HttpClient Http
+
+<PageTitle>Blog</PageTitle>
+
+<h2>Blog</h2>
+
+@if (posts is null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <ul>
+        @foreach (var p in posts)
+        {
+            <li><a href="/blog/@p.slug">@p.title</a> — <small>@p.date (@p.readTime min)</small></li>
+        }
+    </ul>
+}
+
+@code {
+    class Post { public int id; public string? title; public string? slug; public string? date; public int readTime; }
+    Post[]? posts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var doc = await Http.GetFromJsonAsync<BlogDoc>("/data/blog-posts.json");
+        posts = doc?.posts;
+    }
+
+    class BlogDoc { public Post[]? posts; }
+}

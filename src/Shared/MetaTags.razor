@@ -1,0 +1,23 @@
+@inject IJSRuntime JS
+@code {
+    [Parameter] public string? Title { get; set; }
+    [Parameter] public string? Description { get; set; }
+    [Parameter] public string? Keywords { get; set; }
+    [Parameter] public string? Image { get; set; }
+    [Parameter] public string? TwitterCard { get; set; }
+    [Parameter] public string? JsonLd { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var meta = new Dictionary<string, object?>
+        {
+            ["title"] = Title,
+            ["description"] = Description,
+            ["keywords"] = Keywords,
+            ["image"] = Image,
+            ["twitterCard"] = TwitterCard,
+            ["jsonLd"] = JsonLd
+        };
+        await JS.InvokeVoidAsync("vvg.updateMeta", meta);
+    }
+}

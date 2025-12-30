@@ -24,6 +24,13 @@ jobs:
       - name: Publish Project
         run: dotnet publish src/VVG.Web.csproj -c Release -o release --nologo
 
+      - name: Adjust base href for GitHub Pages
+        run: |
+          # Set the base href to the repository name so the SPA loads correctly from a subpath
+          repo="${GITHUB_REPOSITORY#*/}"
+          echo "Setting base href to /$repo/"
+          sed -i "s#<base href=\"/\"#<base href=\"/$repo/\"#" release/wwwroot/index.html
+
       - name: Fix GitHub Pages Compatibility
         run: |
           # Ensure folders starting with '_' are served

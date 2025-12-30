@@ -1,0 +1,13 @@
+/* Additional small helpers */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-logo {
+  height: 24px;
+  width: auto;
+  pointer-events: none;
+}

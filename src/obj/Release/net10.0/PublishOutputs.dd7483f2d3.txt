@@ -1,0 +1,4 @@
+/home/vvgoncachyos/Documents/repos/vvg.online.ek.repo/Closed_Source/test.vvgonline.net/release/wwwroot/index.html
+/home/vvgoncachyos/Documents/repos/vvg.online.ek.repo/Closed_Source/test.vvgonline.net/release/VVG.Web.runtimeconfig.json
+/home/vvgoncachyos/Documents/repos/vvg.online.ek.repo/Closed_Source/test.vvgonline.net/release/dotnet.js
+/home/vvgoncachyos/Documents/repos/vvg.online.ek.repo/Closed_Source/test.vvgonline.net/release/web.config

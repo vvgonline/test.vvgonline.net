@@ -24,6 +24,9 @@
 </head>
 
 <body>
+    <div id="preloader">
+        <img src="assets/profiles/logo-2025.svg" alt="Loading..." class="preloader-logo">
+    </div>
     <div id="app">
         <svg class="loading-progress">
             <circle r="40%" cx="50%" cy="50%" />
@@ -42,6 +45,18 @@
     <script src="js/redesign.js"></script>
     <script src="_framework/blazor.webassembly#[.{fingerprint}].js"></script>
     <script>navigator.serviceWorker.register('service-worker.js', { updateViaCache: 'none' });</script>
+    <script>
+        window.addEventListener('load', function () {
+            var preloader = document.getElementById('preloader');
+            if (preloader) {
+                preloader.style.transition = 'opacity 0.5s ease';
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 500); // Should match transition duration
+            }
+        });
+    </script>
 </body>
 
 </html>

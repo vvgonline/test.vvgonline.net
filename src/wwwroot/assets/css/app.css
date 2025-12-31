@@ -197,6 +197,7 @@ h6 .serif {
 
 h1:focus {
   border: none;
+  outline: none;
 }
 
 code,
@@ -517,6 +518,9 @@ a:not(.no-cursor):hover::after {
   align-items: center;
   position: relative;
   padding: 40px 0;
+  width: 400px;
+  height: 200px;
+  overflow: hidden;
 }
 
 .workflow-node {

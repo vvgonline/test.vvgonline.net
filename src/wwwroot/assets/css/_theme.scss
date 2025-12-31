@@ -71,6 +71,9 @@ body {
 .workflow-container {
   display: flex;
   gap: 1rem;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 .workflow-node {
   border: 1px solid var(--text);

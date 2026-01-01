@@ -1,5 +1,5 @@
 self.assetsManifest = {
-  "version": "QjblI3po",
+  "version": "O40eNjMQ",
   "assets": [
     {
       "hash": "sha256-rW8cWS8jo90jOb4i3LwtuqGRFyEEhofc+tfAmUwRqwY=",
@@ -162,16 +162,16 @@ self.assetsManifest = {
       "url": "_framework/System.Threading.eci0fvui1v.wasm"
     },
     {
-      "hash": "sha256-3uraD5wky3nTDCgk8UF9SecYqez9YPw1GJ5e3PbLCwk=",
-      "url": "_framework/VVG.Web.mz6vkfzat5.wasm"
+      "hash": "sha256-92y12VCIegkCDa1oJdVAzrnRaIRInulShqjzEU25fbY=",
+      "url": "_framework/VVG.Web.70zzlzz88l.wasm"
     },
     {
       "hash": "sha256-3lCWrko3zwspV40aQhs2S/IMkRSarnHRKIdkHhuXIBA=",
       "url": "_framework/blazor.webassembly.66stpp682q.js"
     },
     {
-      "hash": "sha256-R7f3TkL45AKsPU5+Rc9N2Kr/vlyE+btk/+F8nNrBei8=",
-      "url": "_framework/dotnet.h6d4xbqjso.js"
+      "hash": "sha256-LbOmdZ57q957nqzBQZlVQO7dYAEuA8/cHH3ZAymbA1M=",
+      "url": "_framework/dotnet.hvwb41xkjf.js"
     },
     {
       "hash": "sha256-/I3SDHIle7heAxlUGBrgxax+lkKyWyRLBVEJmTHJSCs=",
@@ -254,6 +254,14 @@ self.assetsManifest = {
       "url": "assets/images/profiles/logo-edge-2025-240x240.svg"
     },
     {
+      "hash": "sha256-ocY/6PBl1pqyXKX5Y5ZD6M87h9w2ZUKrG9slXWgEm3s=",
+      "url": "assets/images/twitter-cards/vvg-online-home-twitter-card.png"
+    },
+    {
+      "hash": "sha256-nZlvfsjhnqsfL+K6cK7OUAJVi3Wb+UK/fQyNlWwRowA=",
+      "url": "assets/images/twitter-cards/vvg-online-home-twitter-card.svg"
+    },
+    {
       "hash": "sha256-AwoG4wm4n+ErM3NkbKTG2AZlwHOUcV0VMu6ODr/bP60=",
       "url": "assets/js/meta.js"
     },
@@ -266,7 +274,7 @@ self.assetsManifest = {
       "url": "assets/js/theme.js"
     },
     {
-      "hash": "sha256-Z/zSZD3+pjoFVZY1py2TuvfliPr0BgiQGJRQW3dQINk=",
+      "hash": "sha256-A9g81I8r57r2r88CfxCUORmmwuwWvV4RwBFMl1VyGcU=",
       "url": "index.html"
     },
     {

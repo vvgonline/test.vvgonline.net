@@ -1,6 +1,7 @@
 @page "/blog"
 @using System.Net.Http.Json
 @inject HttpClient Http
+@inject VVG.Web.Services.MetadataService MetadataService
 
 <PageTitle>Blog</PageTitle>
 
@@ -35,6 +36,26 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        MetadataService.SetPageMetadata(new PageMetadata
+        {
+            Title = "Blog - VVG ONLINE",
+            Description = "Insights and articles from VVG ONLINE.",
+            Keywords = "blog,insights,articles",
+
+            OgType = "website",
+            OgTitle = "Blog - VVG ONLINE",
+            OgDescription = "Insights and articles from VVG ONLINE.",
+            OgImage = "https://test.vvgonline.net/assets/images/banners/blog.png",
+            OgUrl = "https://test.vvgonline.net/blog",
+
+            TwitterCard = "summary_large_image",
+            TwitterSite = "@vvgonline",
+            TwitterCreator = "@vvgonline",
+            TwitterTitle = "Blog - VVG ONLINE",
+            TwitterDescription = "Insights and articles from VVG ONLINE.",
+            TwitterImage = "https://test.vvgonline.net/assets/images/twitter-cards/blog.png"
+        });
+
         var doc = await Http.GetFromJsonAsync<BlogDoc>("/data/blog-posts.json");
         posts = doc?.posts;
     }

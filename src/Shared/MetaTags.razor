@@ -1,23 +1,57 @@
 @inject IJSRuntime JS
-@code {
-    [Parameter] public string? Title { get; set; }
-    [Parameter] public string? Description { get; set; }
-    [Parameter] public string? Keywords { get; set; }
-    [Parameter] public string? Image { get; set; }
-    [Parameter] public string? TwitterCard { get; set; }
-    [Parameter] public string? JsonLd { get; set; }
+@inject VVG.Web.Services.MetadataService MetadataService
+@implements IDisposable
 
-    protected override async Task OnParametersSetAsync()
+@code {
+    private VVG.Web.Models.Metadata? _defaultMetadata;
+    private VVG.Web.Models.TwitterCard? _defaultTwitterCard;
+    private VVG.Web.Models.OpenGraph? _defaultOpenGraph;
+
+    protected override async Task OnInitializedAsync()
     {
+        MetadataService.OnMetadataChanged += HandleMetadataChanged;
+        _defaultMetadata = await MetadataService.GetMetadataAsync();
+        _defaultTwitterCard = await MetadataService.GetTwitterCardAsync();
+        _defaultOpenGraph = await MetadataService.GetOpenGraphAsync();
+        await UpdateMeta();
+    }
+
+    private async void HandleMetadataChanged()
+    {
+        await UpdateMeta();
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task UpdateMeta()
+    {
+        var pageMeta = MetadataService.PageMetadata;
+
         var meta = new Dictionary<string, object?>
         {
-            ["title"] = Title,
-            ["description"] = Description,
-            ["keywords"] = Keywords,
-            ["image"] = Image,
-            ["twitterCard"] = TwitterCard,
-            ["jsonLd"] = JsonLd
+            ["title"] = pageMeta?.Title ?? _defaultMetadata?.DefaultTitle,
+            ["description"] = pageMeta?.Description ?? _defaultMetadata?.DefaultDescription,
+            ["keywords"] = pageMeta?.Keywords ?? _defaultMetadata?.Keywords,
+            ["image"] = pageMeta?.Image, 
+            ["jsonLd"] = pageMeta?.JsonLd,
+
+            ["ogType"] = pageMeta?.OgType ?? _defaultOpenGraph?.Type,
+            ["ogTitle"] = pageMeta?.OgTitle ?? pageMeta?.Title ?? _defaultOpenGraph?.Title,
+            ["ogDescription"] = pageMeta?.OgDescription ?? pageMeta?.Description ?? _defaultOpenGraph?.Description,
+            ["ogImage"] = pageMeta?.OgImage ?? pageMeta?.Image ?? _defaultOpenGraph?.Image,
+            ["ogUrl"] = pageMeta?.OgUrl ?? _defaultOpenGraph?.Url,
+
+            ["twitterCard"] = pageMeta?.TwitterCard ?? _defaultTwitterCard?.Card,
+            ["twitterSite"] = pageMeta?.TwitterSite ?? _defaultTwitterCard?.Site,
+            ["twitterCreator"] = pageMeta?.TwitterCreator ?? _defaultTwitterCard?.Creator,
+            ["twitterTitle"] = pageMeta?.TwitterTitle ?? pageMeta?.OgTitle ?? pageMeta?.Title ?? _defaultTwitterCard?.Title,
+            ["twitterDescription"] = pageMeta?.TwitterDescription ?? pageMeta?.OgDescription ?? pageMeta?.Description ?? _defaultTwitterCard?.Description,
+            ["twitterImage"] = pageMeta?.TwitterImage ?? pageMeta?.OgImage ?? pageMeta?.Image ?? _defaultTwitterCard?.Image
         };
         await JS.InvokeVoidAsync("vvg.updateMeta", meta);
+    }
+
+    public void Dispose()
+    {
+        MetadataService.OnMetadataChanged -= HandleMetadataChanged;
     }
 }

@@ -1,6 +1,7 @@
 @page "/services"
 @using System.Net.Http.Json
 @inject HttpClient Http
+@inject MetadataService MetadataService
 
 <PageTitle>Services</PageTitle>
 
@@ -36,7 +37,14 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        var doc = await Http.GetFromJsonAsync<ServiceDoc>("/data/services.json");
+        MetadataService.SetPageMetadata(new PageMetadata
+        {
+            Title = "Services - VVG ONLINE",
+            Description = "Digital consulting services to transform your business.",
+            Keywords = "services, strategy, innovation, digital transformation"
+        });
+
+        var doc = await Http.GetFromJsonAsync<ServiceDoc>("assets/data/services.json");
         services = doc?.services;
     }
 

@@ -12,12 +12,25 @@ window.vvg.updateMeta = function (meta) {
             }
             el.setAttribute('content', value);
         };
+        // Standard meta tags
         set('description', meta.description);
         set('keywords', meta.keywords);
-        set('og:title', meta.title, 'property');
-        set('og:description', meta.description, 'property');
-        set('og:image', meta.image, 'property');
-        set('twitter:card', meta.twitterCard || 'summary_large_image', 'name');
+
+        // Open Graph
+        set('og:type', meta.ogType, 'property');
+        set('og:title', meta.ogTitle || meta.title, 'property');
+        set('og:description', meta.ogDescription || meta.description, 'property');
+        set('og:image', meta.ogImage || meta.image, 'property');
+        set('og:url', meta.ogUrl, 'property');
+
+        // Twitter Card
+        set('twitter:card', meta.twitterCard || 'summary_large_image');
+        set('twitter:site', meta.twitterSite);
+        set('twitter:creator', meta.twitterCreator);
+        set('twitter:title', meta.twitterTitle || meta.ogTitle || meta.title);
+        set('twitter:description', meta.twitterDescription || meta.ogDescription || meta.description);
+        set('twitter:image', meta.twitterImage || meta.ogImage || meta.image);
+
         if (meta.jsonLd) {
             let ld = document.getElementById('vvg-jsonld');
             if (!ld) {

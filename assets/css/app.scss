@@ -1,4 +1,6 @@
 @import "./preloader";
+@import "./theme";
+@import "./main";
 
 :root {
   --accent: #ffdd33;
@@ -125,15 +127,14 @@ h2,
 h3,
 h4,
 h5,
-h6
-.serif {
+h6 .serif {
   font-family: "EB Garamond", serif;
   font-weight: 600;
 }
 
 h1:focus {
-    border: none;
-    outline: none;
+  border: none;
+  outline: none;
 }
 
 code,
@@ -141,10 +142,6 @@ code,
   font-family: "IBM Plex Mono", monospace;
   font-size: 0.85rem;
   color: var(--text);
-}
-
-.text-accent {
-  color: var(--accent) !important;
 }
 
 /* i3/xfce style top panel */
@@ -455,10 +452,6 @@ a:not(.no-cursor):hover::after {
 }
 
 /* Ensure bootstrap utility classes follow theme */
-.text-dark {
-  color: var(--text) !important;
-}
-
 .bg-light {
   background: var(--card-bg) !important;
 }
@@ -470,8 +463,6 @@ a:not(.no-cursor):hover::after {
   align-items: center;
   position: relative;
   padding: 40px 0;
-  width: 400px;
-  height: 200px;
   overflow: hidden;
 }
 
@@ -728,7 +719,7 @@ a:not(.no-cursor):hover::after {
 
 .terminal-prompt {
   color: var(--accent);
-  margin-right: 10px;
+  margin-right: 3.226px;
   font-weight: bold;
 }
 

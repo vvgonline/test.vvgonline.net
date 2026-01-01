@@ -84,6 +84,125 @@
     width: 100%;
   }
 }
+/* Theme CSS (extracted from theme_sample_file/_web-layout/assets/styles/main.css) - essential parts */
+:root {
+  --accent: #ffdd33;
+  --bg: #ffffff;
+  --text: #111113;
+  --card-bg: #f8f8f8;
+}
+
+[data-theme=dark] {
+  --bg: #111119;
+  --text: #ffffff;
+  --card-bg: #111116;
+  --accent: #ffdd33;
+}
+
+.bg-accent {
+  background-color: var(--accent) !important;
+}
+
+.text-accent {
+  color: var(--accent) !important;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background 0.3s;
+  font-family: "IBM Plex Sans", sans-serif;
+  line-height: 1.6;
+  padding-top: 32px;
+}
+
+.system-panel {
+  height: 32px;
+  background: linear-gradient(90deg, #000 0%, #1a1a1a 100%);
+  border-bottom: 1px solid var(--accent);
+  box-shadow: 0 0 10px rgba(255, 221, 51, 0.2);
+  color: #fff;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+}
+
+.system-panel a {
+  color: var(--text);
+  text-decoration: none;
+  padding: 0 10px;
+}
+
+.system-panel .status-right {
+  margin-left: auto;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.btn-vvg {
+  background: var(--accent);
+  border: 1px solid #000;
+  border-radius: 0;
+  padding: 10px 25px;
+}
+
+.hero-title {
+  font-size: 4.5rem;
+  line-height: 0.95;
+  margin-bottom: 2rem;
+}
+
+.hero {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+}
+
+.workflow-container {
+  display: flex;
+  gap: 1rem;
+}
+
+.workflow-node {
+  border: 1px solid var(--text);
+  padding: 15px;
+  background: var(--card-bg);
+}
+
+footer {
+  border-top: 1px solid var(--text);
+  padding: 4rem 0;
+  margin-top: 4rem;
+  color: var(--text);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+}
+/* Additional small helpers */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-logo {
+  height: 24px;
+  width: auto;
+  pointer-events: none;
+}
+
 :root {
   --accent: #ffdd33;
   --bg: #ffffff;
@@ -205,10 +324,6 @@ code,
   font-family: "IBM Plex Mono", monospace;
   font-size: 0.85rem;
   color: var(--text);
-}
-
-.text-accent {
-  color: var(--accent) !important;
 }
 
 /* i3/xfce style top panel */
@@ -503,10 +618,6 @@ a:not(.no-cursor):hover::after {
 }
 
 /* Ensure bootstrap utility classes follow theme */
-.text-dark {
-  color: var(--text) !important;
-}
-
 .bg-light {
   background: var(--card-bg) !important;
 }
@@ -518,8 +629,6 @@ a:not(.no-cursor):hover::after {
   align-items: center;
   position: relative;
   padding: 40px 0;
-  width: 400px;
-  height: 200px;
   overflow: hidden;
 }
 
@@ -767,7 +876,7 @@ a:not(.no-cursor):hover::after {
 
 .terminal-prompt {
   color: var(--accent);
-  margin-right: 10px;
+  margin-right: 3.226px;
   font-weight: bold;
 }
 

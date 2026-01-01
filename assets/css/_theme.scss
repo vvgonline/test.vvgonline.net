@@ -31,6 +31,10 @@ body {
   padding-top: 32px;
 }
 
+header {
+    outline: none;
+}
+
 .system-panel {
   height: 32px;
   background: linear-gradient(90deg, #000 0%, #1a1a1a 100%);

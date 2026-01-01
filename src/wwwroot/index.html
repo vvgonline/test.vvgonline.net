@@ -4,7 +4,34 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VVG.Web</title>
+
+    <!-- HTML Meta Tags -->
+    <title>VVG ONLINE — Home</title>
+    <meta name="description" content="VVG ONLINE digital business consulting" />
+    <meta name="keywords" content="digital,consulting,ai,transformation">
+
+    <!-- Google / Search Engine Tags -->
+    <meta itemprop="name" content="VVG ONLINE — Home" />
+    <meta itemprop="description" content="VVG ONLINE digital business consulting" />
+    <meta itemprop="image" content="https://vvgonline.github.io/test.vvgonline.net/assets/images/banners/default.png" />
+
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content="https://vvgonline.github.io/test.vvgonline.net/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="VVG ONLINE — Home" />
+    <meta property="og:description" content="VVG ONLINE digital business consulting" />
+    <meta property="og:image"
+        content="https://vvgonline.github.io/test.vvgonline.net/assets/images/banners/default.png" />
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="VVG ONLINE — Home" />
+    <meta name="twitter:description" content="VVG ONLINE digital business consulting" />
+    <meta name="twitter:image"
+        content="https://vvgonline.github.io/test.vvgonline.net/assets/images/twitter-cards/default.png" />
+    <meta name="twitter:site" content="@vvgonline">
+    <meta name="twitter:creator" content="@vvgonline">
+
     <base href="/" />
     <link rel="preload" id="webassembly" />
     <link
@@ -23,15 +50,15 @@
 </head>
 
 <body>
-    <div id="preloader">
-        <img src="assets/images/profiles/logo-2025.svg" alt="Loading..." class="preloader-logo">
-    </div>
+    <!-- <div id="preloader" class="preloader-container"></div> -->
     <div id="app">
-        <svg class="loading-progress">
-            <circle r="40%" cx="50%" cy="50%" />
-            <circle r="40%" cx="50%" cy="50%" />
-        </svg>
-        <div class="loading-progress-text"></div>
+        <div id="preloader" class="preloader-container">
+            <svg class="loading-progress">
+                <circle r="40%" cx="50%" cy="50%" />
+                <circle r="40%" cx="50%" cy="50%" />
+            </svg>
+            <div class="loading-progress-text"></div>
+        </div>
     </div>
 
     <!-- <div id="blazor-error-ui">

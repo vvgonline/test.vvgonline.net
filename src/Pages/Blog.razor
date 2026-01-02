@@ -41,6 +41,7 @@ else
             Title = "Blog - VVG ONLINE",
             Description = "Insights and articles from VVG ONLINE.",
             Keywords = "blog,insights,articles",
+            Image = "https://test.vvgonline.net/assets/images/banners/blog.png",
 
             OgType = "website",
             OgTitle = "Blog - VVG ONLINE",
@@ -56,7 +57,7 @@ else
             TwitterImage = "https://test.vvgonline.net/assets/images/twitter-cards/blog.png"
         });
 
-        var doc = await Http.GetFromJsonAsync<BlogDoc>("/data/blog-posts.json");
+        var doc = await Http.GetFromJsonAsync<BlogDoc>("assets/data/blog-posts.json");
         posts = doc?.posts;
     }
 

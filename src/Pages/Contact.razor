@@ -1,0 +1,87 @@
+@page "/contact"
+@inject VVG.Web.Services.MetadataService MetadataService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Contact</PageTitle>
+
+<section class="container py-5">
+    <div class="mb-5 text-center">
+        <h1 class="display-4">Contact Us</h1>
+        <p class="lead">We'd love to hear from you. Reach out with any questions or to start a project.</p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card p-4 p-md-5">
+                <EditForm Model="@contactForm" OnValidSubmit="@HandleSubmit">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+
+                    <div class="mb-3">
+                        <label for="name" class="form-label mono">Full Name</label>
+                        <InputText id="name" class="form-control" @bind-Value="contactForm.Name" placeholder="Your Name" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label mono">Email Address</label>
+                        <InputText id="email" class="form-control" @bind-Value="contactForm.Email" placeholder="name@example.com" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="message" class="form-label mono">Message</label>
+                        <InputTextArea id="message" class="form-control" @bind-Value="contactForm.Message" rows="5" placeholder="Your message here..." />
+                    </div>
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-vvg">Send Message _</button>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</section>
+
+@code {
+    private ContactFormModel contactForm = new ContactFormModel();
+
+    public class ContactFormModel
+    {
+        [System.ComponentModel.DataAnnotations.Required]
+        public string? Name { get; set; }
+
+        [System.ComponentModel.DataAnnotations.Required]
+        [System.ComponentModel.DataAnnotations.EmailAddress]
+        public string? Email { get; set; }
+
+        [System.ComponentModel.DataAnnotations.Required]
+        public string? Message { get; set; }
+    }
+
+    private void HandleSubmit()
+    {
+        var subject = $"Contact Form Submission from {contactForm.Name}";
+        var body = $"{contactForm.Message}%0A%0AFrom: {contactForm.Name} ({contactForm.Email})";
+        var mailtoUrl = $"mailto:vvgonline.net@gmail.com?subject={Uri.EscapeDataString(subject)}&body={Uri.EscapeDataString(body)}";
+        NavigationManager.NavigateTo(mailtoUrl);
+    }
+
+    protected override void OnInitialized()
+    {
+        MetadataService.SetPageMetadata(new PageMetadata
+        {
+            Title = "Contact - VVG ONLINE",
+            Description = "Get in touch with VVG ONLINE for digital consulting services.",
+            Keywords = "contact, consulting, digital, business",
+            Image = "https://test.vvgonline.net/assets/images/banners/contact.png",
+            OgType = "website",
+            OgTitle = "Contact - VVG ONLINE",
+            OgDescription = "Get in touch with VVG ONLINE for digital consulting services.",
+            OgImage = "https://test.vvgonline.net/assets/images/banners/contact.png",
+            OgUrl = "https://test.vvgonline.net/contact",
+
+            TwitterCard = "summary_large_image",
+            TwitterSite = "@vvgonline",
+            TwitterCreator = "@vvgonline",
+            TwitterTitle = "Contact - VVG ONLINE",
+            TwitterDescription = "Get in touch with VVG ONLINE for digital consulting services.",
+            TwitterImage = "https://test.vvgonline.net/assets/images/twitter-cards/vvg-online-home-twitter-card.png"
+        });
+    }
+}

@@ -5,44 +5,39 @@
 
 <PageTitle>Services</PageTitle>
 
-<h1 class="mt-5">Services</h1>
+<section class="container py-5">
+    <div class="mb-5 text-center">
+        <h1 class="display-4">Services</h1>
+        <p class="lead">Digital consulting services to transform your business.</p>
+    </div>
 
-<div class="mt-3 mb-5">
     @if (services is null)
-{
-    <p>Loading...</p>
-}
-else
-{
-    <div class="row">
-        @foreach (var s in services)
-        {
-            <div class="col-md-6 mb-3">
-                <div class="card p-3">
-                    <div class="d-flex align-items-center mb-3">
-                        <i class="@s.icon larger mr-4 bg-accent text-dark px-2 py-1"></i>
-                        <span class="larger px-2 fw-bold">@s.title</span>
-                    </div>
-                    <p>@s.description</p>
-
+    {
+        <p class="text-center">Loading...</p>
+    }
+    else
+    {
+        <div class="row g-0 border-top border-start">
+            @foreach (var (s, index) in services.Select((value, i) => (value, i)))
+            {
+                <div class="col-md-6 col-lg-4 p-4 border-bottom border-end @((index + 1) % 2 == 0 ? "bg-light" : "")">
+                    <span class="mono">0@(index + 1).</span>
+                    <h3 class="mt-3">@s.title</h3>
+                    <p class="opacity-75 small">@s.description</p>
                     @if (s.subservices != null && s.subservices.Length > 0)
                     {
-                        <ul class="list-group mt-3">
+                        <ul class="list-unstyled mt-3">
                             @foreach (var subservice in s.subservices)
                             {
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <span class="p-1">@subservice.name</span>
-                                    <p class="p-1">@subservice.description</p>
-                                </li>
+                                <li>- @subservice.name</li>
                             }
                         </ul>
                     }
                 </div>
-            </div>
-        }
-    </div>
-}
-</div>
+            }
+        </div>
+    }
+</section>
 
 @code {
     class Service

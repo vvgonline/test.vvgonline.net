@@ -1,86 +1,38 @@
-.preloader-container {
+// Variables
+$bg-color: #111113;
+$accent-color: #ffdd33;
+
+// Base container for the preloader
+.preloader {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  background-color: $bg-color;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   z-index: 9999;
-  transition: opacity 0.5s ease, visibility 0.5s ease;
-}
 
-.preloader-content {
-  text-align: center;
-  color: white;
-}
-
-.logo-placeholder {
-  margin-bottom: 30px;
-}
-
-.logo-circle {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: linear-gradient(45deg, #ffbb33, #ffcc33);
-  margin: 0 auto 15px;
-  animation: pulse 2s infinite;
-}
-
-.logo-text {
+  // Typography settings for terminal look
   font-family: "IBM Plex Mono", monospace;
+  color: $accent-color;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+// Container for the ASCII output
+.terminal-output-area {
+  white-space: pre; /* Preserves ASCII spacing */
+  text-align: left; /* ASCII art aligns left */
   font-weight: bold;
-  font-size: 24px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
+  text-shadow: 0 0 5px rgba($accent-color, 0.3);
 }
 
-.loading-bar {
-  width: 300px;
-  height: 6px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 3px;
-  margin: 0 auto 20px;
-  overflow: hidden;
-}
-
-.loading-progress {
-  width: 0%;
-  height: 100%;
-  background: linear-gradient(90deg, #00c9ff, #92fe9d);
-  border-radius: 3px;
-  animation: loading 3s ease-in-out infinite;
-}
-
-.status-text {
-  font-family: "IBM Plex Sans", monospace;
-  font-size: 16px;
-  opacity: 0.8;
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-@keyframes loading {
-  0% {
-    width: 0%;
-  }
-  50% {
-    width: 70%;
-  }
-  100% {
-    width: 100%;
+// Mobile adjustment
+@media (max-width: 768px) {
+  .preloader {
+    font-size: 11px;
   }
 }

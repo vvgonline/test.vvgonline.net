@@ -1,6 +1,7 @@
 @import "./preloader";
 @import "./theme";
 @import "./main";
+@import "./typography";
 
 :root {
   --accent: #ffdd33;
@@ -20,12 +21,7 @@ body {
   background-color: var(--bg);
   color: var(--text);
   transition: background 0.3s;
-}
-
-body {
   font-family: "IBM Plex Sans", sans-serif;
-  background-color: var(--bg);
-  color: var(--text);
   line-height: 1.6;
   padding-top: 32px;
   /* Space for the fixed top panel */
@@ -127,7 +123,8 @@ h2,
 h3,
 h4,
 h5,
-h6 .serif {
+h6,
+.serif {
   font-family: "EB Garamond", serif;
   font-weight: 600;
 }
@@ -306,7 +303,7 @@ footer a:hover {
 
 .blink {
   animation: blinker 1s step-start infinite;
-  color: var(--111113);
+  color: var(--text);
 }
 
 /* Code blink used while code is being typed */
@@ -719,7 +716,7 @@ a:not(.no-cursor):hover::after {
 
 .terminal-prompt {
   color: var(--accent);
-  margin-right: 3.226px;
+  margin-right: 10px;
   font-weight: bold;
 }
 

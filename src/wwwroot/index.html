@@ -50,13 +50,21 @@
 <body>
     <!-- <div id="preloader" class="preloader-container"></div> -->
     <div id="app">
-        <div id="preloader" class="preloader-container">
+        <!-- <div id="preloader" class="preloader-container">
             <svg class="loading-progress">
                 <circle r="40%" cx="50%" cy="50%" />
                 <circle r="40%" cx="50%" cy="50%" />
             </svg>
             <div class="loading-progress-text"></div>
+        </div> -->
+        <div class="preloader">
+            <div class="loading-box">
+                <div class="loader"></div>
+                <div class="terminal-output msg-1">_</div>
+                <div class="terminal-output msg-2">SYSTEM BOOT...</div>
+            </div>
         </div>
+        <component type="typeof(App)" render-mode="WebAssemblyPrerendered" />
     </div>
 
     <!-- <div id="blazor-error-ui">
@@ -64,10 +72,12 @@
         <a href="." class="reload">Reload</a>
         <span class="dismiss">🗙</span>
     </div> -->
+    <script src="assets/js/boot-sequence.js" defer async></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer async></script>
     <script src="./assets/js/theme.js" defer async></script>
     <script src="./assets/js/redesign.js" defer async></script>
     <script src="./assets/js/meta.js" defer async></script>
+
     <script src="_framework/blazor.webassembly#[.{fingerprint}].js"></script>
     <script>navigator.serviceWorker.register('service-worker.js', { updateViaCache: 'none' });</script>
     <script>

@@ -1,0 +1,117 @@
+name: Local Ollama Config
+version: 1.0.0
+schema: v1
+
+models:
+  # Primary chat/edit models
+  - name: Qwen3 Coder 30B
+    provider: ollama
+    model: qwen3-coder:30b
+    apiBase: http://192.168.1.6:11434
+    roles:
+      - chat
+      - edit
+      - apply
+    defaultCompletionOptions:
+      contextLength: 24576
+      temperature: 0.3
+      topP: 0.5
+      topK: 40
+      maxTokens: 4096
+      stop:
+        - "\n\n"
+
+  - name: GPT-OSS 20B
+    provider: ollama
+    model: hf.co/unsloth/gpt-oss-20b-GGUF:Q8_K_XL
+    apiBase: http://192.168.1.6:11434
+    roles:
+      - chat
+      - edit
+
+  - name: Qwen3 Coder 30B A3B
+    provider: ollama
+    model: hf.co/unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF:Q4_K_XL
+    apiBase: http://192.168.1.6:11434
+    roles:
+      - chat
+      - edit
+
+  # Vision model
+  - name: Qwen3 VL 8B
+    provider: ollama
+    model: qwen3-vl:8b-instruct-q8_0
+    apiBase: http://192.168.1.6:11434
+    roles:
+      - chat
+    capabilities:
+      - image_input
+
+  # Autocomplete models
+  - name: Qwen2.5 Coder 7B Instruct
+    provider: ollama
+    model: qwen2.5-coder:7b-instruct-q8_0
+    apiBase: http://192.168.1.6:11434
+    roles:
+      - autocomplete
+      - chat
+
+  - name: Qwen2.5 Coder 7B Base
+    provider: ollama
+    model: qwen2.5-coder:7b-base-q6_K
+    apiBase: http://192.168.1.6:11434
+    roles:
+      - autocomplete
+
+  # Embeddings
+  - name: Nomic Embed
+    provider: ollama
+    model: nomic-embed-text:137m-v1.5-fp16
+    apiBase: http://192.168.1.6:11434
+    roles:
+      - embed
+
+  # Reranker
+  - name: Qwen3 Reranker
+    provider: ollama
+    model: AuditAid/Reranker_v2:Qwen3-Reranker-4B_Q5_K_M
+    apiBase: http://192.168.1.6:11434
+    roles:
+      - rerank
+
+context:
+  - provider: file
+  - provider: code
+  - provider: diff
+  - provider: terminal
+  - provider: codebase
+    params:
+      nRetrieve: 30
+      nFinal: 3
+
+rules:
+  - Always give concise responses
+  - Always Prefer C# (csharp)
+  - Prefer TypeScript over JavaScript
+  - Prefer scss over css
+  - Be very comprehensive
+  - Prefer bullet points over long paragraphs
+  - If you don't understand, say 'I don't know'
+  - Always confirm your thought process before giving answers
+  - Think deeply. No rush.
+  - Ask for more context if needed. I have no issue explaining my queries in length and depth.
+  - Tone - master explaining to student
+
+prompts:
+  - name: check
+    description: Check for mistakes in my code
+    prompt: |
+      Please read the highlighted code and check for:
+      - Syntax errors
+      - Logic errors
+      - Security vulnerabilities
+      - Performance issues
+
+docs:
+  - name: Continue Docs
+    startUrl: https://docs.continue.dev/intro

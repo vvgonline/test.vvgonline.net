@@ -7,6 +7,12 @@
     [Microsoft.AspNetCore.Components.Parameter]
     public string Subtitle { get; set; } = "Driving you beyond growth, through unique, innovative, and result-oriented digital consulting.";
 
+    [Microsoft.AspNetCore.Components.Parameter]
+    public string TagUser { get; set; } = "";
+
+    [Microsoft.AspNetCore.Components.Parameter]
+    public string TagPath { get; set; } = "";
+
     private string? displayedTitle;
     private System.Timers.Timer? _timer;
     private int _charIndex;
@@ -52,14 +58,14 @@
     <div class="row align-items-center">
         <div class="col-lg-8 col-12">
             <div class="terminal-tag-group mb-3">
-                <div class="tag-segment tag-user">// SYSTEM_ARCH</div>
-                <div class="tag-segment tag-path">// EVENT_DRIVEN</div>
+                <div class="tag-segment tag-user">@TagUser</div>
+                <div class="tag-segment tag-path">@TagPath</div>
             </div>
 
             <h1 class="hero-title"><span>@displayedTitle</span><span class="blink">_</span></h1>
             <p class="lead fs-4 opacity-75 serif">@Subtitle</p>
             <div class="mt-4">
-                <a href="mailto:vvgonline.net@gmail.com?subject=Meeting%20Request&body=Hi,%20VVG%20Online,%20I%20would%20like%20to%20set%20up%20a%20meeting%20to%20discuss%20our%20project.%0A%0AThanks,%0A%0A<Your%20Name>" class="btn btn-vvg me-3" title="Start Transformation">Start Transformation</a>
+                <NavLink href="/contact" class="btn btn-vvg me-3">Start Transformation</NavLink>
                 <code
                     class="d-block d-md-inline mt-3 mt-md-0"><span class="text-dark bg-accent px-2 py-1">&gt;</span><span class="text-white bg-dark px-2 py-1"> locate --services --all</span></code>
             </div>

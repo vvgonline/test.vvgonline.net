@@ -4,12 +4,18 @@
 
 <PageTitle>Contact</PageTitle>
 
-<HeroBanner Title="Start the Conversation" 
-    Subtitle="Whether it's a project idea, a strategic question, or a partnership proposal, our team is ready to connect. Let's build the future together." />
+<HeroBanner Title="Start the Conversation"
+    Subtitle="AWhether it's a project idea, a strategic question, or a partnership proposal, our team is ready to connect. Let's build the future together."
+    TagUser="// CONTACT_US" TagPath="// START_CONVERSATION" />
+
+<div class="container">
+    <h2>Contact</h2>
+    <p>Get in touch with us to discuss your project or partnership opportunities.</p>
+</div>
 
 <section class="container py-5">
 
-    <div class="row justify-content-center">
+    <div class="row ">
         <div class="col-lg-8">
             <div class="card p-4 p-md-5">
                 <EditForm Model="@contactForm" OnValidSubmit="@HandleSubmit">

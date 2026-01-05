@@ -3,23 +3,32 @@
 @inject HttpClient Http
 @inject VVG.Web.Services.MetadataService MetadataService
 
-<PageTitle>Blog</PageTitle>
+<HeroBanner Title="Digital Insights" 
+    Subtitle="A curated collection of articles, analyses, and perspectives on technology, strategy, and the future of business." />
 
-<h2>Blog</h2>
-
-@if (posts is null)
-{
-    <p>Loading...</p>
-}
-else
-{
-    <ul>
-        @foreach (var p in posts)
-        {
-            <li><a href="/blog/@p.slug">@p.title</a> — <small>@p.date (@p.readTime min)</small></li>
-        }
-    </ul>
-}
+<section class="container py-5">
+    @if (posts is null)
+    {
+        <p class="text-center">Loading...</p>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var p in posts)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 p-4">
+                        <h4 class="serif mb-3"><a href="/blog/@p.slug" class="text-dark">@p.title</a></h4>
+                        <div class="mt-auto mono border-top pt-3 d-flex justify-content-between">
+                            <span>@p.date</span>
+                            <span>@p.readTime MIN READ</span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</section>
 
 @code {
     class Post

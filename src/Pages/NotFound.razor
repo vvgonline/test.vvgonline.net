@@ -1,5 +1,29 @@
-﻿@page "/not-found"
-@layout MainLayout
+@page "/404"
+@inject VVG.Web.Services.MetadataService MetadataService
 
-<h3>Not Found</h3>
-<p>Sorry, the content you are looking for does not exist.</p>
+<PageTitle>Not Found</PageTitle>
+
+<HeroBanner Title="404: Endpoint Obscured" 
+    Subtitle="The resource you're seeking has either been moved, deleted, or was never here to begin with. Let's get you back on a valid vector." />
+
+<section class="container py-5 text-center">
+    <p class="lead">Here are some useful links to get you back on track:</p>
+    <div class="d-flex justify-content-center gap-3 mt-4">
+        <a href="/" class="btn btn-vvg">_Home</a>
+        <a href="/Services" class="btn btn-secondary">_Services</a>
+        <a href="/Blog" class="btn btn-secondary">_Blog</a>
+        <a href="/Contact" class="btn btn-secondary">_Contact</a>
+    </div>
+</section>
+
+@code {
+    protected override void OnInitialized()
+    {
+        MetadataService.SetPageMetadata(new PageMetadata
+        {
+            Title = "404 Not Found - VVG ONLINE",
+            Description = "The page you were looking for was not found.",
+            Keywords = "42,404, not found, error"
+        });
+    }
+}

@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VVG Online | Strategic Systems</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+        /* ==========================================
+         * CORE VARIABLES & THEME CONFIGURATION
+         * ==========================================
+         */
+        :root {
+            --bg-color: #d9d9d9;
+            --bg-dark: #111113;
+            --text-color: #111113;
+            --text-muted: #666666;
+            --accent-color: #ffdd33;
+            --secondary-bg: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-dark: rgba(17, 17, 19, 0.85);
+            --border-color: #111113;
+            --glass-border: rgba(17, 17, 19, 0.1);
+            
+            /* Fonts */
+            --font-main: 'IBM Plex Sans', sans-serif;
+            --font-code: 'IBM Plex Mono', monospace;
+            --font-heading: 'EB Garamond', serif;
+
+            --border-radius: 0px; 
+        }
+
+        /* Dark Mode Overrides */
+        [data-bs-theme="dark"] {
+            --bg-color: #08080a; 
+            --text-color: #d9d9d9;
+            --text-muted: #888888;
+            --secondary-bg: #1e1e20;
+            --glass-bg: rgba(30, 30, 32, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --border-color: #333333;
+        }
+
+        /* ==========================================
+         * GLOBAL RESET & BASE STYLES
+         * ==========================================
+         */
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        /* Force Sharp Edges */
+        * { border-radius: 0 !important; }
+
+        /* ==========================================
+         * CUSTOM CURSOR
+         * ==========================================
+         */
+        .cursor-dot, .cursor-outline {
+            position: fixed; top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            z-index: 9999; pointer-events: none;
+        }
+        .cursor-dot { width: 8px; height: 8px; background-color: var(--accent-color); }
+        .cursor-outline {
+            width: 40px; height: 40px;
+            border: 1px solid var(--text-color);
+            transition: width 0.2s, height 0.2s;
+        }
+        body:hover .cursor-outline.hovered {
+            width: 60px; height: 60px;
+            background-color: rgba(255, 221, 51, 0.1);
+            border-color: var(--accent-color);
+        }
+
+        /* ==========================================
+         * NAVBAR
+         * ==========================================
+         */
+        .navbar {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+            z-index: 1000;
+        }
+        .navbar-brand {
+            font-family: var(--font-code);
+            font-weight: 700; letter-spacing: -0.05em;
+        }
+        .nav-link {
+            font-family: var(--font-code); font-size: 0.85rem;
+            text-transform: uppercase; color: var(--text-color);
+            padding: 0.5rem 1rem !important;
+        }
+        .nav-link:hover, .nav-link.active { color: var(--accent-color); }
+
+        /* ==========================================
+         * HERO SECTION (Huly.io Style CSS 3D)
+         * ==========================================
+         */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding-top: 80px;
+            overflow: hidden;
+            background: radial-gradient(circle at 50% 50%, #1e1e20 0%, #08080a 100%); /* Deep dark backdrop */
+        }
+        
+        /* Perspective Grid Floor */
+        .grid-floor {
+            position: absolute;
+            width: 200vw; height: 200vh;
+            top: 50%; left: 50%;
+            background-image: 
+                linear-gradient(rgba(255, 221, 51, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 221, 51, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            transform: translate(-50%, -50%) perspective(1000px) rotateX(60deg);
+            z-index: 0;
+            mask-image: radial-gradient(circle, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 70%);
+            -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 70%);
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 6vw, 5.5rem);
+            line-height: 0.95;
+            margin-bottom: 2rem;
+        }
+        
+        .hero-title .accent { color: var(--accent-color); }
+
+        .hero-description {
+            font-family: var(--font-code);
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            border-left: 2px solid var(--accent-color);
+            padding-left: 1.5rem;
+            max-width: 500px;
+        }
+
+        /* HULY STYLE 3D CSS BANNER */
+        .huly-banner-container {
+            width: 100%;
+            height: 100%;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 2000px; /* Essential for 3D effect */
+        }
+
+        /* The Rotating Cube Wrapper */
+        .cube-wrapper {
+            width: 400px;
+            height: 400px;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: rotateY(-25deg) rotateX(15deg);
+            animation: floatObject 6s ease-in-out infinite;
+        }
+
+        @keyframes floatObject {
+            0%, 100% { transform: rotateY(-25deg) rotateX(15deg) translateY(0); }
+            50% { transform: rotateY(-20deg) rotateX(10deg) translateY(-20px); }
+        }
+
+        /* The Main Panel (Front) */
+        .cube-face {
+            position: absolute;
+            background: var(--glass-dark);
+            border: 1px solid rgba(255, 221, 51, 0.3);
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            backface-visibility: hidden; /* Hide inside */
+        }
+
+        .cube-front {
+            width: 400px;
+            height: 400px;
+            transform: translateZ(20px); /* Push forward */
+        }
+
+        /* The Side Panel (Thickness) */
+        .cube-side {
+            width: 40px;
+            height: 400px;
+            background: #000;
+            transform: rotateY(90deg) translateZ(380px); /* Position relative to front */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* The Top Panel (Thickness) */
+        .cube-top {
+            width: 400px;
+            height: 40px;
+            background: #000;
+            transform: rotateX(90deg) translateZ(380px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* --- UI Elements inside the 3D Banner --- */
+        .huly-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 20px; padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .huly-logo { font-family: var(--font-code); font-weight: 700; color: var(--accent-color); }
+        
+        .huly-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex-grow: 1;
+        }
+
+        .huly-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 10px;
+        }
+
+        .huly-stat { font-size: 2rem; font-family: var(--font-code); font-weight: 700; }
+        .huly-label { font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted); }
+
+        .huly-chart-bar {
+            height: 5px; width: 100%; background: #333; margin-top: 5px;
+            position: relative;
+        }
+        .huly-chart-fill {
+            height: 100%; background: var(--accent-color);
+            width: 70%;
+        }
+
+        /* Floating Badges outside cube */
+        .huly-badge {
+            position: absolute;
+            background: var(--bg-color);
+            color: #000;
+            padding: 8px 16px;
+            font-family: var(--font-code);
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid var(--accent-color);
+            transform: translateZ(60px); /* Push out from cube */
+        }
+        .hb-1 { top: -20px; right: -20px; animation: floatBadge 4s infinite 0s; }
+        .hb-2 { bottom: 20px; left: -40px; animation: floatBadge 5s infinite 1s; }
+
+        @keyframes floatBadge {
+            0%, 100% { transform: translateZ(60px) translateY(0); }
+            50% { transform: translateZ(60px) translateY(-10px); }
+        }
+
+        /* ==========================================
+         * SERVICES DASHBOARD SECTION
+         * ==========================================
+         */
+        .services-dashboard {
+            background: var(--secondary-bg);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 6rem 0;
+        }
+
+        .nav-list { list-style: none; padding: 0; }
+
+        .nav-item-btn {
+            width: 100%;
+            text-align: left;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-item-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--text-color);
+            padding-left: 2rem;
+        }
+
+        .nav-item-btn.active {
+            background: var(--accent-color);
+            color: #000;
+            border-color: var(--accent-color);
+        }
+        
+        .nav-item-btn span.num {
+            font-family: var(--font-code);
+            font-size: 0.8rem;
+            opacity: 0.6;
+        }
+
+        .display-area {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            height: 100%;
+            min-height: 500px;
+            position: relative;
+            overflow: hidden;
+            padding: 2rem;
+        }
+
+        .service-content {
+            display: none;
+            height: 100%;
+            flex-direction: column;
+            animation: slideIn 0.4s ease-out;
+        }
+
+        .service-content.active { display: flex; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .tech-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+            font-family: var(--font-code);
+            font-size: 0.9rem;
+        }
+        
+        .tech-table th, .tech-table td {
+            text-align: left;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .tech-table th {
+            color: var(--accent-color);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        .chart-container {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 300px;
+            margin-top: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .bar-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 10%;
+            gap: 0.5rem;
+        }
+
+        .bar {
+            width: 100%;
+            background: var(--border-color);
+            transition: height 1s ease, background 0.3s;
+            position: relative;
+        }
+        .bar:hover { background: var(--accent-color); }
+
+        .bar-label {
+            font-family: var(--font-code);
+            font-size: 0.75rem;
+            text-align: center;
+        }
+
+        .svg-chart-container {
+            width: 100%; height: 300px; margin-top: 2rem; position: relative;
+        }
+        .svg-chart polyline {
+            fill: none;
+            stroke: var(--accent-color);
+            stroke-width: 2;
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: dash 2s ease-out forwards;
+        }
+        @keyframes dash { to { stroke-dashoffset: 0; } }
+
+        .sys-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .sys-node {
+            aspect-ratio: 1;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-code);
+            font-size: 0.8rem;
+            transition: all 0.3s;
+            background: var(--secondary-bg);
+        }
+        .sys-node:hover {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 10px var(--accent-color);
+        }
+
+        .tag-pill {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border: 1px solid var(--border-color);
+            font-family: var(--font-code);
+            font-size: 0.75rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            background: var(--secondary-bg);
+        }
+
+        .scroll-reveal { opacity: 0; transform: translateY(30px); transition: 0.8s ease; }
+        .scroll-reveal.visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 992px) {
+            .hero-grid { grid-template-columns: 1fr; }
+            .cube-wrapper { width: 300px; height: 300px; }
+            .cube-front { width: 300px; height: 300px; }
+            .cube-side { transform: rotateY(90deg) translateZ(280px); }
+            .cube-top { transform: rotateX(90deg) translateZ(280px); }
+            .nav-list { display: flex; overflow-x: auto; gap: 1rem; margin-bottom: 2rem; padding-bottom: 1rem; }
+            .nav-item-btn { width: auto; white-space: nowrap; margin-bottom: 0; }
+            .huly-banner-container { min-height: 400px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Loader -->
+    <div id="loader" style="position:fixed; inset:0; background:var(--bg-color); z-index:10000; display:flex; justify-content:center; align-items:center; transition:opacity 0.5s;">
+        <div class="text-center">
+            <div class="font-code mb-3 text-accent">BOOT SEQUENCE...</div>
+            <div style="width: 200px; height: 2px; background: var(--border-color);">
+                <div style="height:100%; width:0%; background: var(--accent-color); animation: load 1.5s ease-in-out forwards;"></div>
+            </div>
+        </div>
+    </div>
+    <style>@keyframes load { 100% { width: 100%; } }</style>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand interactable" href="#">
+                <i class="bi bi-cpu-fill me-2" style="color:var(--accent-color)"></i> VVG_SYSTEMS
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#nav" title="collapse nav">
+                <i class="bi bi-list fs-1"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="nav">
+                <ul class="navbar-nav ms-auto align-items-center gap-4">
+                    <li class="nav-item"><a class="nav-link interactable" href="#home">HOME</a></li>
+                    <li class="nav-item"><a class="nav-link interactable" href="#services">MODULES</a></li>
+                    <li class="nav-item"><a class="nav-link interactable" href="#contact">CONTACT</a></li>
+                    <li class="nav-item">
+                        <button id="themeToggle" class="btn btn-sm border border-dark text-dark interactable" style="font-family:var(--font-code)">
+                            <i class="bi bi-moon"></i> THEME
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section (Huly.io Style) -->
+    <header id="home" class="hero-section">
+        <div class="grid-floor"></div>
+        <div class="container">
+            <div class="hero-grid">
+                <!-- Text Content -->
+                <div class="hero-text scroll-reveal">
+                    <div class="d-flex align-items-center gap-2 mb-3 font-code" style="color:var(--accent-color)">
+                        <span style="width:10px; height:10px; background:var(--accent-color); display:block;"></span>
+                        SYSTEM VERSION 2.4.0
+                    </div>
+                    <h1 class="hero-title">Architecting <br><span class="accent">Digital Intelligence.</span></h1>
+                    <p class="hero-description">
+                        Comprehensive strategic frameworks, data-driven transformation, and sustainable innovation ecosystems for high-performance organizations.
+                    </p>
+                    <div class="d-flex gap-3">
+                        <a href="#services" class="btn btn-lg px-4 py-3 interactable" style="background:var(--text-color); color:var(--bg-color); font-family:var(--font-code)">
+                            EXPLORE MODULES <i class="bi bi-arrow-right ms-2"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Huly.io Style CSS 3D Banner -->
+                <div class="huly-banner-container scroll-reveal" style="transition-delay: 0.2s;">
+                    <div class="cube-wrapper">
+                        <!-- Front Face (UI) -->
+                        <div class="cube-face cube-front">
+                            <div class="huly-header">
+                                <span class="huly-logo"><i class="bi bi-box-seam"></i> VVG_DASH</span>
+                                <i class="bi bi-three-dots-vertical"></i>
+                            </div>
+                            
+                            <div class="huly-grid">
+                                <div class="huly-card">
+                                    <div class="huly-label">Performance</div>
+                                    <div class="huly-stat">98.4%</div>
+                                    <div class="huly-chart-bar"><div class="huly-chart-fill" style="width: 98%;"></div></div>
+                                </div>
+                                <div class="huly-card">
+                                    <div class="huly-label">Users</div>
+                                    <div class="huly-stat">2.4K</div>
+                                    <div class="huly-chart-bar"><div class="huly-chart-fill" style="width: 65%;"></div></div>
+                                </div>
+                                <div class="huly-card" style="grid-column: span 2">
+                                    <div class="huly-label mb-2">Active Modules</div>
+                                    <div style="display:flex; gap:5px; flex-wrap:wrap;">
+                                        <span style="font-size:10px; border:1px solid #333; padding:2px 5px;">SEO</span>
+                                        <span style="font-size:10px; border:1px solid #333; padding:2px 5px;">AI</span>
+                                        <span style="font-size:10px; background:var(--accent-color); color:black; padding:2px 5px;">CLOUD</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Floating Badges inside the cube's z-space -->
+                            <div class="huly-badge hb-1">
+                                <i class="bi bi-graph-up"></i> +24%
+                            </div>
+                            <div class="huly-badge hb-2">
+                                <i class="bi bi-shield-check"></i> SAFE
+                            </div>
+                        </div>
+                        
+                        <!-- Side Thickness -->
+                        <div class="cube-face cube-side"></div>
+                        <!-- Top Thickness -->
+                        <div class="cube-face cube-top"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Services Dashboard Section -->
+    <section id="services" class="services-dashboard">
+        <div class="container">
+            <div class="row g-5">
+                <!-- Left: Navigation Tabs -->
+                <div class="col-lg-4 scroll-reveal">
+                    <h4 class="font-code mb-4 text-muted">SELECT MODULE //</h4>
+                    <ul class="nav-list">
+                        <li><button class="nav-item-btn active interactable" onclick="showService(1, this)"><span>Strategy & Innovation</span><span class="num">01</span></button></li>
+                        <li><button class="nav-item-btn interactable" onclick="showService(2, this)"><span>Digital Transformation</span><span class="num">02</span></button></li>
+                        <li><button class="nav-item-btn interactable" onclick="showService(3, this)"><span>Capability Building</span><span class="num">03</span></button></li>
+                        <li><button class="nav-item-btn interactable" onclick="showService(4, this)"><span>Strategic Digital Marketing</span><span class="num">04</span></button></li>
+                        <li><button class="nav-item-btn interactable" onclick="showService(5, this)"><span>Design Thinking Workshops</span><span class="num">05</span></button></li>
+                        <li><button class="nav-item-btn interactable" onclick="showService(6, this)"><span>IT Management Solutions</span><span class="num">06</span></button></li>
+                    </ul>
+                </div>
+
+                <!-- Right: Dynamic Display Area -->
+                <div class="col-lg-8 scroll-reveal" style="transition-delay: 0.2s;">
+                    <div class="display-area">
+                        
+                        <!-- 01. Strategy -->
+                        <div id="service-1" class="service-content active">
+                            <h2 style="font-family:var(--font-heading); margin-bottom:0.5rem;">Strategy & Innovation</h2>
+                            <p class="font-code text-muted">Develop tailored strategies and roadmaps that align with your business goals.</p>
+                            
+                            <div style="margin-top: 2rem;">
+                                <div class="tag-pill">Strategy Development</div>
+                                <div class="tag-pill">Innovation Roadmaps</div>
+                            </div>
+
+                            <table class="tech-table">
+                                <thead>
+                                    <tr>
+                                        <th>Phase</th>
+                                        <th>Objective</th>
+                                        <th>KPI</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>01. Discovery</td>
+                                        <td>Analyze market fit & gaps</td>
+                                        <td>Competitive Index</td>
+                                        <td style="color:var(--accent-color)">COMPLETE</td>
+                                    </tr>
+                                    <tr>
+                                        <td>02. Formulation</td>
+                                        <td>Define core value prop</td>
+                                        <td>Stakeholder Buy-in</td>
+                                        <td style="color:var(--text-muted)">IN PROGRESS</td>
+                                    </tr>
+                                    <tr>
+                                        <td>03. Execution</td>
+                                        <td>Implement roadmap</td>
+                                        <td>ROI Growth</td>
+                                        <td style="color:var(--text-muted)">PENDING</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- 02. Digital Transformation -->
+                        <div id="service-2" class="service-content">
+                            <h2>Digital Transformation</h2>
+                            <p class="font-code text-muted">Leverage technology to implement and sustain transformations that create lasting value.</p>
+                            
+                            <div class="tag-pill">Transformation Consulting</div>
+                            <div class="tag-pill">Sustainable Growth</div>
+
+                            <div class="chart-container">
+                                <div class="bar-group">
+                                    <div class="bar" style="height: 40%;"></div>
+                                    <span class="bar-label">Legacy</span>
+                                </div>
+                                <div class="bar-group">
+                                    <div class="bar" style="height: 60%;"></div>
+                                    <span class="bar-label">Hybrid</span>
+                                </div>
+                                <div class="bar-group">
+                                    <div class="bar" style="height: 85%;"></div>
+                                    <span class="bar-label">Cloud</span>
+                                </div>
+                                <div class="bar-group">
+                                    <div class="bar" style="height: 100%; background:var(--accent-color);"></div>
+                                    <span class="bar-label">AI-Native</span>
+                                </div>
+                            </div>
+                            <p class="font-code text-center mt-3 text-muted">Evolutionary Maturity Index</p>
+                        </div>
+
+                        <!-- 03. Capability Building -->
+                        <div id="service-3" class="service-content">
+                            <h2>Capability Building</h2>
+                            <p class="font-code text-muted">Strengthen your team's skills and resources to ensure changes are sustained.</p>
+                            
+                            <div class="tag-pill">Training & Development</div>
+                            <div class="tag-pill">Resource Optimization</div>
+
+                            <div class="row g-3 mt-3">
+                                <div class="col-6 border p-3">
+                                    <h5 class="font-code">Skill Gap Analysis</h5>
+                                    <div style="height:4px; width:100%; background:var(--border-color); margin-top:10px;">
+                                        <div style="height:100%; width:70%; background:var(--accent-color);"></div>
+                                    </div>
+                                </div>
+                                <div class="col-6 border p-3">
+                                    <h5 class="font-code">Resource Allocation</h5>
+                                    <div style="height:4px; width:100%; background:var(--border-color); margin-top:10px;">
+                                        <div style="height:100%; width:90%; background:var(--accent-color);"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 04. Strategic Digital Marketing -->
+                        <div id="service-4" class="service-content">
+                            <h2>Digital Marketing</h2>
+                            <p class="font-code text-muted">Transform your digital presence and reach your target audience effectively.</p>
+                            
+                            <div class="tag-pill">SEO Optimization</div>
+                            <div class="tag-pill">Social Media Mgmt</div>
+                            <div class="tag-pill">Analytics & KPIs</div>
+
+                            <div class="svg-chart-container">
+                                <svg width="100%" height="100%" viewBox="0 0 500 300" preserveAspectRatio="none">
+                                    <line x1="0" y1="75" x2="500" y2="75" stroke="var(--border-color)" stroke-width="1" />
+                                    <line x1="0" y1="150" x2="500" y2="150" stroke="var(--border-color)" stroke-width="1" />
+                                    <line x1="0" y1="225" x2="500" y2="225" stroke="var(--border-color)" stroke-width="1" />
+                                    <polyline points="0,250 50,200 100,220 150,150 200,180 250,100 300,120 350,50 400,80 450,20 500,10" />
+                                    <circle cx="250" cy="100" r="4" fill="var(--bg-color)" stroke="var(--accent-color)" stroke-width="2" />
+                                    <circle cx="450" cy="20" r="4" fill="var(--bg-color)" stroke="var(--accent-color)" stroke-width="2" />
+                                </svg>
+                                <div class="position-absolute bottom-0 start-0 w-100 d-flex justify-content-between font-code text-muted" style="font-size:0.75rem; padding:0 1rem;">
+                                    <span>Q1</span><span>Q2</span><span>Q3</span><span>Q4</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 05. Innovative Design Thinking -->
+                        <div id="service-5" class="service-content">
+                            <h2>Design Thinking</h2>
+                            <p class="font-code text-muted">Foster innovation and solve complex business challenges.</p>
+                            
+                            <div class="d-flex flex-column gap-2 mt-4">
+                                <div class="d-flex align-items-center p-3 border">
+                                    <div style="width:40px; height:40px; background:var(--accent-color); display:flex; align-items:center; justify-content:center; font-weight:bold; margin-right:1rem;">1</div>
+                                    <div>
+                                        <strong>Empathize</strong><br>
+                                        <small class="text-muted font-code">User Research</small>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center p-3 border">
+                                    <div style="width:40px; height:40px; background:var(--text-color); color:var(--bg-color); display:flex; align-items:center; justify-content:center; font-weight:bold; margin-right:1rem;">2</div>
+                                    <div>
+                                        <strong>Define</strong><br>
+                                        <small class="text-muted font-code">Problem Statement</small>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center p-3 border">
+                                    <div style="width:40px; height:40px; border:2px solid var(--accent-color); display:flex; align-items:center; justify-content:center; font-weight:bold; margin-right:1rem;">3</div>
+                                    <div>
+                                        <strong>Iterate</strong><br>
+                                        <small class="text-muted font-code">Prototyping</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 06. IT Management Solutions -->
+                        <div id="service-6" class="service-content">
+                            <h2>IT Management Solutions</h2>
+                            <p class="font-code text-muted">Optimize your technology infrastructure and operations.</p>
+                            
+                            <div class="tag-pill">Cloud Infrastructure</div>
+                            <div class="tag-pill">Cybersecurity</div>
+                            <div class="tag-pill">Custom AI Models</div>
+
+                            <div class="sys-grid">
+                                <div class="sys-node"><i class="bi bi-hdd-network fs-4 mb-2"></i>Storage</div>
+                                <div class="sys-node"><i class="bi bi-cloud fs-4 mb-2"></i>Cloud</div>
+                                <div class="sys-node"><i class="bi bi-shield-lock fs-4 mb-2"></i>Security</div>
+                                <div class="sys-node"><i class="bi bi-cpu fs-4 mb-2"></i>Compute</div>
+                                <div class="sys-node"><i class="bi bi-robot fs-4 mb-2"></i>AI Core</div>
+                                <div class="sys-node"><i class="bi bi-diagram-3 fs-4 mb-2"></i>Network</div>
+                                <div class="sys-node"><i class="bi bi-box-seam fs-4 mb-2"></i>Vendors</div>
+                                <div class="sys-node"><i class="bi bi-people fs-4 mb-2"></i>Support</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5 text-center border-top border-dark font-code" style="background:var(--bg-color)">
+        <p class="mb-0 text-muted">&copy; 2023 VVG ONLINE. DESIGNED FOR PERFORMANCE.</p>
+    </footer>
+
+    <!-- Scripts (Three.js removed) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        /**
+         * CORE LOGIC (Three.js Removed)
+         */
+        class App {
+            constructor() {
+                this.initTheme();
+                this.initCursor();
+                this.initScrollReveal();
+                this.initServices();
+                this.removeLoader();
+            }
+
+            removeLoader() {
+                window.addEventListener('load', () => {
+                    setTimeout(() => {
+                        document.getElementById('loader').style.opacity = '0';
+                        setTimeout(() => document.getElementById('loader').remove(), 500);
+                    }, 1000);
+                });
+            }
+
+            initTheme() {
+                const toggle = document.getElementById('themeToggle');
+                toggle.addEventListener('click', () => {
+                    const html = document.documentElement;
+                    const isDark = html.getAttribute('data-bs-theme') === 'dark';
+                    html.setAttribute('data-bs-theme', isDark ? 'light' : 'dark');
+                    toggle.innerHTML = isDark ? '<i class="bi bi-moon"></i> DARK' : '<i class="bi bi-sun"></i> LIGHT';
+                });
+            }
+
+            initCursor() {
+                const dot = document.querySelector('.cursor-dot');
+                const outline = document.querySelector('.cursor-outline');
+                
+                if(!window.matchMedia("(pointer: fine)").matches) return;
+
+                window.addEventListener('mousemove', e => {
+                    dot.style.left = `${e.clientX}px`;
+                    dot.style.top = `${e.clientY}px`;
+                    
+                    outline.animate({
+                        left: `${e.clientX}px`, top: `${e.clientY}px`
+                    }, { duration: 500, fill: "forwards" });
+                });
+
+                document.querySelectorAll('.interactable').forEach(el => {
+                    el.addEventListener('mouseenter', () => outline.classList.add('hovered'));
+                    el.addEventListener('mouseleave', () => outline.classList.remove('hovered'));
+                });
+            }
+
+            initScrollReveal() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1 });
+
+                document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+            }
+
+            initServices() {
+                window.showService = (id, btn) => {
+                    // Remove active class from buttons
+                    document.querySelectorAll('.nav-item-btn').forEach(b => b.classList.remove('active'));
+                    // Add active class to clicked button
+                    btn.classList.add('active');
+
+                    // Hide all content
+                    document.querySelectorAll('.service-content').forEach(c => c.classList.remove('active'));
+                    // Show selected content
+                    document.getElementById(`service-${id}`).classList.add('active');
+                };
+            }
+
+            // initLogo() REMOVED
+        }
+
+        document.addEventListener('DOMContentLoaded', () => new App());
+    </script>
+</body>
+</html>

@@ -4,9 +4,9 @@ AI coding agent instructions for **src**
 
 ## Project Overview
 
-**Project Type:** C# Application
-**Primary Language:** C# (55% of codebase)
-**Secondary Languages:** JavaScript (45%)
+**Project Type:** C# Blazor WASM Application
+**Primary Language:** C# (As much as possible)
+**Secondary Languages:** TypeScript (When required)
 
 ## Architecture
 
@@ -21,9 +21,6 @@ AI coding agent instructions for **src**
 **Documentation:**
 
 - `README.md`
-- `bin/Debug/net10.0/wwwroot/_framework/System.IO.Compression.ZipFile.nap78ewmdw.wasm`
-- `bin/Debug/net10.0/wwwroot/_framework/System.IO.Compression.ZipFile.nap78ewmdw.wasm.gz`
-- `bin/Debug/net10.0/wwwroot/_framework/System.Runtime.Serialization.Xml.v8gymdawqg.wasm`
 
 ## Testing
 
@@ -41,7 +38,5 @@ AI coding agent instructions for **src**
 
 - Check project documentation for specific conventions
 - Test changes thoroughly before committing
-- Project has 1000 files across 15 directories
-- Large codebase: Focus on specific areas when making changes
 
 ---

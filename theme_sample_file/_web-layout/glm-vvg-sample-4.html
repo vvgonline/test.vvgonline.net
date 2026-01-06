@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VVG ONLINE | The Business Architects</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+        /* =========================================
+           VARIABLES & RESET
+           ========================================= */
+        :root {
+            --c-bg: #111113;
+            --c-text: #d9d9d9;
+            --c-accent: #ffdd33;
+            --c-accent-dim: rgba(255, 221, 51, 0.2);
+            --c-grid: rgba(217, 217, 217, 0.05);
+            
+            --f-serif: 'EB Garamond', serif;
+            --f-mono: 'IBM Plex Mono', monospace;
+            --f-sans: 'IBM Plex Sans', sans-serif;
+        }
+
+        [data-bs-theme="light"] {
+            --c-bg: #d9d9d9;
+            --c-text: #111113;
+            --c-grid: rgba(17, 17, 19, 0.05);
+            --c-accent-dim: rgba(255, 221, 51, 0.3);
+        }
+
+        /* STRICT SHARP EDGES */
+        * { border-radius: 0 !important; }
+
+        body {
+            background-color: var(--c-bg);
+            color: var(--c-text);
+            font-family: var(--f-sans);
+            overflow-x: hidden;
+            cursor: none; /* Custom Cursor */
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Three.js Canvas Background */
+        #bg-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            z-index: -1; /* Behind everything */
+            pointer-events: none;
+            opacity: 0.6; /* Subtle visibility */
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--c-bg); }
+        ::-webkit-scrollbar-thumb { background: var(--c-text); }
+
+        /* Noise Overlay */
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 9999;
+            opacity: 0.05;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Typography Utility Classes */
+        .display-super { font-family: var(--f-serif); font-size: clamp(4rem, 10vw, 12rem); line-height: 0.85; font-weight: 500; }
+        .display-lg { font-family: var(--f-serif); font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; font-weight: 500; }
+        .font-mono { font-family: var(--f-mono); }
+        .text-accent { color: var(--c-accent); }
+        .border-top-custom { border-top: 1px solid var(--c-text); }
+        .border-bottom-custom { border-bottom: 1px solid var(--c-text); }
+
+        /* =========================================
+           CUSTOM CURSOR
+           ========================================= */
+        .cursor-dot, .cursor-circle {
+            position: fixed; top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            z-index: 10000; pointer-events: none;
+        }
+        .cursor-dot { width: 6px; height: 6px; background: var(--c-accent); }
+        .cursor-circle {
+            width: 40px; height: 40px; border: 1px solid var(--c-text);
+            transition: width 0.3s, height 0.3s, background 0.3s;
+        }
+        body:hover .cursor-circle.hovered {
+            width: 80px; height: 80px;
+            background: var(--c-accent-dim);
+            border-color: var(--c-accent);
+        }
+
+        /* =========================================
+           LAYOUT COMPONENTS
+           ========================================= */
+        
+        /* Sidebar Navigation */
+        .side-nav {
+            position: fixed; left: 0; top: 0; height: 100vh;
+            width: 80px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            border-right: 1px solid var(--c-grid);
+            z-index: 1000;
+        }
+        
+        .nav-dot {
+            width: 8px; height: 8px; background: transparent; border: 1px solid var(--c-text);
+            margin: 20px 0; cursor: pointer; transition: 0.3s;
+        }
+        .nav-dot.active, .nav-dot:hover { background: var(--c-accent); border-color: var(--c-accent); }
+
+        /* Hero Section */
+        .hero-section {
+            min-height: 100vh; padding-left: 100px;
+            display: flex; flex-direction: column; justify-content: center;
+            position: relative;
+        }
+
+        .hero-overlay-text {
+            position: absolute; right: 0; bottom: 5%;
+            font-family: var(--f-mono); font-size: 12vw;
+            opacity: 0.05;
+            pointer-events: none;
+            white-space: nowrap;
+            color: var(--c-text);
+        }
+
+        /* Marquee */
+        .marquee-container {
+            width: 100%; overflow: hidden; white-space: nowrap;
+            border-top: 1px solid var(--c-text);
+            border-bottom: 1px solid var(--c-text);
+            padding: 20px 0;
+            background: var(--c-text);
+            color: var(--c-accent);
+        }
+        .marquee-content {
+            display: inline-block; animation: marquee 20s linear infinite;
+            font-family: var(--f-mono); text-transform: uppercase; font-size: 1.5rem;
+            letter-spacing: 2px;
+        }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* Horizontal Scroll Section (Sticky) */
+        .horizontal-scroll-wrapper {
+            position: relative;
+            height: 400vh; /* Determines scroll duration */
+        }
+        .sticky-container {
+            position: sticky; top: 0; height: 100vh;
+            display: flex; align-items: center;
+            overflow: hidden;
+        }
+        .horizontal-track {
+            display: flex; gap: 10vw; padding-left: 100px;
+            width: max-content; transition: transform 0.1s linear;
+        }
+        
+        .service-card {
+            width: 60vw; max-width: 600px;
+            padding-right: 2rem;
+            border-right: 1px solid var(--c-grid);
+        }
+
+        /* Feature List */
+        .feature-list-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 2rem 0; border-bottom: 1px solid var(--c-grid);
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .feature-list-item:hover { padding-left: 2rem; background: linear-gradient(90deg, var(--c-accent-dim), transparent); }
+        .feature-list-item:hover h3 { color: var(--c-accent); }
+
+        /* Abstract Shapes */
+        .shape-square {
+            width: 200px; height: 200px;
+            border: 1px solid var(--c-accent);
+            position: absolute;
+            top: 20%; right: 10%;
+            z-index: -1;
+            animation: float 10s ease-in-out infinite;
+        }
+        @keyframes float { 0%,100%{transform:translateY(0) rotate(0deg);} 50%{transform:translateY(-20px) rotate(5deg);} }
+
+        /* Footer */
+        footer { padding: 100px; }
+
+        /* Animation Classes */
+        .reveal-up { opacity: 0; transform: translateY(50px); transition: 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-up.active { opacity: 1; transform: translateY(0); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .side-nav { display: none; }
+            .hero-section { padding-left: 20px; }
+            .display-super { font-size: 3.5rem; }
+            .cursor-dot, .cursor-circle { display: none; }
+            body { cursor: auto; }
+            .horizontal-scroll-wrapper { height: auto; }
+            .sticky-container { position: relative; height: auto; overflow: visible; }
+            .horizontal-track { flex-direction: column; padding-left: 20px; width: 100%; }
+            .service-card { width: 100%; border-right: none; border-bottom: 1px solid var(--c-grid); padding-bottom: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Three.js Background Canvas -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Noise Texture -->
+    <div class="noise-overlay"></div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-circle interactable"></div>
+
+    <!-- Fixed Sidebar Navigation -->
+    <nav class="side-nav">
+        <div class="logo-interact" onclick="scrollToSection(0)">
+            <i class="bi bi-grid-1x2-fill interactable" style="font-size:1.5rem;"></i>
+        </div>
+        <div style="flex-grow:1;"></div>
+        <div class="nav-dot active interactable" onclick="scrollToSection(0)"></div>
+        <div class="nav-dot interactable" onclick="scrollToSection(1)"></div>
+        <div class="nav-dot interactable" onclick="scrollToSection(2)"></div>
+        <div class="nav-dot interactable" onclick="scrollToSection(3)"></div>
+        <div class="nav-dot interactable" onclick="scrollToSection(4)"></div>
+        <div style="flex-grow:1;"></div>
+        <div class="font-mono interactable" style="font-size: 0.7rem; transform: rotate(-90deg);" id="themeToggle">
+            LIGHT/DARK
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section id="sec-hero" class="hero-section">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 position-relative">
+                    <div class="reveal-up">
+                        <p class="font-mono text-accent mb-0">EST. 2024 // NEW YORK // TOKYO</p>
+                    </div>
+                    <h1 class="display-super reveal-up mt-2">
+                        WE BUILD<br>
+                        <span class="text-accent" style="font-style: italic;">LEGACY.</span>
+                    </h1>
+                    <div class="mt-5 reveal-up" style="max-width: 500px;">
+                        <p class="font-mono" style="font-size: 0.9rem; line-height: 1.6;">
+                            VVG ONLINE IS A DIGITAL BUSINESS CONSULTANCY. WE MERGE RIGOROUS STRATEGY WITH CUTTING-EDGE TECHNOLOGY TO SCALE YOUR ORGANIZATION.
+                        </p>
+                        <button class="btn mt-4 interactable" style="background: var(--c-text); color: var(--c-accent); padding: 15px 40px; font-family: var(--f-mono); font-weight: 600;">
+                            INITIATE PROJECT
+                        </button>
+                    </div>
+
+                    <div class="shape-square"></div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-overlay-text">VVG // 01</div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee-container">
+        <div class="marquee-content">
+            STRATEGY & INNOVATION • DIGITAL TRANSFORMATION • CAPABILITY BUILDING • STRATEGIC MARKETING • 
+            STRATEGY & INNOVATION • DIGITAL TRANSFORMATION • CAPABILITY BUILDING • STRATEGIC MARKETING •
+        </div>
+    </div>
+
+    <!-- ABOUT SECTION -->
+    <section id="sec-about" class="py-5" style="padding-left: 100px;">
+        <div class="row align-items-center">
+            <div class="col-lg-5 mb-5 mb-lg-0 reveal-up">
+                <h2 class="display-lg">The Architect<br>Mindset.</h2>
+            </div>
+            <div class="col-lg-6 offset-lg-1 reveal-up">
+                <div class="font-mono mb-4">
+                    <span class="text-accent">//</span> PHILOSOPHY
+                </div>
+                <p class="lead mb-4">
+                    We don't just solve problems; we engineer systems. In an era of chaos, precision is the ultimate luxury.
+                </p>
+                <p class="text-muted">
+                    Our approach is rooted in brutalist efficiency. We strip away the noise to reveal the core value proposition of your business. We deploy data, design, and technology as a singular, cohesive force.
+                </p>
+                
+                <div class="row mt-5">
+                    <div class="col-6 border-end border-bottom-custom p-4">
+                        <div class="font-mono text-accent" style="font-size: 2rem;">98%</div>
+                        <div class="font-mono text-muted" style="font-size: 0.8rem;">CLIENT RETENTION</div>
+                    </div>
+                    <div class="col-6 border-bottom-custom p-4">
+                        <div class="font-mono text-accent" style="font-size: 2rem;">12x</div>
+                        <div class="font-mono text-muted" style="font-size: 0.8rem;">AVG. ROI</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES (HORIZONTAL SCROLL) -->
+    <section id="sec-services" class="horizontal-scroll-wrapper">
+        <div class="sticky-container">
+            <div class="horizontal-track" id="track">
+                
+                <!-- Header for scroll section -->
+                <div class="d-flex flex-column justify-content-center h-100 pe-5" style="width: 20vw; min-width: 300px;">
+                    <span class="font-mono text-accent reveal-up">01 —</span>
+                    <h2 class="display-lg reveal-up">Our<br>Capabilities</h2>
+                </div>
+
+                <!-- Card 1 -->
+                <div class="service-card reveal-up">
+                    <div class="font-mono mb-3">01</div>
+                    <h3 class="display-lg mb-3">Strategy & Innovation</h3>
+                    <p class="text-muted mb-4">Develop tailored strategies and roadmaps that align with your business goals and drive innovation.</p>
+                    <ul class="font-mono text-muted list-unstyled">
+                        <li class="mb-2">> Strategy Development</li>
+                        <li class="mb-2">> Innovation Roadmaps</li>
+                    </ul>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="service-card reveal-up">
+                    <div class="font-mono mb-3">02</div>
+                    <h3 class="display-lg mb-3">Digital Transformation</h3>
+                    <p class="text-muted mb-4">Leverage technology to implement and sustain transformations that create lasting value.</p>
+                    <ul class="font-mono text-muted list-unstyled">
+                        <li class="mb-2">> Transformation Consulting</li>
+                        <li class="mb-2">> Sustainable Growth</li>
+                    </ul>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="service-card reveal-up">
+                    <div class="font-mono mb-3">03</div>
+                    <h3 class="display-lg mb-3">Strategic Marketing</h3>
+                    <p class="text-muted mb-4">Transform your digital presence and reach your target audience effectively through data.</p>
+                    <ul class="font-mono text-muted list-unstyled">
+                        <li class="mb-2">> SEO Optimization</li>
+                        <li class="mb-2">> Analytics & KPIs</li>
+                        <li class="mb-2">> Paid Campaigns</li>
+                    </ul>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="service-card reveal-up">
+                    <div class="font-mono mb-3">04</div>
+                    <h3 class="display-lg mb-3">IT Management</h3>
+                    <p class="text-muted mb-4">Optimize your technology infrastructure and operations for maximum efficiency.</p>
+                    <ul class="font-mono text-muted list-unstyled">
+                        <li class="mb-2">> Cloud Infrastructure</li>
+                        <li class="mb-2">> Cybersecurity</li>
+                        <li class="mb-2">> Custom AI Models</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- PROCESS LIST -->
+    <section id="sec-process" class="py-5" style="padding-left: 100px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-5 reveal-up">
+                    <span class="font-mono text-accent">02 —</span>
+                    <h2 class="display-lg">The<br>Process</h2>
+                </div>
+                <div class="col-lg-7 offset-lg-1 reveal-up">
+                    
+                    <div class="feature-list-item interactable">
+                        <div class="font-mono text-accent">01</div>
+                        <h3 class="mb-0" style="font-family: var(--f-serif);">Discovery & Analysis</h3>
+                        <i class="bi bi-arrow-right-short"></i>
+                    </div>
+
+                    <div class="feature-list-item interactable">
+                        <div class="font-mono text-accent">02</div>
+                        <h3 class="mb-0" style="font-family: var(--f-serif);">Strategic Formulation</h3>
+                        <i class="bi bi-arrow-right-short"></i>
+                    </div>
+
+                    <div class="feature-list-item interactable">
+                        <div class="font-mono text-accent">03</div>
+                        <h3 class="mb-0" style="font-family: var(--f-serif);">Design Thinking</h3>
+                        <i class="bi bi-arrow-right-short"></i>
+                    </div>
+
+                    <div class="feature-list-item interactable">
+                        <div class="font-mono text-accent">04</div>
+                        <h3 class="mb-0" style="font-family: var(--f-serif);">Execution & Scale</h3>
+                        <i class="bi bi-arrow-right-short"></i>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="sec-contact" class="py-5" style="padding-left: 100px; padding-bottom: 100px;">
+        <div class="container-fluid border-top-custom pt-5">
+            <div class="row">
+                <div class="col-lg-6 mb-5 reveal-up">
+                    <h2 class="display-super">Let's<br>Talk.</h2>
+                    <p class="font-mono mt-3">HELLO@VVGONLINE.NET</p>
+                </div>
+                <div class="col-lg-5 offset-lg-1 reveal-up">
+                    <form class="font-mono">
+                        <div class="mb-4">
+                            <label class="mb-2 text-accent">NAME</label>
+                            <input type="text" class="form-control bg-transparent border-bottom-custom p-0" style="border-top:0; border-left:0; border-right:0;">
+                        </div>
+                        <div class="mb-4">
+                            <label class="mb-2 text-accent">EMAIL</label>
+                            <input type="email" class="form-control bg-transparent border-bottom-custom p-0" style="border-top:0; border-left:0; border-right:0;">
+                        </div>
+                        <div class="mb-4">
+                            <label class="mb-2 text-accent">MESSAGE</label>
+                            <textarea class="form-control bg-transparent border-bottom-custom p-0" rows="3" style="border-top:0; border-left:0; border-right:0;"></textarea>
+                        </div>
+                        <button type="submit" class="btn interactable mt-4" style="background: var(--c-accent); color: #000; padding: 15px 40px; width: 100%;">
+                            SEND MESSAGE
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="d-flex justify-content-between align-items-end flex-wrap gap-4">
+            <div>
+                <h2 class="display-lg">VVG ONLINE</h2>
+                <p class="font-mono text-muted mt-2">© 2024 ALL RIGHTS RESERVED.</p>
+            </div>
+            <div class="font-mono d-flex gap-4">
+                <a href="#" class="text-accent interactable">INSTAGRAM</a>
+                <a href="#" class="text-accent interactable">LINKEDIN</a>
+                <a href="#" class="text-accent interactable">TWITTER</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <script>
+        // ==========================================
+        // CORE LOGIC
+        // ==========================================
+        class App {
+            constructor() {
+                this.initCursor();
+                this.initScrollReveal();
+                this.initHorizontalScroll();
+                this.initStickyNav();
+                this.initTheme();
+                this.initThreeBackground();
+            }
+
+            // Custom Cursor Logic
+            initCursor() {
+                const dot = document.querySelector('.cursor-dot');
+                const circle = document.querySelector('.cursor-circle');
+                
+                if(!window.matchMedia("(pointer: fine)").matches) return;
+
+                window.addEventListener('mousemove', e => {
+                    dot.style.left = `${e.clientX}px`;
+                    dot.style.top = `${e.clientY}px`;
+                    
+                    circle.animate({
+                        left: `${e.clientX}px`, top: `${e.clientY}px`
+                    }, { duration: 500, fill: "forwards" });
+                });
+
+                document.querySelectorAll('.interactable').forEach(el => {
+                    el.addEventListener('mouseenter', () => circle.classList.add('hovered'));
+                    el.addEventListener('mouseleave', () => circle.classList.remove('hovered'));
+                });
+            }
+
+            // Scroll Reveal Animation
+            initScrollReveal() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('active');
+                        }
+                    });
+                }, { threshold: 0.1 });
+
+                document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el));
+            }
+
+            // Horizontal Scroll Logic
+            initHorizontalScroll() {
+                const wrapper = document.querySelector('.horizontal-scroll-wrapper');
+                const track = document.querySelector('.horizontal-track');
+                
+                window.addEventListener('scroll', () => {
+                    const stickyTop = wrapper.offsetTop;
+                    const stickyHeight = wrapper.offsetHeight;
+                    const viewHeight = window.innerHeight;
+                    
+                    // Calculate progress (0 to 1)
+                    let scrollY = window.scrollY;
+                    let progress = (scrollY - stickyTop) / (stickyHeight - viewHeight);
+                    
+                    // Clamp value
+                    progress = Math.max(0, Math.min(progress, 1));
+                    
+                    // Move track
+                    const maxTranslate = track.offsetWidth - window.innerWidth;
+                    track.style.transform = `translateX(-${progress * maxTranslate}px)`;
+                });
+            }
+
+            // Sticky Sidebar Navigation Logic
+            initStickyNav() {
+                const sections = ['sec-hero', 'sec-about', 'sec-services', 'sec-process', 'sec-contact'];
+                const dots = document.querySelectorAll('.nav-dot');
+                
+                window.addEventListener('scroll', () => {
+                    let current = 0;
+                    sections.forEach((sec, index) => {
+                        const section = document.getElementById(sec);
+                        const sectionTop = section.offsetTop;
+                        if (window.scrollY >= (sectionTop - section.offsetHeight / 3)) {
+                            current = index;
+                        }
+                    });
+
+                    dots.forEach(dot => dot.classList.remove('active'));
+                    if(dots[current]) dots[current].classList.add('active');
+                });
+            }
+
+            // Scroll to Section Helper
+            initTheme() {
+                const toggle = document.getElementById('themeToggle');
+                toggle.addEventListener('click', () => {
+                    const html = document.documentElement;
+                    const isDark = html.getAttribute('data-bs-theme') === 'dark';
+                    html.setAttribute('data-bs-theme', isDark ? 'light' : 'dark');
+                    // Trigger color update for Three.js
+                    this.updateThreeColors(!isDark);
+                });
+            }
+
+            // Three.js Background Implementation
+            initThreeBackground() {
+                const canvas = document.getElementById('bg-canvas');
+                const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                camera.position.z = 20;
+                camera.position.y = 5;
+                camera.rotation.x = -0.2;
+
+                // Create Plane Geometry (High segment for smooth waves)
+                const geometry = new THREE.PlaneGeometry(60, 40, 64, 64);
+                
+                // Material
+                const material = new THREE.MeshBasicMaterial({ 
+                    color: 0x333333, 
+                    wireframe: true,
+                    transparent: true,
+                    opacity: 0.15
+                });
+
+                const plane = new THREE.Mesh(geometry, material);
+                scene.add(plane);
+
+                // Mouse interaction vars
+                let mouseX = 0;
+                let mouseY = 0;
+
+                document.addEventListener('mousemove', (e) => {
+                    mouseX = (e.clientX - window.innerWidth / 2) * 0.001;
+                    mouseY = (e.clientY - window.innerHeight / 2) * 0.001;
+                });
+
+                // Store original positions
+                const positionAttribute = geometry.attributes.position;
+                const originalPositions = [];
+                for (let i = 0; i < positionAttribute.count; i++) {
+                    originalPositions.push(
+                        positionAttribute.getX(i),
+                        positionAttribute.getY(i),
+                        positionAttribute.getZ(i)
+                    );
+                }
+
+                // Animation Loop
+                const animate = () => {
+                    requestAnimationFrame(animate);
+
+                    const time = performance.now() * 0.001;
+
+                    // Vertex Displacement (Wave effect)
+                    for (let i = 0; i < positionAttribute.count; i++) {
+                        const x = originalPositions[i * 3];
+                        const y = originalPositions[i * 3 + 1];
+                        
+                        // Create a wave based on position and time
+                        const z = Math.sin(x * 0.5 + time) * Math.cos(y * 0.3 + time) * 2;
+                        
+                        positionAttribute.setZ(i, z);
+                    }
+                    positionAttribute.needsUpdate = true;
+
+                    // Subtle rotation based on mouse
+                    plane.rotation.z += 0.001;
+                    plane.rotation.x += (mouseY * 0.2 - plane.rotation.x) * 0.05;
+                    plane.rotation.y += (mouseX * 0.2 - plane.rotation.y) * 0.05;
+
+                    renderer.render(scene, camera);
+                };
+                animate();
+
+                // Resize Handler
+                window.addEventListener('resize', () => {
+                    camera.aspect = window.innerWidth / window.innerHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                });
+
+                // Store references for theme updating
+                this.threeMaterial = material;
+            }
+
+            // Update colors when theme changes
+            updateThreeColors(isDarkMode) {
+                if(this.threeMaterial) {
+                    // Dark mode: Light grey lines on dark bg
+                    // Light mode: Dark grey lines on light bg
+                    this.threeMaterial.color.setHex(isDarkMode ? 0x555555 : 0x222222);
+                }
+            }
+        }
+
+        window.scrollToSection = (index) => {
+            const ids = ['sec-hero', 'sec-about', 'sec-services', 'sec-process', 'sec-contact'];
+            const el = document.getElementById(ids[index]);
+            if(el) el.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => new App());
+    </script>
+</body>
+</html>

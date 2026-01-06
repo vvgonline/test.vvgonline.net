@@ -9,14 +9,6 @@
         "baseURL": "http://localhost:11434/v1"
       },
       "models": {
-        "qwen3:4b-thinking-2507-fp16": {
-          "name": "Qwen 3 Thinking (4B FP16)",
-          "contextWindow": 32768
-        },
-        "hf.co/unsloth/gpt-oss-20b-GGUF:Q8_K_XL": {
-          "name": "GPT-OSS Unsloth (20B Q8)",
-          "contextWindow": 8192
-        },
         "my-unsloth-qwen3-coder:latest": {
           "name": "My Unsloth Qwen 3 Coder",
           "contextWindow": 32768
@@ -25,65 +17,57 @@
           "name": "Qwen 3 Coder Instruct (30B Q4)",
           "contextWindow": 32768
         },
-        "qwen3-coder:30b": {
-          "name": "Qwen 3 Coder (30B)",
-          "contextWindow": 32768
-        },
-        "qwen2.5-coder:7b-base-q6_K": {
-          "name": "Qwen 2.5 Coder Base (7B Q6)",
-          "contextWindow": 32768
-        },
-        "qwen3-vl:8b-instruct-q8_0": {
-          "name": "Qwen 3 VL Instruct (8B)",
-          "contextWindow": 8192
-        },
-        "qwen3-vl:2b-thinking-bf16": {
-          "name": "Qwen 3 VL Thinking (2B)",
-          "contextWindow": 8192
-        },
-        "AuditAid/Reranker_v2:Qwen3-Reranker-4B_Q5_K_M": {
-          "name": "AuditAid Reranker (4B)",
-          "contextWindow": 8192
-        },
-        "qwen2.5-coder:7b-instruct-q8_0": {
-          "name": "Qwen 2.5 Coder Instruct (7B)",
-          "contextWindow": 32768
-        },
-        "qwen2.5-coder:3b-base-fp16": {
-          "name": "Qwen 2.5 Coder Base (3B)",
-          "contextWindow": 16384
-        },
-        "nomic-embed-text:137m-v1.5-fp16": {
-          "name": "Nomic Embed Text (Embedding Model)",
+        "hf.co/unsloth/gpt-oss-20b-GGUF:Q8_K_XL": {
+          "name": "GPT-OSS Unsloth (20B Q8)",
           "contextWindow": 8192
         },
         "ministral-3:8b-instruct-2512-q8_0": {
           "name": "Ministral 3 Instruct (8B)",
           "contextWindow": 16384
         },
-        "qwen3-vl:4b-instruct-bf16": {
-          "name": "Qwen 3 VL Instruct (4B)",
-          "contextWindow": 8192
-        },
-        "ministral-3:3b-instruct-2512-fp16": {
-          "name": "Ministral 3 Instruct (3B FP16)",
-          "contextWindow": 16384
-        },
-        "qwen3:1.7b-fp16": {
-          "name": "Qwen 3 (1.7B FP16)",
-          "contextWindow": 4096
+        "qwen2.5-coder:7b-instruct-q8_0": {
+          "name": "Qwen 2.5 Coder Instruct (7B Q8)",
+          "contextWindow": 32768
         },
         "qwen3:8b-q8_0": {
           "name": "Qwen 3 (8B Q8)",
           "contextWindow": 8192
         },
-        "qwen3:4b-fp16": {
-          "name": "Qwen 3 (4B FP16)",
+        "qwen3-vl:8b-instruct-q8_0": {
+          "name": "Qwen 3 VL Instruct (8B)",
           "contextWindow": 8192
         },
-        "hf.co/Qwen/Qwen3-4B-GGUF:Q8_0": {
-          "name": "Qwen 3 HF (4B Q8)",
+        "qwen3:4b-thinking-2507-fp16": {
+          "name": "Qwen 3 Thinking (4B FP16)",
+          "contextWindow": 32768
+        },
+        "ministral-3:3b-instruct-2512-fp16": {
+          "name": "Ministral 3 Instruct (3B FP16)",
+          "contextWindow": 16384
+        },
+        "nomic-embed-text:137m-v1.5-fp16": {
+          "name": "Nomic Embed Text (Embedding Model)",
           "contextWindow": 8192
+        },
+        "nomic-embed-text:137m-v1.5-fp16": {
+        "name": "Nomic Embed Text (Embedding Model)",
+           "contextWindow": 8192
+        },
+        "AuditAid/Reranker_v2:Qwen3-Reranker-4B_Q5_K_M": {
+           "name": "AuditAid Reranker (4B)",
+             "contextWindow": 8192
+        },
+        "hf.co/bartowski/nvidia_NVIDIA-Nemotron-Nano-9B-v2-GGUF:Q8_0": {
+          "name": "NVIDIA Nemotron Nano 9B (Q8_0)",
+          "contextWindow": 8192
+        },
+        "qwen2.5-coder:14b-instruct-q8_0": {
+          "name": "Qwen 2.5 Coder Instruct (14B Q8)",
+          "contextWindow": 24576
+        },
+        "hf.co/mradermacher/Qwen3-4B-Thinking-2507-Kimi-K2-Thinking-Distill-i1-GGUF:Q6_K": {
+          "name": "Qwen 3 4B Thinking Kimi Distill (Q6_K)",
+          "contextWindow": 24576
         }
       }
     }

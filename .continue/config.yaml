@@ -56,12 +56,52 @@ models:
       - autocomplete
       - chat
 
+  - name: NVIDIA-Nemotron-Nano-9B-v2-GGUF:Q8_0
+    provider: ollama
+    model: hf.co/bartowski/nvidia_NVIDIA-Nemotron-Nano-9B-v2-GGUF:Q8_0
+    apiBase: http://localhost:11434
+    roles:
+      - chat
+
   - name: Qwen2.5 Coder 7B Base
     provider: ollama
     model: qwen2.5-coder:7b-base-q6_K
     apiBase: http://localhost:11434
     roles:
       - autocomplete
+      - chat
+  - name: qwen2.5-coder:14b-instruct-q8_0
+    provider: ollama
+    model: qwen2.5-coder:14b-instruct-q8_0
+    apiBase: http://localhost:11434
+    roles:
+      - autocomplete
+      - chat
+      - edit
+      - apply
+    defaultCompletionOptions:
+      contextLength: 24576
+      temperature: 0.3
+      topP: 0.5
+      topK: 40
+      maxTokens: 4096
+      stop:
+        - "\n\n"
+  
+  - name: Qwen3-4B-Thinking-2507-Kimi-K2-Thinking-Distill-q6_k
+    provider: ollama
+    model: hf.co/Kimi-AI/Qwen3-4B-Thinking-2507-Kimi-K2-Thinking-Distill-q6_k
+    apiBase: http://localhost:11434
+    roles:
+      - chat
+    defaultCompletionOptions:
+      contextLength: 24576
+      temperature: 0.3
+      topP: 0.5
+      topK: 40
+      maxTokens: 4096
+      stop:
+        - "\n\n"
 
   # Embeddings
   - name: Nomic Embed

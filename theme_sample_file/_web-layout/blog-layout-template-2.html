@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archives | Daniel Miessler</title>
+    
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts: Inter (Closest to his system font stack) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <!-- SCSS Simulated Styles -->
+    <style>
+        :root {
+            /* Daniel Miessler Theme Colors */
+            --dm-text-main: #111111;
+            --dm-text-muted: #666666;
+            --dm-bg-body: #ffffff;
+            --dm-accent: #0056b3; /* Deep blue used for links/buttons */
+            --dm-border-light: #eaeaea;
+            
+            /* Spacing & Layout */
+            --dm-nav-height: 70px;
+            --dm-container-max: 1200px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: var(--dm-text-main);
+            background-color: var(--dm-bg-body);
+            -webkit-font-smoothing: antialiased;
+            padding-top: var(--dm-nav-height);
+        }
+
+        /* --- Navbar --- */
+        .dm-navbar {
+            height: var(--dm-nav-height);
+            border-bottom: 1px solid var(--dm-border-light);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: -0.02em;
+            color: #000;
+        }
+
+        .nav-link {
+            font-size: 0.95rem;
+            color: #444;
+            font-weight: 500;
+            margin-left: 20px;
+        }
+
+        .nav-link:hover {
+            color: #000;
+        }
+
+        .btn-subscribe {
+            background-color: #000;
+            color: #fff;
+            border-radius: 4px;
+            padding: 6px 16px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .btn-subscribe:hover {
+            background-color: #333;
+            color: #fff;
+        }
+
+        /* --- Layout --- */
+        .dm-container {
+            max-width: var(--dm-container-max);
+        }
+
+        /* --- Search Section --- */
+        .search-wrapper {
+            margin-bottom: 3rem;
+        }
+
+        .search-input {
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            padding: 12px 16px;
+            font-size: 1rem;
+            width: 100%;
+            transition: border-color 0.2s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #888;
+        }
+
+        /* --- Archive List (The Core Layout) --- */
+        .archive-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .archive-item {
+            display: flex;
+            align-items: baseline; /* Aligns text by baseline */
+            padding: 24px 0;
+            border-bottom: 1px solid var(--dm-border-light);
+            flex-wrap: wrap;
+        }
+
+        .archive-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Date Column (Left) */
+        .item-date {
+            width: 140px;
+            flex-shrink: 0;
+            font-size: 0.9rem;
+            color: var(--dm-text-muted);
+            font-weight: 400;
+        }
+
+        /* Title Column (Middle/Expand) */
+        .item-content {
+            flex-grow: 1;
+            padding-right: 20px;
+        }
+
+        .item-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 6px;
+            color: var(--dm-text-main);
+            display: block;
+            text-decoration: none;
+        }
+
+        .item-title:hover {
+            color: var(--dm-accent);
+        }
+
+        .item-excerpt {
+            font-size: 1rem;
+            color: var(--dm-text-muted);
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* Tag Column (Right) */
+        .item-tag {
+            width: 100px; /* Fixed width for alignment */
+            text-align: right;
+            flex-shrink: 0;
+            font-size: 0.8rem;
+            color: var(--dm-accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* --- Sidebar --- */
+        .sidebar-section {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--dm-border-light);
+        }
+
+        .sidebar-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #000;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+        }
+
+        /* Unsupervised Learning Box */
+        .ul-box {
+            border: 1px solid #e0e0e0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            background: #fafafa;
+        }
+
+        .ul-box p {
+            font-size: 0.9rem;
+            color: var(--dm-text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .form-control-sm {
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            padding: 8px 12px;
+        }
+
+        .topic-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .topic-pill {
+            background-color: #f5f5f5;
+            color: #444;
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .topic-pill:hover {
+            background-color: #e0e0e0;
+            color: #000;
+        }
+
+        /* --- Footer --- */
+        footer {
+            margin-top: 5rem;
+            padding: 3rem 0;
+            border-top: 1px solid var(--dm-border-light);
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--dm-text-muted);
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .archive-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .item-date {
+                width: 100%;
+                margin-bottom: 4px;
+            }
+            .item-tag {
+                width: 100%;
+                text-align: left;
+                margin-top: 8px;
+            }
+            .item-content {
+                padding-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg dm-navbar">
+        <div class="container dm-container">
+            <a class="navbar-brand" href="#">DANIEL MIESSLER</a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navContent">
+                <ul class="navbar-nav align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="#">Essays</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Podcast</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Newsletter</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+                    <li class="nav-item ms-lg-3">
+                        <a href="#" class="btn btn-subscribe">Subscribe</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container dm-container mt-5">
+        <div class="row">
+            
+            <!-- Left Column: Archives -->
+            <main class="col-lg-8 col-xl-8">
+                
+                <!-- Search -->
+                <div class="search-wrapper">
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search archives...">
+                </div>
+
+                <!-- Archive List -->
+                <div id="archiveListContainer">
+                    <ul class="archive-list">
+                        <!-- Javascript will inject items here -->
+                    </ul>
+                </div>
+
+                <!-- Pagination / Load More -->
+                <div class="mt-5 pt-3 border-top text-center">
+                    <button id="loadMoreBtn" class="btn btn-link text-decoration-none text-muted fw-bold">
+                        Show More <i class="bi bi-chevron-down"></i>
+                    </button>
+                </div>
+
+            </main>
+
+            <!-- Right Column: Sidebar -->
+            <aside class="col-lg-4 col-xl-3 offset-xl-1 mt-5 mt-lg-0">
+                
+                <!-- Widget: Unsupervised Learning -->
+                <div class="sidebar-section">
+                    <h4 class="sidebar-title">Unsupervised Learning</h4>
+                    <div class="ul-box">
+                        <p>Weekly analysis on AI, Security, and the Future of Human Thinking.</p>
+                        <form onsubmit="event.preventDefault(); alert('Subscribed!');">
+                            <input type="email" class="form-control form-control-sm mb-2" placeholder="Email address" required>
+                            <button type="submit" class="btn btn-dark w-100 btn-sm py-2">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Widget: Topics -->
+                <div class="sidebar-section">
+                    <h4 class="sidebar-title">Topics</h4>
+                    <div class="topic-list">
+                        <a href="#" class="topic-pill">AI</a>
+                        <a href="#" class="topic-pill">Security</a>
+                        <a href="#" class="topic-pill">Strategy</a>
+                        <a href="#" class="topic-pill">Career</a>
+                        <a href="#" class="topic-pill">Philosophy</a>
+                        <a href="#" class="topic-pill">Parenting</a>
+                    </div>
+                </div>
+
+                <!-- Widget: Popular -->
+                <div class="sidebar-section border-0 pb-0">
+                    <h4 class="sidebar-title">Popular</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-3">
+                            <a href="#" class="text-decoration-none text-dark fw-medium">The Difference Between Data, Information, and Knowledge</a>
+                        </li>
+                        <li class="mb-3">
+                            <a href="#" class="text-decoration-none text-dark fw-medium">How to Learn Anything Faster</a>
+                        </li>
+                        <li class="mb-3">
+                            <a href="#" class="text-decoration-none text-dark fw-medium">A Guide to Thinking Strategically</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-decoration-none text-dark fw-medium">The Prompt Engineering Guide</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </aside>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container dm-container">
+            <p class="mb-1">&copy; <span id="year"></span> Daniel Miessler</p>
+            <p class="small text-muted">San Francisco, CA</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- TypeScript Simulation Logic -->
+    <script>
+        // Update Year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        /**
+         * @interface ArchiveItem
+         * Defines the structure for a single archive post.
+         */
+        class ArchiveItem {
+            /**
+             * @param {string} date - Format: "Oct 24"
+             * @param {string} title - The post title
+             * @param {string} tag - The category tag
+             * @param {string} excerpt - Short description
+             */
+            constructor(date, title, tag, excerpt) {
+                this.date = date;
+                this.title = title;
+                this.tag = tag;
+                this.excerpt = excerpt;
+            }
+        }
+
+        // Mock Data Database
+        /** @type {ArchiveItem[]} */
+        const archiveData = [
+            new ArchiveItem("Oct 24", "The Future of AI in Cybersecurity", "AI", "Artificial Intelligence is reshaping the defensive landscape. Here is my analysis of prompt engineering for red teams."),
+            new ArchiveItem("Oct 18", "Understanding Unknown Unknowns", "Strategy", "The most dangerous risks are the ones you don't know exist. How to build a detection system for the unimaginable."),
+            new ArchiveItem("Oct 10", "My 2023 Setup: Hardware and Software", "Productivity", "A complete breakdown of the tools, hardware, and software I use to think, write, and manage projects."),
+            new ArchiveItem("Sep 28", "A Primer on Prompt Engineering", "AI", "Prompt engineering is not just about talking to ChatGPT. It is about interface design for the next generation of software."),
+            new ArchiveItem("Sep 15", "Security is a Mindset, Not a Tool", "Security", "Buying tools doesn't make you secure. Building a culture of paranoia and verification does."),
+            new ArchiveItem("Aug 30", "The Difference Between Data, Info, and Knowledge", "Philosophy", "Understanding the DIKW pyramid is crucial for building effective systems in the age of LLMs."),
+            new ArchiveItem("Aug 12", "Startups vs. Big Tech: A Career Guide", "Career", "How to decide between the stability of FAANG and the chaos of a seed-stage startup."),
+            new ArchiveItem("Jul 22", "Minimizing Cognitive Load", "Productivity", "Your brain has a limited amount of processing power. Here is how I preserve it for deep work.")
+        ];
+
+        /**
+         * Renders the list of archive items to the DOM.
+         * @param {ArchiveItem[]} items 
+         */
+        function renderList(items) {
+            const listContainer = document.querySelector('.archive-list');
+            listContainer.innerHTML = '';
+
+            if (items.length === 0) {
+                listContainer.innerHTML = '<li class="text-center text-muted py-5">No results found.</li>';
+                return;
+            }
+
+            items.forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'archive-item';
+                
+                li.innerHTML = `
+                    <div class="item-date">${item.date}</div>
+                    <div class="item-content">
+                        <a href="#" class="item-title">${item.title}</a>
+                        <p class="item-excerpt">${item.excerpt}</p>
+                    </div>
+                    <div class="item-tag">${item.tag}</div>
+                `;
+                
+                listContainer.appendChild(li);
+            });
+        }
+
+        /**
+         * Filter functionality
+         */
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = archiveData.filter(item => 
+                item.title.toLowerCase().includes(term) || 
+                item.tag.toLowerCase().includes(term) ||
+                item.excerpt.toLowerCase().includes(term)
+            );
+            renderList(filtered);
+        });
+
+        /**
+         * Load More functionality (Simulation)
+         */
+        const loadMoreBtn = document.getElementById('loadMoreBtn');
+        loadMoreBtn.addEventListener('click', () => {
+            loadMoreBtn.innerHTML = 'Loading...';
+            setTimeout(() => {
+                // In a real app, fetch more data. Here we just simulate interaction.
+                loadMoreBtn.innerHTML = 'No more posts';
+                loadMoreBtn.disabled = true;
+                loadMoreBtn.classList.add('disabled', 'text-decoration-none');
+            }, 800);
+        });
+
+        // Initial Render
+        renderList(archiveData);
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daniel Miessler | Archives</title>
+    
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts: Inter (commonly used on modern minimalist sites) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <!-- 
+      SCSS Simulation: 
+      In a real SCSS environment, these variables would be in _variables.scss 
+      and the styles would be nested. 
+    -->
+    <style>
+        :root {
+            --dm-font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --dm-text-primary: #111827;
+            --dm-text-secondary: #6B7280;
+            --dm-bg-body: #FFFFFF;
+            --dm-bg-subtle: #F9FAFB;
+            --dm-accent-color: #2563EB; /* Royal Blue */
+            --dm-border-color: #E5E7EB;
+            --dm-card-hover-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+
+        body {
+            font-family: var(--dm-font-family);
+            color: var(--dm-text-primary);
+            background-color: var(--dm-bg-subtle);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background-color: #fff;
+            border-bottom: 1px solid var(--dm-border-color);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--dm-text-primary);
+            letter-spacing: -0.025em;
+        }
+
+        .nav-link {
+            color: var(--dm-text-secondary);
+            font-weight: 500;
+            font-size: 0.95rem;
+            margin-left: 1.5rem;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--dm-text-primary);
+        }
+
+        /* Header / Hero Section */
+        .page-header {
+            padding: 3rem 0 2rem;
+            background-color: var(--dm-bg-body);
+            border-bottom: 1px solid var(--dm-border-color);
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: var(--dm-text-secondary);
+            font-size: 1.1rem;
+            font-weight: 400;
+        }
+
+        /* Post Card Styling */
+        .post-card {
+            background: #fff;
+            border: 1px solid var(--dm-border-color);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .post-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--dm-card-hover-shadow);
+            border-color: #d1d5db;
+        }
+
+        .post-meta {
+            font-size: 0.85rem;
+            color: var(--dm-text-secondary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .post-title {
+            font-weight: 600;
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: var(--dm-text-primary);
+            line-height: 1.3;
+        }
+
+        .post-excerpt {
+            color: var(--dm-text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .tag-badge {
+            background-color: #EFF6FF;
+            color: var(--dm-accent-color);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Sidebar Components */
+        .sidebar-widget {
+            background: #fff;
+            border: 1px solid var(--dm-border-color);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .widget-title {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--dm-text-secondary);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-signup {
+            text-align: center;
+        }
+
+        .newsletter-input {
+            border-radius: 9999px;
+            border: 1px solid var(--dm-border-color);
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            width: 100%;
+            margin-bottom: 0.75rem;
+        }
+
+        .newsletter-input:focus {
+            outline: none;
+            border-color: var(--dm-accent-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .btn-primary-custom {
+            background-color: var(--dm-text-primary);
+            color: #fff;
+            border-radius: 9999px;
+            padding: 0.5rem 1.5rem;
+            border: none;
+            font-weight: 500;
+            width: 100%;
+            transition: background-color 0.2s;
+        }
+
+        .btn-primary-custom:hover {
+            background-color: #000;
+        }
+
+        /* Search Bar */
+        .search-container {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .search-input {
+            padding-left: 2.5rem;
+            border-radius: 0.5rem;
+            border: 1px solid var(--dm-border-color);
+            font-size: 1rem;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--dm-text-secondary);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #fff;
+            border-top: 1px solid var(--dm-border-color);
+            padding: 3rem 0;
+            margin-top: 4rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--dm-text-secondary);
+        }
+
+        /* Helpers */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">DANIEL MIESSLER</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link active" href="#">Essays</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Podcast</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Newsletter</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+                    <li class="nav-item">
+                        <a class="btn btn-sm btn-outline-dark rounded-pill ms-3 px-3" href="#">Subscribe</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="page-header">
+        <div class="container text-center">
+            <h1 class="page-title">Archives</h1>
+            <p class="page-subtitle">Thoughts on Artificial Intelligence, Security, and Strategy.</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            
+            <!-- Main Column (Posts) -->
+            <main class="col-lg-8">
+                
+                <!-- Search Filter -->
+                <div class="search-container">
+                    <i class="bi bi-search search-icon"></i>
+                    <input type="text" id="searchInput" class="form-control search-input" placeholder="Search archives...">
+                </div>
+
+                <!-- Post List Container -->
+                <div id="posts-container">
+                    <!-- Posts will be injected here via JavaScript -->
+                </div>
+
+                <!-- Load More Button -->
+                <div class="text-center mt-5 mb-5">
+                    <button id="loadMoreBtn" class="btn btn-outline-secondary rounded-pill px-4">Load More</button>
+                </div>
+
+            </main>
+
+            <!-- Sidebar -->
+            <aside class="col-lg-4 mt-4 mt-lg-0">
+                <div class="sticky-top" style="top: 2rem; z-index: 1;">
+                    
+                    <!-- Newsletter Widget -->
+                    <div class="sidebar-widget newsletter-signup">
+                        <h4 class="widget-title text-start">Unsupervised Learning</h4>
+                        <p class="mb-3 text-start" style="font-size: 0.95rem; color: #4b5563;">A weekly newsletter about AI, Security, and Human Thinking.</p>
+                        <form onsubmit="event.preventDefault(); alert('Subscribed! (Simulation)');">
+                            <input type="email" class="newsletter-input" placeholder="Email address" required>
+                            <button type="submit" class="btn-primary-custom">Subscribe Free</button>
+                        </form>
+                        <div class="mt-3 text-start small text-muted">
+                            <i class="bi bi-check2-circle me-1"></i> 150,000+ readers
+                        </div>
+                    </div>
+
+                    <!-- Topics Widget -->
+                    <div class="sidebar-widget">
+                        <h4 class="widget-title">Topics</h4>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a href="#" class="tag-badge text-decoration-none">AI</a>
+                            <a href="#" class="tag-badge text-decoration-none">Security</a>
+                            <a href="#" class="tag-badge text-decoration-none">Strategy</a>
+                            <a href="#" class="tag-badge text-decoration-none">Philosophy</a>
+                            <a href="#" class="tag-badge text-decoration-none">Career</a>
+                            <a href="#" class="tag-badge text-decoration-none">Parenting</a>
+                            <a href="#" class="tag-badge text-decoration-none">Startup</a>
+                        </div>
+                    </div>
+
+                    <!-- Popular Posts Widget -->
+                    <div class="sidebar-widget">
+                        <h4 class="widget-title">Popular</h4>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-3">
+                                <a href="#" class="text-decoration-none text-dark fw-medium">The Difference Between Data, Information, and Knowledge</a>
+                            </li>
+                            <li class="mb-3">
+                                <a href="#" class="text-decoration-none text-dark fw-medium">A Guide to Thinking Strategically</a>
+                            </li>
+                            <li class="mb-3">
+                                <a href="#" class="text-decoration-none text-dark fw-medium">How to Learn Anything Faster</a>
+                            </li>
+                            <li class="mb-0">
+                                <a href="#" class="text-decoration-none text-dark fw-medium">The Prompt Engineering Guide</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <p class="mb-2">&copy; <span id="year"></span> Daniel Miessler.</p>
+                    <p class="small text-muted">
+                        All thoughts are my own and do not represent my employer.
+                    </p>
+                    <div class="mt-3">
+                        <a href="#" class="text-muted mx-2"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="text-muted mx-2"><i class="bi bi-linkedin"></i></a>
+                        <a href="#" class="text-muted mx-2"><i class="bi bi-github"></i></a>
+                        <a href="#" class="text-muted mx-2"><i class="bi bi-rss"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- 
+      TypeScript Simulation Logic 
+      In a production environment, this would be in a .ts file and compiled.
+    -->
+    <script>
+        // Set current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        /**
+         * @interface Post
+         * Represents a blog post structure.
+         */
+        class Post {
+            /**
+             * @param {string} title 
+             * @param {string} date 
+             * @param {string} tag 
+             * @param {string} excerpt 
+             * @param {string} link 
+             */
+            constructor(title, date, tag, excerpt, link) {
+                this.title = title;
+                this.date = date;
+                this.tag = tag;
+                this.excerpt = excerpt;
+                this.link = link;
+            }
+        }
+
+        // Mock Data - mimicking a database fetch
+        /** @type {Post[]} */
+        const allPosts = [
+            new Post(
+                "The Future of AI in Cybersecurity",
+                "Oct 24, 2023",
+                "AI",
+                "Artificial Intelligence is reshaping the defensive landscape. Here is my analysis of prompt engineering for red teams.",
+                "#"
+            ),
+            new Post(
+                "Understanding Unknown Unknowns",
+                "Oct 18, 2023",
+                "Strategy",
+                "The most dangerous risks are the ones you don't know exist. How to build a detection system for the unimaginable.",
+                "#"
+            ),
+            new Post(
+                "My 2023 Setup: Hardware and Software",
+                "Oct 10, 2023",
+                "Productivity",
+                "A complete breakdown of the tools, hardware, and software I use to think, write, and manage projects.",
+                "#"
+            ),
+            new Post(
+                "A Primer on Prompt Engineering",
+                "Sep 28, 2023",
+                "AI",
+                "Prompt engineering is not just about talking to ChatGPT. It is about interface design for the next generation of software.",
+                "#"
+            ),
+            new Post(
+                "Security is a Mindset, Not a Tool",
+                "Sep 15, 2023",
+                "Security",
+                "Buying tools doesn't make you secure. Building a culture of paranoia and verification does.",
+                "#"
+            ),
+            new Post(
+                "The Difference Between Data, Info, and Knowledge",
+                "Aug 30, 2023",
+                "Philosophy",
+                "Understanding the DIKW pyramid is crucial for building effective systems in the age of LLMs.",
+                "#"
+            ),
+            new Post(
+                "Startups vs. Big Tech: A Career Guide",
+                "Aug 12, 2023",
+                "Career",
+                "How to decide between the stability of FAANG and the chaos of a seed-stage startup.",
+                "#"
+            ),
+            new Post(
+                "Minimizing Cognitive Load",
+                "Jul 22, 2023",
+                "Productivity",
+                "Your brain has a limited amount of processing power. Here is how I preserve it for deep work.",
+                "#"
+            )
+        ];
+
+        // State Management
+        let visibleCount = 5;
+        let currentPosts = [...allPosts];
+
+        /**
+         * Renders the posts to the DOM.
+         * @param {Post[]} postsToRender 
+         */
+        function renderPosts(postsToRender) {
+            const container = document.getElementById('posts-container');
+            container.innerHTML = '';
+
+            if (postsToRender.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-5">
+                        <i class="bi bi-emoji-frown display-4 text-muted"></i>
+                        <p class="mt-3 text-muted">No essays found matching your search.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            postsToRender.forEach(post => {
+                const articleHTML = `
+                    <article class="post-card">
+                        <div class="post-meta">
+                            <span>${post.date}</span>
+                            <span>&bull;</span>
+                            <span class="tag-badge">${post.tag}</span>
+                        </div>
+                        <h2 class="post-title">
+                            <a href="${post.link}" class="text-decoration-none text-dark">${post.title}</a>
+                        </h2>
+                        <p class="post-excerpt mb-0">${post.excerpt}</p>
+                    </article>
+                `;
+                container.insertAdjacentHTML('beforeend', articleHTML);
+            });
+
+            // Handle "Load More" visibility
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            if (postsToRender.length <= visibleCount && postsToRender.length === allPosts.length) {
+                // If showing default chunk and it fits
+                 // Only hide if not searching
+                 if(document.getElementById('searchInput').value === "") {
+                     loadMoreBtn.classList.add('hidden');
+                 } else {
+                     loadMoreBtn.classList.add('hidden');
+                 }
+            } else {
+                loadMoreBtn.classList.remove('hidden');
+            }
+        }
+
+        /**
+         * Filters posts based on search input.
+         */
+        function handleSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            visibleCount = 100; // Show all when searching
+            
+            currentPosts = allPosts.filter(post => 
+                post.title.toLowerCase().includes(query) || 
+                post.excerpt.toLowerCase().includes(query) ||
+                post.tag.toLowerCase().includes(query)
+            );
+
+            renderPosts(currentPosts);
+        }
+
+        // Event Listeners
+        document.getElementById('searchInput').addEventListener('input', handleSearch);
+
+        document.getElementById('loadMoreBtn').addEventListener('click', () => {
+            // In a real app, this would fetch more from an API.
+            // Here we just reveal the rest of our mock data.
+            visibleCount = allPosts.length;
+            renderPosts(allPosts);
+        });
+
+        // Initial Render
+        renderPosts(allPosts.slice(0, visibleCount));
+
+    </script>
+</body>
+</html>

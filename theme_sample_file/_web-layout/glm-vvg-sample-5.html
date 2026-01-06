@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VVG ONLINE | Digital Architecture</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+        /* =========================================
+           VARIABLES & THEME
+           ========================================= */
+        :root {
+            /* Palette */
+            --bg-color: #111113;
+            --surface-color: #1a1a1c;
+            --text-color: #d9d9d9;
+            --accent-color: #ffdd33;
+            --border-color: #333333;
+            --glass-bg: rgba(17, 17, 19, 0.7);
+            --glass-border: rgba(255, 221, 51, 0.1);
+
+            /* Fonts */
+            --font-serif: 'EB Garamond', serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-sans: 'IBM Plex Sans', sans-serif;
+        }
+
+        /* Reset & Base */
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-sans);
+            overflow-x: hidden;
+            cursor: none; /* Custom cursor */
+            line-height: 1.6;
+        }
+
+        /* STRICT SHARP EDGES */
+        * { border-radius: 0 !important; }
+
+        a { text-decoration: none; color: inherit; cursor: none; }
+
+        /* Typography */
+        h1, h2, h3, h4 { font-family: var(--font-serif); font-weight: 500; letter-spacing: -0.02em; }
+        .font-mono { font-family: var(--font-mono); letter-spacing: 0.05em; font-size: 0.85rem; }
+        .text-accent { color: var(--accent-color) !important; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: var(--text-color); }
+
+        /* =========================================
+           CUSTOM CURSOR
+           ========================================= */
+        .cursor-dot, .cursor-circle {
+            position: fixed; top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            z-index: 9999; pointer-events: none;
+            mix-blend-mode: difference;
+        }
+        .cursor-dot { width: 8px; height: 8px; background: var(--accent-color); }
+        .cursor-circle {
+            width: 40px; height: 40px; border: 1px solid var(--text-color);
+            transition: width 0.3s, height 0.3s, background 0.3s;
+        }
+        body:hover .cursor-circle.hovered {
+            width: 60px; height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--accent-color);
+        }
+
+        /* =========================================
+           LAYOUT COMPONENTS
+           ========================================= */
+
+        /* 3D Canvas Background */
+        #hero-canvas {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            opacity: 0.6;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            padding: 1.5rem 2rem;
+            display: flex; justify-content: space-between; align-items: center;
+            transition: background 0.3s;
+            mix-blend-mode: exclusion;
+            color: white;
+        }
+        nav.scrolled { background: var(--glass-bg); backdrop-filter: blur(10px); mix-blend-mode: normal; color: var(--text-color); border-bottom: 1px solid var(--border-color); }
+
+        .nav-links a {
+            margin-left: 2rem;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -5px; left: 0;
+            width: 0%; height: 1px; background: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex; align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 80px;
+        }
+
+        .hero-content {
+            position: relative; z-index: 2;
+            max-width: 900px;
+        }
+
+        .hero-title {
+            font-size: clamp(3.5rem, 8vw, 7rem);
+            line-height: 0.95;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero-subtitle {
+            font-family: var(--font-mono);
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 2rem;
+        }
+
+        /* Buttons */
+        .btn-main {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            border: 1px solid var(--text-color);
+            font-family: var(--font-mono);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            background: transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-main:hover {
+            background: var(--accent-color);
+            color: #000;
+            border-color: var(--accent-color);
+        }
+
+        /* Section Styling */
+        section { padding: 8rem 0; border-bottom: 1px solid var(--border-color); }
+        
+        .section-label {
+            display: inline-block;
+            font-family: var(--font-mono);
+            color: var(--accent-color);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Services Bento Grid */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, 300px);
+            gap: 20px;
+        }
+
+        .bento-item {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            display: flex; flex-direction: column; justify-content: space-between;
+        }
+
+        .bento-item:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-5px);
+        }
+
+        .bento-item::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 0; height: 2px;
+            background: var(--accent-color);
+            transition: width 0.4s ease;
+        }
+        .bento-item:hover::before { width: 100%; }
+
+        .bento-wide { grid-column: span 2; }
+        .bento-tall { grid-row: span 2; }
+
+        /* Insight List */
+        .insight-item {
+            border-bottom: 1px solid var(--border-color);
+            padding: 2rem 0;
+            display: flex; justify-content: space-between; align-items: center;
+            transition: padding 0.3s;
+        }
+        .insight-item:hover {
+            padding-left: 2rem;
+            border-color: var(--accent-color);
+        }
+
+        /* Chat / Assistant */
+        .chat-widget {
+            position: fixed; bottom: 2rem; right: 2rem;
+            width: 60px; height: 60px;
+            background: var(--accent-color);
+            border-radius: 0; /* Sharp */
+            display: flex; align-items: center; justify-content: center;
+            z-index: 999;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(255, 221, 51, 0.2);
+            transition: transform 0.3s;
+        }
+        .chat-widget:hover { transform: scale(1.1) rotate(90deg); }
+
+        /* Scroll Reveal Animation */
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-up.active { opacity: 1; transform: translateY(0); }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .bento-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
+            .bento-wide, .bento-tall { grid-column: auto; grid-row: auto; height: auto; min-height: 250px; }
+            .hero-title { font-size: 3.5rem; }
+            nav { background: var(--bg-color); border-bottom: 1px solid var(--border-color); }
+            .nav-links { display: none; } /* Simplified for mobile */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-circle interactable"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="font-sans fs-4 fw-bold interactable">VVG ONLINE</div>
+        <div class="nav-links">
+            <a href="#services" class="interactable">Capabilities</a>
+            <a href="#workflow" class="interactable">Methodology</a>
+            <a href="#insights" class="interactable">Insights</a>
+            <a href="#contact" class="interactable">Contact</a>
+        </div>
+        <div class="font-mono interactable" onclick="toggleTheme()" style="font-size:0.8rem;">
+            [ THEME ] <i class="bi bi-circle-half ms-2"></i>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Three.js -->
+    <header class="hero">
+        <canvas id="hero-canvas"></canvas>
+        <div class="container hero-content">
+            <div class="reveal-up">
+                <p class="hero-subtitle">Digital Business Consulting</p>
+                <h1 class="hero-title">ARCHITECTING <br><span class="text-accent">THE FUTURE</span> OF COMMERCE.</h1>
+                <p class="lead mb-5" style="max-width: 600px; margin: 0 auto 3rem auto; opacity: 0.8;">
+                    We merge rigorous strategy with cutting-edge technology to build resilient, scalable business ecosystems.
+                </p>
+                <div>
+                    <a href="#services" class="btn-main interactable">Explore Modules</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Philosophy Section -->
+    <section>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-5 mb-5 mb-lg-0 reveal-up">
+                    <span class="section-label">01 // PHILOSOPHY</span>
+                    <h2 style="font-size: 3.5rem; line-height: 1.1;">Precision in a <br>Chaotic World.</h2>
+                </div>
+                <div class="col-lg-6 offset-lg-1 reveal-up">
+                    <p class="lead mb-4">
+                        At VVG, we don't believe in generic solutions. We treat every organization as a unique organism requiring a specific architectural blueprint.
+                    </p>
+                    <p style="opacity: 0.7;">
+                        Our methodology combines the rigidity of structural engineering with the fluidity of digital innovation. From AI integration to cultural transformation, we build systems that last.
+                    </p>
+                    <div class="d-flex gap-5 mt-5">
+                        <div>
+                            <div class="font-serif display-6 text-accent">12+</div>
+                            <div class="font-mono text-muted">YEARS EXP.</div>
+                        </div>
+                        <div>
+                            <div class="font-serif display-6 text-accent">50%</div>
+                            <div class="font-mono text-muted">AVG. EFFICIENCY GAIN</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services (Bento Grid) -->
+    <section id="services" style="background: var(--surface-color);">
+        <div class="container">
+            <div class="mb-5 reveal-up">
+                <span class="section-label">02 // CAPABILITIES</span>
+                <h2>Core Modules</h2>
+            </div>
+
+            <div class="bento-grid reveal-up">
+                <!-- Item 1: Wide -->
+                <div class="bento-item bento-wide interactable">
+                    <i class="bi bi-diagram-3 fs-1 text-accent"></i>
+                    <div>
+                        <h4>Digital Transformation</h4>
+                        <p class="small opacity-75 mt-2">Overhauling legacy systems for the cloud-native era.</p>
+                    </div>
+                </div>
+
+                <!-- Item 2: Tall -->
+                <div class="bento-item bento-tall interactable">
+                    <i class="bi bi-brain fs-1 text-accent"></i>
+                    <div class="mt-4">
+                        <h4>AI & Automation</h4>
+                        <p class="small opacity-75 mt-2">Deploying custom LLMs and automation workflows.</p>
+                    </div>
+                    <div class="mt-auto">
+                        <span class="font-mono text-accent">> STATUS: ACTIVE</span>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="bento-item interactable">
+                    <i class="bi bi-graph-up-arrow fs-1 text-accent"></i>
+                    <div>
+                        <h4>Strategic Growth</h4>
+                    </div>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="bento-item interactable">
+                    <i class="bi bi-shield-lock fs-1 text-accent"></i>
+                    <div>
+                        <h4>Cybersecurity</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Workflow -->
+    <section id="workflow">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 reveal-up">
+                    <span class="section-label">03 // METHODOLOGY</span>
+                    <h2 class="mb-5">The Process</h2>
+                    
+                    <div class="d-flex gap-4 mb-4">
+                        <div class="font-serif display-5 text-accent">01</div>
+                        <div>
+                            <h5>Discovery</h5>
+                            <p class="small text-muted">Deep dive into existing infrastructure and culture.</p>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-4 mb-4">
+                        <div class="font-serif display-5 text-accent">02</div>
+                        <div>
+                            <h5>Architecture</h5>
+                            <p class="small text-muted">Designing the scalable blueprint.</p>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-4">
+                        <div class="font-serif display-5 text-accent">03</div>
+                        <div>
+                            <h5>Deployment</h5>
+                            <p class="small text-muted">Execution with continuous feedback loops.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 reveal-up d-flex align-items-center justify-content-center">
+                    <!-- Abstract Visual using CSS Grid -->
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 300px;">
+                        <div style="background: var(--border-color); height: 100px;"></div>
+                        <div style="background: var(--accent-color); height: 100px;"></div>
+                        <div style="background: var(--border-color); height: 100px;"></div>
+                        <div style="background: var(--border-color); height: 100px;"></div>
+                        <div style="background: var(--surface-color); border: 1px solid var(--accent-color); height: 100px;"></div>
+                        <div style="background: var(--border-color); height: 100px;"></div>
+                        <div style="background: var(--border-color); height: 100px;"></div>
+                        <div style="background: var(--border-color); height: 100px;"></div>
+                        <div style="background: var(--border-color); height: 100px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Insights -->
+    <section id="insights">
+        <div class="container">
+            <div class="row mb-5 reveal-up">
+                <div class="col-lg-6">
+                    <span class="section-label">04 // INTELLIGENCE</span>
+                    <h2>Latest Insights</h2>
+                </div>
+            </div>
+
+            <div class="reveal-up">
+                <div class="insight-item interactable">
+                    <div>
+                        <span class="font-mono text-accent">TECHNOLOGY</span>
+                        <h4 class="mt-2">The Rise of Agentic AI in Enterprise</h4>
+                    </div>
+                    <i class="bi bi-arrow-right"></i>
+                </div>
+                <div class="insight-item interactable">
+                    <div>
+                        <span class="font-mono text-accent">STRATEGY</span>
+                        <h4 class="mt-2">Redefining KPIs for the Digital Age</h4>
+                    </div>
+                    <i class="bi bi-arrow-right"></i>
+                </div>
+                <div class="insight-item interactable">
+                    <div>
+                        <span class="font-mono text-accent">CULTURE</span>
+                        <h4 class="mt-2">Building Resilient Teams in Remote Environments</h4>
+                    </div>
+                    <i class="bi bi-arrow-right"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+        <div class="container text-center">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 reveal-up">
+                    <h1 class="display-1 font-serif mb-4">Let's Build.</h1>
+                    <p class="lead mb-5 opacity-75">Ready to transform your business architecture?</p>
+                    <a href="mailto:hello@vvgonline.net" class="btn-main interactable">Initiate Contact</a>
+                    
+                    <div class="mt-5 pt-5 border-top border-secondary">
+                        <div class="d-flex justify-content-center gap-4 font-mono">
+                            <a href="#" class="interactable">LinkedIn</a>
+                            <a href="#" class="interactable">Twitter</a>
+                            <a href="#" class="interactable">Instagram</a>
+                        </div>
+                        <p class="small text-muted mt-4">© 2024 VVG ONLINE. ALL RIGHTS RESERVED.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chat Widget -->
+    <div class="chat-widget interactable" onclick="alert('AI Assistant: How can I help you with your digital transformation?')">
+        <i class="bi bi-chat-dots fs-4"></i>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <script>
+        // ==========================================
+        // CORE LOGIC
+        // ==========================================
+        class App {
+            constructor() {
+                this.initCursor();
+                this.initScrollReveal();
+                this.initNavbar();
+                this.initThreeHero();
+            }
+
+            // Custom Cursor
+            initCursor() {
+                const dot = document.querySelector('.cursor-dot');
+                const circle = document.querySelector('.cursor-circle');
+                
+                if(!window.matchMedia("(pointer: fine)").matches) return;
+
+                window.addEventListener('mousemove', e => {
+                    dot.style.left = `${e.clientX}px`;
+                    dot.style.top = `${e.clientY}px`;
+                    
+                    circle.animate({
+                        left: `${e.clientX}px`, top: `${e.clientY}px`
+                    }, { duration: 500, fill: "forwards" });
+                });
+
+                document.querySelectorAll('.interactable').forEach(el => {
+                    el.addEventListener('mouseenter', () => circle.classList.add('hovered'));
+                    el.addEventListener('mouseleave', () => circle.classList.remove('hovered'));
+                });
+            }
+
+            // Scroll Reveal
+            initScrollReveal() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('active');
+                        }
+                    });
+                }, { threshold: 0.1 });
+
+                document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el));
+            }
+
+            // Navbar Blur on Scroll
+            initNavbar() {
+                const nav = document.getElementById('navbar');
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 50) nav.classList.add('scrolled');
+                    else nav.classList.remove('scrolled');
+                });
+            }
+
+            // Three.js Hero Animation
+            initThreeHero() {
+                const canvas = document.getElementById('hero-canvas');
+                const scene = new THREE.Scene();
+                // Fog for depth
+                scene.fog = new THREE.FogExp2(0x111113, 0.002);
+
+                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+                // Create "Neural Core" - Icosahedron
+                const geometry = new THREE.IcosahedronGeometry(10, 1);
+                const material = new THREE.MeshBasicMaterial({ 
+                    color: 0x333333, 
+                    wireframe: true,
+                    transparent: true,
+                    opacity: 0.3
+                });
+                const core = new THREE.Mesh(geometry, material);
+                scene.add(core);
+
+                // Add internal glowing core
+                const innerGeo = new THREE.IcosahedronGeometry(6, 0);
+                const innerMat = new THREE.MeshBasicMaterial({ color: 0xffdd33, wireframe: true });
+                const innerCore = new THREE.Mesh(innerGeo, innerMat);
+                scene.add(innerCore);
+
+                // Particles
+                const particlesGeo = new THREE.BufferGeometry();
+                const particleCount = 700;
+                const posArray = new Float32Array(particleCount * 3);
+                
+                for(let i = 0; i < particleCount * 3; i++) {
+                    posArray[i] = (Math.random() - 0.5) * 50;
+                }
+                
+                particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+                const particlesMat = new THREE.PointsMaterial({
+                    size: 0.05,
+                    color: 0xffdd33
+                });
+                const particlesMesh = new THREE.Points(particlesGeo, particlesMat);
+                scene.add(particlesMesh);
+
+                camera.position.z = 20;
+
+                // Mouse Interaction
+                let mouseX = 0;
+                let mouseY = 0;
+                
+                window.addEventListener('mousemove', (e) => {
+                    mouseX = (e.clientX - window.innerWidth / 2) * 0.001;
+                    mouseY = (e.clientY - window.innerHeight / 2) * 0.001;
+                });
+
+                const animate = () => {
+                    requestAnimationFrame(animate);
+
+                    // Constant slow rotation
+                    core.rotation.y += 0.002;
+                    innerCore.rotation.y -= 0.004;
+                    particlesMesh.rotation.y += 0.0005;
+
+                    // Mouse interaction tilt
+                    core.rotation.x += (mouseY - core.rotation.x) * 0.05;
+                    core.rotation.y += (mouseX - core.rotation.y) * 0.05;
+
+                    renderer.render(scene, camera);
+                };
+                animate();
+
+                // Resize
+                window.addEventListener('resize', () => {
+                    camera.aspect = window.innerWidth / window.innerHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                });
+            }
+        }
+
+        // Toggle Theme
+        window.toggleTheme = () => {
+            const html = document.documentElement;
+            const isDark = html.getAttribute('data-bs-theme') === 'dark';
+            html.setAttribute('data-bs-theme', isDark ? 'light' : 'dark');
+            // In a real app, you'd update Three.js materials colors here too.
+            if(isDark) {
+                document.body.style.backgroundColor = '#d9d9d9';
+                document.body.style.color = '#111113';
+            } else {
+                document.body.style.backgroundColor = '#111113';
+                document.body.style.color = '#d9d9d9';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => new App());
+    </script>
+</body>
+</html>

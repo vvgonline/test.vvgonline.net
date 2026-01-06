@@ -1,0 +1,28 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "The Future of AI in Digital Business",
+      "slug": "future-of-ai-digital-business",
+      "author": "VVG ONLINE Team",
+      "date": "2025-11-28",
+      "readTime": 8,
+      "tags": ["ai", "digital transformation", "business strategy"],
+      "excerpt": "Exploring the transformative impact of artificial intelligence on modern digital business strategies.",
+      "content": "<p>Artificial intelligence is rapidly reshaping the landscape of digital business...</p>",
+      "featuredImage": "blog-1.svg"
+    },
+    {
+      "id": 2,
+      "title": "Mastering Digital Marketing in 2026",
+      "slug": "mastering-digital-marketing-2026",
+      "author": "VVG ONLINE Team",
+      "date": "2025-12-15",
+      "readTime": 6,
+      "tags": ["digital marketing", "seo", "content strategy"],
+      "excerpt": "A comprehensive guide to the latest trends and essential strategies for digital marketing success in the coming year.",
+      "content": "<p>Staying ahead in digital marketing requires constant adaptation...</p>",
+      "featuredImage": "blog-2.svg"
+    }
+  ]
+}

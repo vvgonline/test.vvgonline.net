@@ -13,3 +13,6 @@
 - Prefer scss over css
 - Prefer Blazor components over raw HTML
 - Prefer Razor syntax over HTML where applicable
+- when creating new files, always create them in the correct folder as per the project structure
+- always follow the existing code style and conventions used in the codebase
+- after I give command '/export', export the chat in markdown format without any additional commentary. file name should be 'chat_export<timestamp>.md'

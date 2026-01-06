@@ -17,6 +17,15 @@ VVG.online.WEB.Test.PWA/
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml
+├── specs/
+│ ├── 0_Project_Vision.md
+│ ├── 1_Product_Requirements.md
+│ ├── 2_Architecture.md
+│ ├── 3_Roadmap.md
+│ ├── milestones/
+│ └── tasks/
+├── quality.toml
+└── src/
 ├── VVG.online.WEB.Test.PWA.csproj
 ├── Program.cs
 ├── App.razor

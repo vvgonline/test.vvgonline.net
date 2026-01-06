@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VVG ONLINE | Digital Architecture</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+        /* =========================================
+           VARIABLES & THEME
+           ========================================= */
+        :root {
+            /* Palette */
+            --bg-color: #111113;
+            --surface-color: #1a1a1c;
+            --text-color: #d9d9d9;
+            --accent-color: #ffdd33;
+            --border-color: #333333;
+            --glass-bg: rgba(17, 17, 19, 0.8);
+            --glass-border: rgba(255, 221, 51, 0.1);
+
+            /* Fonts */
+            --font-serif: 'EB Garamond', serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-sans: 'IBM Plex Sans', sans-serif;
+        }
+
+        /* Reset & Base */
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-sans);
+            overflow-x: hidden;
+            cursor: none; /* Custom cursor */
+            line-height: 1.6;
+        }
+
+        /* STRICT SHARP EDGES */
+        * { border-radius: 0 !important; }
+
+        a { text-decoration: none; color: inherit; cursor: none; }
+
+        /* Typography */
+        h1, h2, h3, h4 { font-family: var(--font-serif); font-weight: 500; letter-spacing: -0.02em; }
+        .font-mono { font-family: var(--font-mono); letter-spacing: 0.05em; font-size: 0.85rem; }
+        .text-accent { color: var(--accent-color) !important; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: var(--text-color); }
+
+        /* =========================================
+           CUSTOM CURSOR
+           ========================================= */
+        .cursor-dot, .cursor-circle {
+            position: fixed; top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            z-index: 9999; pointer-events: none;
+            mix-blend-mode: difference;
+        }
+        .cursor-dot { width: 8px; height: 8px; background: var(--accent-color); }
+        .cursor-circle {
+            width: 40px; height: 40px; border: 1px solid var(--text-color);
+            transition: width 0.3s, height 0.3s, background 0.3s;
+        }
+        body:hover .cursor-circle.hovered {
+            width: 60px; height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--accent-color);
+        }
+
+        /* =========================================
+           3D HERO & ROBOT
+           ========================================= */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex; align-items: center;
+            padding-top: 80px;
+        }
+
+        #hero-canvas {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            /* Robot is on the right, so content on left is safe */
+        }
+
+        /* Robot Speech Bubble */
+        .robot-bubble {
+            position: absolute;
+            top: 30%;
+            right: 20%;
+            width: 280px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            padding: 1.5rem;
+            color: var(--text-color);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            z-index: 10;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+            pointer-events: none;
+        }
+
+        .robot-bubble.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .robot-bubble::before {
+            content: '';
+            position: absolute; bottom: -10px; right: 40px;
+            width: 0; height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid var(--glass-border);
+        }
+
+        /* =========================================
+           LAYOUT COMPONENTS
+           ========================================= */
+
+        /* Navigation */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            padding: 1.5rem 2rem;
+            display: flex; justify-content: space-between; align-items: center;
+            transition: background 0.3s;
+            mix-blend-mode: exclusion;
+            color: white;
+        }
+        nav.scrolled { background: var(--glass-bg); backdrop-filter: blur(10px); mix-blend-mode: normal; color: var(--text-color); border-bottom: 1px solid var(--border-color); }
+
+        .nav-links a {
+            margin-left: 2rem;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -5px; left: 0;
+            width: 0%; height: 1px; background: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after { width: 100%; }
+
+        .hero-content {
+            position: relative; z-index: 2;
+            max-width: 600px; /* Less width to make room for robot */
+            margin-left: 5%;
+        }
+
+        .hero-title {
+            font-size: clamp(3.5rem, 7vw, 6rem);
+            line-height: 0.95;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero-subtitle {
+            font-family: var(--font-mono);
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 2rem;
+        }
+
+        .btn-main {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            border: 1px solid var(--text-color);
+            font-family: var(--font-mono);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            background: transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-main:hover {
+            background: var(--accent-color);
+            color: #000;
+            border-color: var(--accent-color);
+        }
+
+        /* Sections */
+        section { padding: 8rem 0; border-bottom: 1px solid var(--border-color); }
+        .section-label {
+            display: inline-block;
+            font-family: var(--font-mono);
+            color: var(--accent-color);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Chat Modal */
+        #chat-modal {
+            display: none;
+            position: fixed; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px; height: 500px;
+            background: var(--surface-color);
+            border: 1px solid var(--accent-color);
+            z-index: 10001;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+        }
+        .chat-header {
+            background: var(--accent-color); color: #000;
+            padding: 1rem; font-family: var(--font-mono); font-weight: bold;
+            display: flex; justify-content: space-between;
+        }
+        .chat-body {
+            height: 380px; overflow-y: auto; padding: 1rem; font-family: var(--font-mono); font-size: 0.9rem;
+        }
+        .chat-input-area {
+            padding: 1rem; border-top: 1px solid var(--border-color);
+            display: flex; gap: 10px;
+        }
+        .chat-input-area input {
+            background: transparent; border: none; color: white; width: 100%; font-family: inherit; outline: none;
+        }
+
+        /* Bento Grid & other previous styles kept */
+        .bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 300px); gap: 20px; }
+        .bento-item { background: var(--surface-color); border: 1px solid var(--border-color); padding: 2rem; position: relative; overflow: hidden; transition: all 0.4s ease; display: flex; flex-direction: column; justify-content: space-between; }
+        .bento-item:hover { border-color: var(--accent-color); transform: translateY(-5px); }
+        .bento-wide { grid-column: span 2; }
+        .bento-tall { grid-row: span 2; }
+
+        .reveal-up { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-up.active { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 992px) {
+            .bento-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
+            .bento-wide, .bento-tall { grid-column: auto; grid-row: auto; height: auto; min-height: 250px; }
+            .hero-title { font-size: 3.5rem; }
+            nav { background: var(--bg-color); border-bottom: 1px solid var(--border-color); }
+            .nav-links { display: none; }
+            /* Move robot on mobile */
+            .robot-bubble { top: 10%; right: 5%; width: 200px; font-size: 0.75rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-circle interactable"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="font-sans fs-4 fw-bold interactable">VVG ONLINE</div>
+        <div class="nav-links">
+            <a href="#services" class="interactable">Capabilities</a>
+            <a href="#workflow" class="interactable">Methodology</a>
+            <a href="#insights" class="interactable">Insights</a>
+            <a href="#contact" class="interactable">Contact</a>
+        </div>
+        <div class="font-mono interactable" onclick="toggleTheme()" style="font-size:0.8rem;">
+            [ THEME ] <i class="bi bi-circle-half ms-2"></i>
+        </div>
+    </nav>
+
+    <!-- Hero Section with 3D Robot -->
+    <header class="hero">
+        <canvas id="hero-canvas"></canvas>
+        
+        <!-- Robot's Speech Bubble -->
+        <div id="robot-bubble" class="robot-bubble">
+            <strong class="text-accent">VVG-BOT v1.0:</strong><br>
+            <span id="robot-text">Hello! I am your digital assistant. Scroll down to explore our architecture.</span>
+        </div>
+
+        <div class="container hero-content">
+            <div class="reveal-up">
+                <p class="hero-subtitle">Digital Business Consulting</p>
+                <h1 class="hero-title">ARCHITECTING <br><span class="text-accent">THE FUTURE</span> OF COMMERCE.</h1>
+                <p class="lead mb-5" style="opacity: 0.8;">
+                    I can help you navigate our services. Click on me to chat!
+                </p>
+                <div>
+                    <a href="#services" class="btn-main interactable">Explore Modules</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Philosophy Section -->
+    <section id="philosophy">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-5 mb-5 mb-lg-0 reveal-up">
+                    <span class="section-label">01 // PHILOSOPHY</span>
+                    <h2 style="font-size: 3.5rem; line-height: 1.1;">Precision in a <br>Chaotic World.</h2>
+                </div>
+                <div class="col-lg-6 offset-lg-1 reveal-up">
+                    <p class="lead mb-4">
+                        At VVG, we don't believe in generic solutions. We treat every organization as a unique organism requiring a specific architectural blueprint.
+                    </p>
+                    <p style="opacity: 0.7;">
+                        Our methodology combines the rigidity of structural engineering with the fluidity of digital innovation.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services (Bento Grid) -->
+    <section id="services" style="background: var(--surface-color);">
+        <div class="container">
+            <div class="mb-5 reveal-up">
+                <span class="section-label">02 // CAPABILITIES</span>
+                <h2>Core Modules</h2>
+            </div>
+
+            <div class="bento-grid reveal-up">
+                <!-- Item 1: Wide -->
+                <div class="bento-item bento-wide interactable">
+                    <i class="bi bi-diagram-3 fs-1 text-accent"></i>
+                    <div>
+                        <h4>Digital Transformation</h4>
+                        <p class="small opacity-75 mt-2">Overhauling legacy systems for cloud-native era.</p>
+                    </div>
+                </div>
+                <!-- Item 2: Tall -->
+                <div class="bento-item bento-tall interactable">
+                    <i class="bi bi-robot fs-1 text-accent"></i>
+                    <div class="mt-4">
+                        <h4>AI & Automation</h4>
+                        <p class="small opacity-75 mt-2">Deploying custom LLMs and automation workflows.</p>
+                    </div>
+                    <div class="mt-auto">
+                        <span class="font-mono text-accent">> STATUS: ACTIVE</span>
+                    </div>
+                </div>
+                <!-- Item 3 -->
+                <div class="bento-item interactable">
+                    <i class="bi bi-graph-up-arrow fs-1 text-accent"></i>
+                    <div><h4>Strategic Growth</h4></div>
+                </div>
+                <!-- Item 4 -->
+                <div class="bento-item interactable">
+                    <i class="bi bi-shield-lock fs-1 text-accent"></i>
+                    <div><h4>Cybersecurity</h4></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Workflow -->
+    <section id="workflow">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 reveal-up">
+                    <span class="section-label">03 // METHODOLOGY</span>
+                    <h2 class="mb-5">The Process</h2>
+                    
+                    <div class="d-flex gap-4 mb-4">
+                        <div class="font-serif display-5 text-accent">01</div>
+                        <div><h5>Discovery</h5><p class="small text-muted">Deep dive into existing infrastructure.</p></div>
+                    </div>
+                    <div class="d-flex gap-4 mb-4">
+                        <div class="font-serif display-5 text-accent">02</div>
+                        <div><h5>Architecture</h5><p class="small text-muted">Designing scalable blueprint.</p></div>
+                    </div>
+                    <div class="d-flex gap-4">
+                        <div class="font-serif display-5 text-accent">03</div>
+                        <div><h5>Deployment</h5><p class="small text-muted">Execution with continuous feedback.</p></div>
+                    </div>
+                </div>
+                <div class="col-lg-6 reveal-up d-flex align-items-center justify-content-center">
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 300px;">
+                        <div style="background: var(--border-color); height: 100px;"></div>
+                        <div style="background: var(--accent-color); height: 100px;"></div>
+                        <div style="background: var(--border-color); height: 100px;"></div>
+                        <div style="background: var(--border-color); height: 100px;"></div>
+                        <div style="background: var(--surface-color); border: 1px solid var(--accent-color); height: 100px;"></div>
+                        <div style="background: var(--border-color); height: 100px;"></div>
+                        <div style="background: var(--border-color); height: 100px;"></div>
+                        <div style="background: var(--border-color); height: 100px;"></div>
+                        <div style="background: var(--border-color); height: 100px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+        <div class="container text-center">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 reveal-up">
+                    <h1 class="display-1 font-serif mb-4">Let's Build.</h1>
+                    <p class="lead mb-5 opacity-75">Ready to transform your business architecture?</p>
+                    <a href="#" class="btn-main interactable">Initiate Contact</a>
+                    <p class="small text-muted mt-4">© 2024 VVG ONLINE. ALL RIGHTS RESERVED.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chat Modal -->
+    <div id="chat-modal">
+        <div class="chat-header">
+            <span>VVG-BOT CHAT</span>
+            <i class="bi bi-x-lg" style="cursor: pointer;" onclick="toggleChat()"></i>
+        </div>
+        <div class="chat-body" id="chat-messages">
+            <div class="mb-2"><strong class="text-accent">VVG-BOT:</strong> Hello! I'm ready to answer your questions about our services.</div>
+        </div>
+        <div class="chat-input-area">
+            <span class="text-accent">></span>
+            <input type="text" id="chat-input" placeholder="Ask something..." onkeypress="handleChat(event)">
+            <i class="bi bi-send interactable" onclick="sendMessage()"></i>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <script>
+        // ==========================================
+        // CORE LOGIC
+        // ==========================================
+        class App {
+            constructor() {
+                this.initCursor();
+                this.initScrollReveal();
+                this.initNavbar();
+                this.initThreeHero();
+                this.initChat();
+            }
+
+            // Custom Cursor
+            initCursor() {
+                const dot = document.querySelector('.cursor-dot');
+                const circle = document.querySelector('.cursor-circle');
+                
+                if(!window.matchMedia("(pointer: fine)").matches) return;
+
+                window.addEventListener('mousemove', e => {
+                    dot.style.left = `${e.clientX}px`;
+                    dot.style.top = `${e.clientY}px`;
+                    circle.animate({ left: `${e.clientX}px`, top: `${e.clientY}px` }, { duration: 500, fill: "forwards" });
+                });
+                document.querySelectorAll('.interactable').forEach(el => {
+                    el.addEventListener('mouseenter', () => circle.classList.add('hovered'));
+                    el.addEventListener('mouseleave', () => circle.classList.remove('hovered'));
+                });
+            }
+
+            // Scroll Reveal
+            initScrollReveal() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) entry.target.classList.add('active');
+                    });
+                }, { threshold: 0.1 });
+                document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el));
+            }
+
+            // Navbar Blur
+            initNavbar() {
+                const nav = document.getElementById('navbar');
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 50) nav.classList.add('scrolled');
+                    else nav.classList.remove('scrolled');
+                });
+            }
+
+            // Chat Logic
+            initChat() {
+                this.chatOpen = false;
+                window.toggleChat = () => {
+                    const modal = document.getElementById('chat-modal');
+                    this.chatOpen = !this.chatOpen;
+                    modal.style.display = this.chatOpen ? 'block' : 'none';
+                };
+                
+                // Click on robot to open chat
+                this.robotMesh.addEventListener('click', window.toggleChat);
+            }
+
+            // Three.js Scene with Robot
+            initThreeHero() {
+                const canvas = document.getElementById('hero-canvas');
+                const scene = new THREE.Scene();
+                // Dark Fog for depth
+                scene.fog = new THREE.FogExp2(0x111113, 0.02);
+
+                const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+                const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                renderer.shadowMap.enabled = true;
+
+                // Lighting
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+                scene.add(ambientLight);
+                const dirLight = new THREE.DirectionalLight(0xffdd33, 1);
+                dirLight.position.set(5, 5, 5);
+                scene.add(dirLight);
+
+                // --- BUILD THE ROBOT (Procedural) ---
+                this.robotGroup = new THREE.Group();
+
+                // Materials
+                const bodyMat = new THREE.MeshStandardMaterial({ color: 0x1a1a1c, roughness: 0.3, metalness: 0.8 });
+                const jointMat = new THREE.MeshStandardMaterial({ color: 0x333333, roughness: 0.7 });
+                const eyeMat = new THREE.MeshBasicMaterial({ color: 0xffdd33 }); // Glowing eyes
+                const treadMat = new THREE.MeshStandardMaterial({ color: 0x222222, roughness: 0.9 });
+
+                // 1. Body (Box)
+                const bodyGeo = new THREE.BoxGeometry(2, 2, 2);
+                const body = new THREE.Mesh(bodyGeo, bodyMat);
+                body.position.y = 1.5;
+                this.robotGroup.add(body);
+
+                // 2. Head (Box)
+                const headGeo = new THREE.BoxGeometry(1.8, 1.5, 1.8);
+                const head = new THREE.Mesh(headGeo, bodyMat);
+                head.position.y = 3.2;
+                this.robotGroup.add(head);
+                this.robotHead = head; // Reference for rotation
+
+                // 3. Eyes (Binocular style)
+                const eyeGeo = new THREE.CylinderGeometry(0.3, 0.3, 0.8, 16);
+                eyeGeo.rotateZ(Math.PI / 2);
+                
+                const leftEye = new THREE.Mesh(eyeGeo, eyeMat);
+                leftEye.position.set(-0.5, 3.2, 1);
+                this.robotGroup.add(leftEye);
+
+                const rightEye = new THREE.Mesh(eyeGeo, eyeMat);
+                rightEye.position.set(0.5, 3.2, 1);
+                this.robotGroup.add(rightEye);
+
+                // 4. Arms (Simple)
+                const armGeo = new THREE.BoxGeometry(0.4, 2.5, 0.4);
+                
+                const leftArm = new THREE.Mesh(armGeo, jointMat);
+                leftArm.position.set(-1.2, 2, 0);
+                leftArm.rotation.z = 0.2;
+                this.robotGroup.add(leftArm);
+                this.leftArm = leftArm; // Animate later
+
+                const rightArm = new THREE.Mesh(armGeo, jointMat);
+                rightArm.position.set(1.2, 2, 0);
+                rightArm.rotation.z = -0.2;
+                this.robotGroup.add(rightArm);
+                this.rightArm = rightArm; // Animate later
+
+                // 5. Treads (Cylinders)
+                const treadGeo = new THREE.CylinderGeometry(0.8, 0.8, 2.5, 16);
+                treadGeo.rotateZ(Math.PI / 2);
+
+                const leftTread = new THREE.Mesh(treadGeo, treadMat);
+                leftTread.position.set(-1.5, 0.4, 0);
+                this.robotGroup.add(leftTread);
+                this.leftTread = leftTread;
+
+                const rightTread = new THREE.Mesh(treadGeo, treadMat);
+                rightTread.position.set(1.5, 0.4, 0);
+                this.robotGroup.add(rightTread);
+                this.rightTread = rightTread;
+
+                // Position Robot on the Right Side
+                this.robotGroup.position.set(4, 0, 0); 
+                scene.add(this.robotGroup);
+                
+                // Store for raycaster click
+                this.robotMesh = body; // Clickable area
+
+                // Floor Grid
+                const gridHelper = new THREE.GridHelper(50, 50, 0x333333, 0x222222);
+                scene.add(gridHelper);
+
+                camera.position.z = 12;
+                camera.position.y = 2;
+
+                // Mouse Interaction for Head Tracking
+                this.mouse = new THREE.Vector2();
+                this.targetRotation = new THREE.Vector2();
+
+                window.addEventListener('mousemove', (e) => {
+                    // Normalize mouse -1 to 1
+                    this.mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+                    this.mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+                });
+
+                // Speech Bubble Logic
+                this.updateSpeechBubble();
+
+                // Animation Loop
+                const animate = () => {
+                    requestAnimationFrame(animate);
+
+                    // Head Tracking (Lerp for smoothness)
+                    this.targetRotation.x = this.mouse.y * 0.5;
+                    this.targetRotation.y = this.mouse.x * 0.5;
+                    
+                    this.robotHead.rotation.x += (this.targetRotation.x - this.robotHead.rotation.x) * 0.1;
+                    this.robotHead.rotation.y += (this.targetRotation.y - this.robotHead.rotation.y) * 0.1;
+
+                    // Breathing / Idle Animation
+                    const time = Date.now() * 0.002;
+                    this.robotGroup.position.y = Math.sin(time) * 0.2; // Bob up and down
+                    this.leftArm.rotation.z = 0.2 + Math.sin(time * 2) * 0.05; // Wave arms slightly
+                    this.rightArm.rotation.z = -0.2 + Math.cos(time * 2) * 0.05;
+
+                    // Rotate Treads
+                    this.leftTread.rotation.x -= 0.01;
+                    this.rightTread.rotation.x -= 0.01;
+
+                    // Scroll Parallax for Robot
+                    this.robotGroup.position.y = -window.scrollY * 0.005 + Math.sin(time) * 0.2;
+
+                    renderer.render(scene, camera);
+                };
+                animate();
+
+                // Resize
+                window.addEventListener('resize', () => {
+                    camera.aspect = window.innerWidth / window.innerHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                });
+            }
+
+            updateSpeechBubble() {
+                const bubble = document.getElementById('robot-bubble');
+                const text = document.getElementById('robot-text');
+                const sections = {
+                    'hero': "Hello! I am your digital assistant. Scroll down to explore our architecture.",
+                    'philosophy': "Precision is key. We analyze every variable before deployment.",
+                    'services': "Here are our core modules. AI, Cybersecurity, and Transformation.",
+                    'workflow': "1. Discovery, 2. Architecture, 3. Deployment. Simple and effective.",
+                    'contact': "Ready to talk? Click the button or ask me a question!"
+                };
+
+                window.addEventListener('scroll', () => {
+                    const scrollY = window.scrollY;
+                    let currentSection = 'hero';
+                    
+                    if (scrollY > document.getElementById('philosophy').offsetTop - 200) currentSection = 'philosophy';
+                    if (scrollY > document.getElementById('services').offsetTop - 200) currentSection = 'services';
+                    if (scrollY > document.getElementById('workflow').offsetTop - 200) currentSection = 'workflow';
+                    if (scrollY > document.getElementById('contact').offsetTop - 200) currentSection = 'contact';
+
+                    text.innerText = sections[currentSection];
+                    bubble.classList.add('active');
+                    
+                    // Reset animation
+                    setTimeout(() => {
+                       // bubble.style.transform = 'translateY(0)';
+                    }, 100);
+                });
+            }
+        }
+
+        // Chat Handlers
+        function handleChat(e) {
+            if (e.key === 'Enter') sendMessage();
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const msg = input.value;
+            if (!msg) return;
+
+            const chatBody = document.getElementById('chat-messages');
+            
+            // User Msg
+            chatBody.innerHTML += `<div class="mb-2 text-end text-accent">YOU: ${msg}</div>`;
+            input.value = '';
+
+            // Bot Response (Simulated)
+            setTimeout(() => {
+                let reply = "I'm processing that. Can you provide more details?";
+                if(msg.toLowerCase().includes('price')) reply = "Pricing depends on the scope of the digital transformation.";
+                if(msg.toLowerCase().includes('hello')) reply = "Hello there! How can VVG help you today?";
+                chatBody.innerHTML += `<div class="mb-2"><strong class="text-accent">VVG-BOT:</strong> ${reply}</div>`;
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 1000);
+        }
+
+        // Toggle Theme
+        window.toggleTheme = () => {
+            const html = document.documentElement;
+            const isDark = html.getAttribute('data-bs-theme') === 'dark';
+            html.setAttribute('data-bs-theme', isDark ? 'light' : 'dark');
+            if(isDark) {
+                document.body.style.backgroundColor = '#d9d9d9';
+                document.body.style.color = '#111113';
+            } else {
+                document.body.style.backgroundColor = '#111113';
+                document.body.style.color = '#d9d9d9';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => new App());
+    </script>
+</body>
+</html>

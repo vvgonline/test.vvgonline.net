@@ -1,0 +1,18 @@
+{
+  "services": [
+    {
+      "id": 1,
+      "title": "Digital Strategy",
+      "description": "Crafting innovative digital strategies for sustainable business growth.",
+      "icon": "strategy.svg",
+      "details": "Our digital strategy services focus on market analysis, competitive landscape, and technology integration to drive your business forward."
+    },
+    {
+      "id": 2,
+      "title": "AI Transformation",
+      "description": "Implementing AI solutions to automate processes and enhance decision-making.",
+      "icon": "ai.svg",
+      "details": "From machine learning models to natural language processing, we help integrate AI into your core operations for maximum impact."
+    }
+  ]
+}

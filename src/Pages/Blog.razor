@@ -6,19 +6,44 @@
 <HeroBanner Title="Digital Insights" 
     Subtitle="A curated collection of articles, analyses, and perspectives on technology, strategy, and the future of business." TagUser="// DIGITAL_INSIGHTS" TagPath="// STAY_UPDATED" />
 
-<section class="container py-5">
-    @if (posts is null)
+
+
+<section class="container py-3">
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <input type="text" class="form-control" placeholder="Search posts..." @bind-value="searchTerm" @oninput="FilterPosts" />
+        </div>
+        <div class="col-md-6">
+            @* <select class="form-select" @bind="selectedTag" @onchange="FilterPosts"> *@
+                <select class="form-select" @bind="selectedTag">
+                <option value="All">All Tags</option>
+                @if (allTags != null)
+                {
+                    @foreach (var tag in allTags.OrderBy(t => t))
+                    {
+                        <option value="@tag">@tag</option>
+                    }
+                }
+            </select>
+        </div>
+    </div>
+    @if (filteredPosts is null)
     {
         <p class="text-center">Loading...</p>
+    }
+    else if (!filteredPosts.Any())
+    {
+        <p class="text-center">No posts found matching your criteria.</p>
     }
     else
     {
         <div class="row g-4">
-            @foreach (var p in posts)
+            @foreach (var p in filteredPosts)
             {
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 p-4">
                         <h4 class="serif mb-3"><a href="/blog/@p.slug" class="text-dark">@p.title</a></h4>
+                        <p>@p.excerpt</p>
                         <div class="mt-auto mono border-top pt-3 d-flex justify-content-between">
                             <span>@p.date</span>
                             <span>@p.readTime MIN READ</span>
@@ -40,8 +65,14 @@
     string? date
         { get; set; }
         public int readTime { get; set; }
+        public string[]? tags { get; set; }
+        public string? excerpt { get; set; }
     }
     Post[]? posts;
+    Post[]? filteredPosts;
+    string searchTerm = string.Empty;
+    string selectedTag = "All";
+    string[]? allTags;
 
     protected override async Task OnInitializedAsync()
     {
@@ -68,6 +99,32 @@
 
         var doc = await Http.GetFromJsonAsync<BlogDoc>("assets/data/blog-posts.json");
         posts = doc?.posts;
+        allTags = posts?.SelectMany(p => p.tags ?? Enumerable.Empty<string>()).Distinct().ToArray();
+        FilterPosts();
+    }
+
+    void FilterPosts()
+    {
+        if (posts == null)
+        {
+            filteredPosts = null;
+            return;
+        }
+
+        var query = posts.AsEnumerable();
+
+        if (!string.IsNullOrWhiteSpace(searchTerm))
+        {
+            query = query.Where(p => p.title != null && p.title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                                     p.excerpt != null && p.excerpt.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
+        }
+
+        if (selectedTag != "All")
+        {
+            query = query.Where(p => p.tags != null && p.tags.Contains(selectedTag));
+        }
+
+        filteredPosts = query.ToArray();
     }
 
     class BlogDoc { public Post[]? posts { get; set; } }

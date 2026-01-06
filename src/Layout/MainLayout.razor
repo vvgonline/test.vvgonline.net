@@ -1,5 +1,6 @@
 @inherits LayoutComponentBase
 @inject IJSRuntime JS
+@inject VVG.Web.Services.ThemeService ThemeService
 
 <CascadingValue Value="this">
     <MetaTags />
@@ -74,6 +75,11 @@
     {
         isTerminalOpen = !isTerminalOpen;
         StateHasChanged();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ThemeService.InitializeThemeAsync();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

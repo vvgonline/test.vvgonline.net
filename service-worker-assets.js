@@ -1,5 +1,5 @@
 self.assetsManifest = {
-  "version": "KmuGZEod",
+  "version": "vZ1BYV1C",
   "assets": [
     {
       "hash": "sha256-rW8cWS8jo90jOb4i3LwtuqGRFyEEhofc+tfAmUwRqwY=",
@@ -58,8 +58,8 @@ self.assetsManifest = {
       "url": "_framework/Microsoft.AspNetCore.Components.WebAssembly.cqfuxaqd2b.wasm"
     },
     {
-      "hash": "sha256-nOzH62YqTiPMcfVVBnOpzYN24anhb3N72QI+tE6mAFo=",
-      "url": "_framework/Microsoft.AspNetCore.Components.sis85ftl2g.wasm"
+      "hash": "sha256-CB/TpeCtl/BG2T7Ar4Yg6D5v4CvHI8imee9cU30wo8s=",
+      "url": "_framework/Microsoft.AspNetCore.Components.sz4rdg29a0.wasm"
     },
     {
       "hash": "sha256-II2IMFFwMrZ8T7O1jcKjyTGYt1jy8oh5T4fzISc4Fso=",
@@ -170,8 +170,8 @@ self.assetsManifest = {
       "url": "_framework/System.ComponentModel.TypeConverter.qxwegspfgi.wasm"
     },
     {
-      "hash": "sha256-PtPJ8Zp5susrime+dPItAN9pmDXzNKEpB2DArXsdPgk=",
-      "url": "_framework/System.Console.inznf8jk80.wasm"
+      "hash": "sha256-OFSLj8aONQGinek9X7vlVaknh6D5cKza5Kmlptgp2EA=",
+      "url": "_framework/System.Console.guc7foasqs.wasm"
     },
     {
       "hash": "sha256-Pm6KO+s3L5AlP5qykvyfe5LOhHt1J4vCNIIt8B7JpVE=",
@@ -374,16 +374,16 @@ self.assetsManifest = {
       "url": "_framework/System.Xml.XmlSerializer.bfsm7rg8bh.wasm"
     },
     {
-      "hash": "sha256-dPa4IP4V4hJmNzbLh3/xo2VcA3yfu9JWMwFmKezQNEM=",
-      "url": "_framework/VVG.Web.whj7o0crnw.wasm"
+      "hash": "sha256-K8WkW8Nt8VjL4yv7Xo7Zyu7r4CtTI9IuoOE52RFIcYY=",
+      "url": "_framework/VVG.Web.h5pekod0pp.wasm"
     },
     {
       "hash": "sha256-3lCWrko3zwspV40aQhs2S/IMkRSarnHRKIdkHhuXIBA=",
       "url": "_framework/blazor.webassembly.66stpp682q.js"
     },
     {
-      "hash": "sha256-mTmPNd5yOrpTCbGAGXXV6wf2hn3ajAjRV8Ry1N1cjpc=",
-      "url": "_framework/dotnet.dffi3u47um.js"
+      "hash": "sha256-gPmwMFtxxYV38SUvq2vZlvf1/sEhy+q4JToFLFG6VGE=",
+      "url": "_framework/dotnet.08yl1in76t.js"
     },
     {
       "hash": "sha256-/I3SDHIle7heAxlUGBrgxax+lkKyWyRLBVEJmTHJSCs=",
@@ -436,6 +436,10 @@ self.assetsManifest = {
     {
       "hash": "sha256-PsJUOj/JMheXUXzpPhD23ELYqSdxCYfyQfcVQuWxViw=",
       "url": "assets/css/_preloader.scss"
+    },
+    {
+      "hash": "sha256-JFXblDTsr47emFZ8I9XqwYW7pcsya5rJ00RKILmfyTM=",
+      "url": "assets/css/_terminal-like-services-page.scss"
     },
     {
       "hash": "sha256-cBtbCcuaPrHtEms6H+EpIONR480Tu2sXYNLS3NCk8bo=",
@@ -498,7 +502,7 @@ self.assetsManifest = {
       "url": "assets/images/twitter-cards/vvg-online-home-twitter-card.svg"
     },
     {
-      "hash": "sha256-o5vtdThcip3jFhTOytkK7ydba/NK6b/lAde3KZyKjxI=",
+      "hash": "sha256-CEi4T0XK/xN/VHcl0ia8bpUa/zdcWYmgdjTidemLIj0=",
       "url": "assets/js/boot-sequence.js"
     },
     {
@@ -514,7 +518,31 @@ self.assetsManifest = {
       "url": "assets/js/theme.js"
     },
     {
-      "hash": "sha256-FCAohlSlmp2jv9N9p5apfNZeQGhxLJyJJ4fjOQBGWKY=",
+      "hash": "sha256-aH5wGf3Tq3Hl6pIvr0PhTghq19xMZSv+pXTthYCBTQA=",
+      "url": "data/blog-posts.json"
+    },
+    {
+      "hash": "sha256-qwNWNS72UFEL3ML+pzRfWn9E2+SurhfoWsJpr0fq0ns=",
+      "url": "data/facts-figures.json"
+    },
+    {
+      "hash": "sha256-UQccU7uVtW+01qNmSKF3luHak23qzxU9X0GzbRwgsQM=",
+      "url": "data/metadata.json"
+    },
+    {
+      "hash": "sha256-rcFfCklk6bXiHnr8TfBfudKCITAjiLjyXW56Ok7VrMw=",
+      "url": "data/open-graph.json"
+    },
+    {
+      "hash": "sha256-T4/EfNU2B/Bq/eU3pbq1DNYTg1bihNy/lqWskwtRZdY=",
+      "url": "data/services.json"
+    },
+    {
+      "hash": "sha256-KgZzFYU4bXAWMzryiMCEvOOvxvQ77540/lieTaIojGg=",
+      "url": "data/twitter-card.json"
+    },
+    {
+      "hash": "sha256-kitf1fQRwkNHGswz25ODp+qiYe3gyT6tIG2ZVQ4thyg=",
       "url": "index.html"
     },
     {
@@ -696,6 +724,14 @@ self.assetsManifest = {
     {
       "hash": "sha256-D3hkqoz5MEmVRgMphIGTuaiCEfgqlLIY66hoPYfvSzk=",
       "url": "manifest.webmanifest"
+    },
+    {
+      "hash": "sha256-7Zefngs3mxqaBtsXpTJLdTw/RP7TiDlRfE3mnX1sMfA=",
+      "url": "robots.txt"
+    },
+    {
+      "hash": "sha256-Ytt6X82mMknnBs5cwyzFJKDiC5RR0OZQT7L9BW3j/a8=",
+      "url": "sitemap.xml"
     }
   ]
 };

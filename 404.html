@@ -30,8 +30,8 @@
     <meta name="twitter:description" content="A test website for VVG online." />
     <meta name="twitter:image"
         content="https://github.com/vvgonline/test.vvgonline.net/blob/main/src/wwwroot/assets/images/twitter-cards/vvg-online-home-twitter-card.png?raw=true" />
-   <base href="/test.vvgonline.net/" /> 
-    <link href="_framework/dotnet.dffi3u47um.js" rel="preload" as="script" fetchpriority="high" crossorigin="anonymous" integrity="sha256-mTmPNd5yOrpTCbGAGXXV6wf2hn3ajAjRV8Ry1N1cjpc=" />
+   <base href="/test.vvgonline.net/">
+    <link href="_framework/dotnet.08yl1in76t.js" rel="preload" as="script" fetchpriority="high" crossorigin="anonymous" integrity="sha256-gPmwMFtxxYV38SUvq2vZlvf1/sEhy+q4JToFLFG6VGE=" />
     <link
         href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;600&display=swap"
         rel="stylesheet">
@@ -47,7 +47,7 @@
     <script type="importmap">{
   "imports": {
     "./_framework/blazor.webassembly.js": "./_framework/blazor.webassembly.66stpp682q.js",
-    "./_framework/dotnet.js": "./_framework/dotnet.dffi3u47um.js",
+    "./_framework/dotnet.js": "./_framework/dotnet.08yl1in76t.js",
     "./_framework/dotnet.native.js": "./_framework/dotnet.native.cs8mcre4gh.js",
     "./_framework/dotnet.runtime.js": "./_framework/dotnet.runtime.0j6ezsi0n0.js"
   },
@@ -55,8 +55,8 @@
   "integrity": {
     "./_framework/blazor.webassembly.66stpp682q.js": "sha256-3lCWrko3zwspV40aQhs2S/IMkRSarnHRKIdkHhuXIBA=",
     "./_framework/blazor.webassembly.js": "sha256-3lCWrko3zwspV40aQhs2S/IMkRSarnHRKIdkHhuXIBA=",
-    "./_framework/dotnet.dffi3u47um.js": "sha256-mTmPNd5yOrpTCbGAGXXV6wf2hn3ajAjRV8Ry1N1cjpc=",
-    "./_framework/dotnet.js": "sha256-mTmPNd5yOrpTCbGAGXXV6wf2hn3ajAjRV8Ry1N1cjpc=",
+    "./_framework/dotnet.08yl1in76t.js": "sha256-gPmwMFtxxYV38SUvq2vZlvf1/sEhy+q4JToFLFG6VGE=",
+    "./_framework/dotnet.js": "sha256-gPmwMFtxxYV38SUvq2vZlvf1/sEhy+q4JToFLFG6VGE=",
     "./_framework/dotnet.native.cs8mcre4gh.js": "sha256-/I3SDHIle7heAxlUGBrgxax+lkKyWyRLBVEJmTHJSCs=",
     "./_framework/dotnet.native.js": "sha256-/I3SDHIle7heAxlUGBrgxax+lkKyWyRLBVEJmTHJSCs=",
     "./_framework/dotnet.runtime.0j6ezsi0n0.js": "sha256-jCsbbdXoVd1zzGc0fQT2sz4mKuv0ANdurPVGo5Sc2jg=",
@@ -66,38 +66,22 @@
 </head>
 
 <body>
-    <!-- <div id="preloader" class="preloader-container"></div> -->
     <div id="app">
-        <!-- <div id="preloader" class="preloader-container">
-            <svg class="loading-progress">
-                <circle r="40%" cx="50%" cy="50%" />
-                <circle r="40%" cx="50%" cy="50%" />
-            </svg>
-            <div class="loading-progress-text"></div>
-        </div> -->
         <div class="preloader">
             <div class="loading-box">
                 <div class="loader"></div>
                 <div class="terminal-output msg-1">_</div>
-                <div class="terminal-output msg-2">SYSTEM BOOT...</div>
+                <div class="terminal-output msg-2">SYSTEM BOOTING...</div>
             </div>
         </div>
-        <component type="typeof(App)" render-mode="WebAssemblyPrerendered" />
     </div>
-
-    <!-- <div id="blazor-error-ui">
-        An unhandled error has occurred.
-        <a href="." class="reload">Reload</a>
-        <span class="dismiss">🗙</span>
-    </div> -->
     <script src="assets/js/boot-sequence.js" defer async></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer async></script>
     <script src="./assets/js/theme.js" defer async></script>
     <script src="./assets/js/redesign.js" defer async></script>
     <script src="./assets/js/meta.js" defer async></script>
-
     <script src="_framework/blazor.webassembly.66stpp682q.js"></script>
     <script>navigator.serviceWorker.register('service-worker.js', { updateViaCache: 'none' });</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer async></script>
     <script>
         window.addEventListener('load', function () {
             var preloader = document.getElementById('preloader');

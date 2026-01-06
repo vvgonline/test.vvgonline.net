@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!preloader) return;
 
     // Clean up any existing HTML inside preloader (like spinners)
-    preloader.innerHTML = '<div class="terminal-output-area" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; width: 100%;"></div>';
+    preloader.innerHTML = '<div class="terminal-output-area" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; width: 85%;"></div>';
     const output = preloader.querySelector('.terminal-output-area');
 
     // NOTE: All backslashes (\) in the ASCII art below are escaped as (\\) to display correctly in JS.

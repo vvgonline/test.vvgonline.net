@@ -28,6 +28,7 @@ models:
     roles:
       - chat
       - edit
+      - apply
 
   - name: Qwen3 Coder 30B A3B
     provider: ollama
@@ -36,6 +37,7 @@ models:
     roles:
       - chat
       - edit
+      - apply
 
   # Vision model
   - name: Qwen3 VL 8B
@@ -56,12 +58,13 @@ models:
       - autocomplete
       - chat
 
-  - name: NVIDIA-Nemotron-Nano-9B-v2-GGUF:Q8_0
+  - name: NVIDIA-Nemotron-Nano-9B-v2
     provider: ollama
     model: hf.co/bartowski/nvidia_NVIDIA-Nemotron-Nano-9B-v2-GGUF:Q8_0
     apiBase: http://localhost:11434
     roles:
       - chat
+      - edit
 
   - name: Qwen2.5 Coder 7B Base
     provider: ollama
@@ -70,7 +73,9 @@ models:
     roles:
       - autocomplete
       - chat
-  - name: qwen2.5-coder:14b-instruct-q8_0
+      - edit
+
+  - name: Qwen2.5 Coder 14B Instruct
     provider: ollama
     model: qwen2.5-coder:14b-instruct-q8_0
     apiBase: http://localhost:11434
@@ -87,13 +92,14 @@ models:
       maxTokens: 4096
       stop:
         - "\n\n"
-  
-  - name: Qwen3-4B-Thinking-2507-Kimi-K2-Thinking-Distill-q6_k
+
+  - name: Qwen3 4B Kimi K2 Thinking Distill
     provider: ollama
     model: hf.co/Kimi-AI/Qwen3-4B-Thinking-2507-Kimi-K2-Thinking-Distill-q6_k
     apiBase: http://localhost:11434
     roles:
       - chat
+      - edit
     defaultCompletionOptions:
       contextLength: 24576
       temperature: 0.3
@@ -102,6 +108,71 @@ models:
       maxTokens: 4096
       stop:
         - "\n\n"
+
+  # Additional models from Ollama list
+  - name: Qwen3 4B Thinking FP16
+    provider: ollama
+    model: qwen3:4b-thinking-2507-fp16
+    apiBase: http://localhost:11434
+    roles:
+      - chat
+
+  - name: Qwen3 8B Q8
+    provider: ollama
+    model: qwen3:8b-q8_0
+    apiBase: http://localhost:11434
+    roles:
+      - chat
+      - edit
+
+  - name: Qwen3 4B FP16
+    provider: ollama
+    model: qwen3:4b-fp16
+    apiBase: http://localhost:11434
+    roles:
+      - chat
+
+  - name: Ministral 3 8B Instruct
+    provider: ollama
+    model: ministral-3:8b-instruct-2512-q8_0
+    apiBase: http://localhost:11434
+    roles:
+      - chat
+      - edit
+
+  - name: Ministral 3 3B FP16
+    provider: ollama
+    model: ministral-3:3b-instruct-2512-fp16
+    apiBase: http://localhost:11434
+    roles:
+      - chat
+
+  - name: Qwen3 VL 4B Instruct
+    provider: ollama
+    model: qwen3-vl:4b-instruct-bf16
+    apiBase: http://localhost:11434
+    roles:
+      - chat
+    capabilities:
+      - image_input
+
+  - name: Qwen3 VL 2B Thinking
+    provider: ollama
+    model: qwen3-vl:2b-thinking-bf16
+    apiBase: http://localhost:11434
+    roles:
+      - chat
+    capabilities:
+      - image_input
+
+  - name: My Unsloth Qwen3 Coder
+    provider: ollama
+    model: my-unsloth-qwen3-coder:latest
+    apiBase: http://localhost:11434
+    roles:
+      - chat
+      - edit
+      - apply
 
   # Embeddings
   - name: Nomic Embed
@@ -131,15 +202,18 @@ context:
 
 rules:
   - Always give concise responses
-  - Always Prefer C# (csharp)
+  - Always prefer C# (csharp)
   - Prefer TypeScript over JavaScript
-  - Prefer scss over css
+  - Prefer SCSS over CSS
   - Be very comprehensive
   - Prefer bullet points over long paragraphs
+  - Use markdown code blocks with language identifiers
+  - Include examples when explaining concepts
+  - For C#, follow Microsoft naming conventions (PascalCase for public members)
   - If you don't understand, say 'I don't know'
   - Always confirm your thought process before giving answers
   - Think deeply. No rush.
-  - Ask for more context if needed. I have no issue explaining my queries in length and depth.
+  - Ask for more context if needed
   - Tone - master explaining to student
 
 prompts:

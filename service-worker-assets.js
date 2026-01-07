@@ -1,5 +1,5 @@
 self.assetsManifest = {
-  "version": "vZ1BYV1C",
+  "version": "ErTMkrvC",
   "assets": [
     {
       "hash": "sha256-rW8cWS8jo90jOb4i3LwtuqGRFyEEhofc+tfAmUwRqwY=",
@@ -374,16 +374,12 @@ self.assetsManifest = {
       "url": "_framework/System.Xml.XmlSerializer.bfsm7rg8bh.wasm"
     },
     {
-      "hash": "sha256-K8WkW8Nt8VjL4yv7Xo7Zyu7r4CtTI9IuoOE52RFIcYY=",
-      "url": "_framework/VVG.Web.h5pekod0pp.wasm"
+      "hash": "sha256-8aaE3d2Ay1QCsEvDuCj2Tv5fWFTnz+Y3l80wTZ0+TqM=",
+      "url": "_framework/VVG.Web.9qgxs2bhqy.wasm"
     },
     {
       "hash": "sha256-3lCWrko3zwspV40aQhs2S/IMkRSarnHRKIdkHhuXIBA=",
       "url": "_framework/blazor.webassembly.66stpp682q.js"
-    },
-    {
-      "hash": "sha256-gPmwMFtxxYV38SUvq2vZlvf1/sEhy+q4JToFLFG6VGE=",
-      "url": "_framework/dotnet.08yl1in76t.js"
     },
     {
       "hash": "sha256-/I3SDHIle7heAxlUGBrgxax+lkKyWyRLBVEJmTHJSCs=",
@@ -392,6 +388,10 @@ self.assetsManifest = {
     {
       "hash": "sha256-vjddPOzSD1RO9Een4QrlAPnxzBSmD/QchBKKmBMLZwg=",
       "url": "_framework/dotnet.native.muve7a13r4.wasm"
+    },
+    {
+      "hash": "sha256-NSVzjH+3mGDo1olE7xbsbOQGUXg4voip/dN/FylqJas=",
+      "url": "_framework/dotnet.rka5ipk2ok.js"
     },
     {
       "hash": "sha256-jCsbbdXoVd1zzGc0fQT2sz4mKuv0ANdurPVGo5Sc2jg=",
@@ -466,6 +466,34 @@ self.assetsManifest = {
       "url": "assets/data/blog-posts.json"
     },
     {
+      "hash": "sha256-/PMM+ZSDTL6FUVN/LtVJen7HESphz4G6yHnOiGMvlsE=",
+      "url": "assets/data/blogs-md/Communication-Mastery-for-Digital-Business-Success.md"
+    },
+    {
+      "hash": "sha256-qbTUKjeJOQILCYsTYutr7SLKECiCsM/g7H119C6aa2A=",
+      "url": "assets/data/blogs-md/Digital-Assets-The-Real-Estate-of-the-Virtual-World.md"
+    },
+    {
+      "hash": "sha256-+wvNum5QpDTXR3L4eVl4F3U9/p4KydK/HQi6uETkkHQ=",
+      "url": "assets/data/blogs-md/Don-t-Normalize-Common-Things-A-Philosophy-for-Business-Excellence.md"
+    },
+    {
+      "hash": "sha256-yRUJTlp/S9mr3HPVMZ+7Xyirtj+3jrmgy8R9BfDji1Q=",
+      "url": "assets/data/blogs-md/GST-Rate-Deductions-for-E-commerce-A-Complete-Guide-by-VVG-ONLINE.md"
+    },
+    {
+      "hash": "sha256-CR60b27W67vlGuYZua7Lnk4LiwEVssxiAGGtoC/uuIY=",
+      "url": "assets/data/blogs-md/Key-Performance-Indicators-KPIs.md"
+    },
+    {
+      "hash": "sha256-fk1OJPAMKXfDl0UhnX0T5uQ9hJvTgZhrl8Lkpmgaybo=",
+      "url": "assets/data/blogs-md/Operating-Model-Design.md"
+    },
+    {
+      "hash": "sha256-Owns8/L/z4uLYVkvwpfkDARMBpajtpgJ7VUqsc8iS1c=",
+      "url": "assets/data/blogs-md/The-Digital-Marketing-Investment-Imperative.md"
+    },
+    {
       "hash": "sha256-2Wvou+lYygqNAzxreQrcAmsRh59RfD69Ugna3Hb53F8=",
       "url": "assets/data/facts-figures.json"
     },
@@ -518,31 +546,7 @@ self.assetsManifest = {
       "url": "assets/js/theme.js"
     },
     {
-      "hash": "sha256-aH5wGf3Tq3Hl6pIvr0PhTghq19xMZSv+pXTthYCBTQA=",
-      "url": "data/blog-posts.json"
-    },
-    {
-      "hash": "sha256-qwNWNS72UFEL3ML+pzRfWn9E2+SurhfoWsJpr0fq0ns=",
-      "url": "data/facts-figures.json"
-    },
-    {
-      "hash": "sha256-UQccU7uVtW+01qNmSKF3luHak23qzxU9X0GzbRwgsQM=",
-      "url": "data/metadata.json"
-    },
-    {
-      "hash": "sha256-rcFfCklk6bXiHnr8TfBfudKCITAjiLjyXW56Ok7VrMw=",
-      "url": "data/open-graph.json"
-    },
-    {
-      "hash": "sha256-T4/EfNU2B/Bq/eU3pbq1DNYTg1bihNy/lqWskwtRZdY=",
-      "url": "data/services.json"
-    },
-    {
-      "hash": "sha256-KgZzFYU4bXAWMzryiMCEvOOvxvQ77540/lieTaIojGg=",
-      "url": "data/twitter-card.json"
-    },
-    {
-      "hash": "sha256-kitf1fQRwkNHGswz25ODp+qiYe3gyT6tIG2ZVQ4thyg=",
+      "hash": "sha256-xOyyjflvMAsrCSvRBii5aVJkXUP4XBXmQjwxCmPHn4k=",
       "url": "index.html"
     },
     {

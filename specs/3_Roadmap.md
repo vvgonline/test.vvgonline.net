@@ -47,6 +47,34 @@ This roadmap outlines the phased approach to implementing the required features 
     *   **Dependencies:** `facts-figures.json` must be populated.
     *   **Status:** Pending.
     *   **Artifacts:** Implemented `Chart.razor`, data binding.
+*   **Task 2.5: Blog Content Model and Index**
+    *   **Description:** Define the markdown + front‑matter structure for blog posts and implement the build‑time process that generates `blog-index.json` (and optional search index).
+    *   **Dependencies:** Existing blog content scraping and markdown export must be available.
+    *   **Status:** Pending.
+    *   **Artifacts:** `wwwroot/blog/*.md`, `wwwroot/data/blog-index.json`, build script or CI step.
+*   **Task 2.6: Blog Layouts**
+    *   **Description:** Implement `BlogLayout.razor` separate from `MainLayout.razor`, with a two‑column layout and sidebar used by `/blog`, `/archives`, and `/blog/{slug}`.
+    *   **Dependencies:** Core routing and base layout must be stable.
+    *   **Status:** Pending.
+    *   **Artifacts:** `BlogLayout.razor`, updates to routing and layout assignment.
+*   **Task 2.7: Blog Index and Archives Pages**
+    *   **Description:** Implement:
+        * `Blog.razor` as the index page, reading from `blog-index.json` and showing a list of posts with basic tag filter.
+        * `Archives.razor` with year/tag filters and search box.
+    *   **Dependencies:** Task 2.5 (content model and index).
+    *   **Status:** Pending.
+    *   **Artifacts:** `Blog.razor`, `Archives.razor`, filter/search logic.
+*   **Task 2.8: TOC and Sidebar Components**
+    *   **Description:** Implement sidebar modules and a collapsible, scroll‑aware TOC for long posts.
+    *   **Dependencies:** Single post view (`ViewPost.razor` or `/blog/{slug}` component) and heading structure must be defined.
+    *   **Status:** Pending.
+    *   **Artifacts:** `BlogToc.razor`, `BlogSidebarAbout.razor`, `BlogSidebarHighlights.razor`, `BlogSidebarTags.razor`, supporting JS interop for scrollspy.
+*   **Task 2.9: Sharing and CTA**
+    *   **Description:** Add simple “copy link” and optional share button on single posts and define an end‑of‑post CTA pattern.
+    *   **Dependencies:** Single post layout and routing.
+    *   **Status:** Pending.
+    *   **Artifacts:** CTA component, copy/share UI in post template.
+
 
 ### Phase 3: Verification and Polish
 
@@ -65,5 +93,16 @@ This roadmap outlines the phased approach to implementing the required features 
     *   **Dependencies:** All previous tasks.
     *   **Status:** Pending.
     *   **Artifacts:** Finalized code, updated documentation.
+*   **Task 3.4: Blog UX and Navigation Review**
+    *   **Description:** Validate usability of the blog index, archives filters, search box, sidebar, and TOC on desktop and mobile.
+    *   **Dependencies:** Tasks 2.5–2.8.
+    *   **Status:** Pending.
+    *   **Artifacts:** UX review notes, backlog of refinements
+*   **Task 3.5: Performance and Accessibility Audit (Blog)**
+    *   **Description:** Measure load and interaction performance of blog views in Blazor WASM and verify accessibility (focus order, keyboard navigation, ARIA attributes for TOC and filters).
+    *   **Dependencies:** All blog features implemented.
+    *   **Status:** Pending.
+    *   **Artifacts:** Performance profile, accessibility checklist, fixes.
+
 
 This roadmap will be updated as implementation progresses and new information becomes available.

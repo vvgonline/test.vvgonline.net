@@ -24,4 +24,25 @@ The primary goals for the `test.vvgonline.net` project are:
 15. **Continuous Integration/Continuous Deployment (CI/CD):** Set up CI/CD pipelines for automated testing and deployment.
 16. **Community Engagement:** Foster a community around the project for feedback and contributions.
 
+## Blog Experience Vision
+
+The `test.vvgonline.net` blog should:
+
+1. Serve as the canonical, markdown‑driven archive of VVG ONLINE thought leadership, with Git as the source of truth for all posts.
+2. Provide a focused reading experience with:
+   - A clean main reading column.
+   - A contextual sidebar with about/profile, highlights, and navigation aids.
+   - A collapsible “On this page” table of contents (TOC) for long posts.
+3. Support efficient discovery of content through:
+   - A dedicated archives page with year and tag filters.
+   - A prominent search box for full‑text search across titles and content.
+4. Support a markdown‑first authoring workflow:
+   - Posts authored as markdown files with front‑matter (title, slug, date, tags, draft, excerpt).
+   - A build step that generates a JSON index for fast client‑side rendering in Blazor WebAssembly.
+5. Keep interaction intentionally minimal:
+   - Simple share/copy‑link actions and clear CTAs (e.g., contact, services) instead of heavy commenting systems in the initial release.
+6. Maintain performance and accessibility:
+   - Static hosting (GitHub Pages) friendly architecture.
+   - Sanitary markdown→HTML rendering to avoid XSS while preserving rich formatting.
+
 The project aims to serve as a testbed for new features of VVG ONLINE's website.

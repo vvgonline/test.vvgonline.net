@@ -39,6 +39,29 @@ This document outlines the specific product requirements and details the impleme
       "site_name": "VVG ONLINE"
     }
     ```
+* **Example Structure (`json-ld.json`):**
+
+    ```json
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://vvgonline.github.io/test.vvgonline.net/",
+      "name": "VVG ONLINE - Digital Business Consulting",
+      "description": "Leading digital business consulting services to transform your enterprise.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "VVG ONLINE",
+        "url": "https://vvgonline.net"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://vvgonline.github.io/test.vvgonline.net/archives?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    ```
+
+* **Requirement:** Add a `json-ld.json` file under `src/wwwroot/data/` and ensure `MetadataService.cs` injects a `<script type="application/ld+json">` tag on pages where structured data is needed (site‑wide on Home, and optionally enriched on blog post pages).
 
 ### 2. Blog Search and Filtering
 
@@ -52,6 +75,118 @@ This document outlines the specific product requirements and details the impleme
     * **Performance:** Ensure efficient searching and filtering to maintain a responsive user experience, even with a large number of blog posts.
     * **Styling:** Ensure the search and filter UI elements align with the overall design aesthetics of the site.
     * **Scrap current blog posts from the existing blog section:** Extract existing blog posts from the current blog section of the [site](https://vvgonline.net/#insights) to populate the new blog structure.
+
+### 2.1 Blog Content Model and Storage
+
+* **Requirement:** Use markdown files with front‑matter as the single source of truth for blog posts.
+* **Data Structure:**
+  * Each post is a `.md` file stored under `wwwroot/blog/` (or `wwwroot/data/blog/`), with front‑matter keys:
+    * `title` (string)
+    * `slug` (string, URL path segment)
+    * `publishedAt` (ISO date string)
+    * `tags` (string array)
+    * `excerpt` (string, optional)
+    * `draft` (boolean)
+* **Behavior:**
+  * Draft posts are excluded from public listings and routing.
+  * Slugs must be unique; navigating to `/blog/{slug}` loads the corresponding post.
+* **Index Generation:**
+  * A build step generates a `blog-index.json` file containing:
+    * `title`, `slug`, `publishedAt`, `tags`, `excerpt`, `draft` (no full body content).
+  * The Blazor WASM app loads `blog-index.json` to power listings, archives, and search.
+
+### 2.2 Blog Layouts and Views
+
+* **Requirement:** Separate general site layout from blog layout.
+* **Main Layout (`MainLayout`):**
+  * Used for non‑blog pages (home, services, contact).
+  * Single‑column or simple top‑nav layout, without blog sidebar or TOC.
+* **Blog Layout (`BlogLayout`):**
+  * Used for `/blog`, `/archives`, and `/blog/{slug}` routes.
+  * Two‑column layout on desktop:
+    * Main column: post list or article content (approx. 65–70% width).
+    * Sidebar: about/profile card, highlights, tags, and optional TOC.
+  * On mobile, columns stack vertically (main content first, then sidebar modules).
+
+* **Blog Index Page (`/blog`):**
+  * Displays a vertical list of posts ordered by `publishedAt` (newest first).
+  * Each list item includes:
+    * Title (links to `/blog/{slug}`).
+    * Published date.
+    * Tags.
+    * Excerpt (from front‑matter, or auto‑generated from content).
+    * "Read more" link.
+  * A slim filter bar above the list allows filtering by tag (single or multi‑select).
+
+* **Single Post Page (`/blog/{slug}`):**
+  * Shows title, date, and tags at the top.
+  * Renders the markdown content as sanitized HTML.
+  * End‑of‑post “More like this” area:
+    * At least 3 related posts matching tags and/or year, if available.
+  * End‑of‑post CTA area:
+    * A configurable component for newsletter signup or contact/services.
+
+### 2.3 Archives, Filters, and Search
+
+* **Requirement:** Provide a dedicated archives view with year/tag filters and search.
+
+* **Archives Page (`/archives`):**
+  * A search box at the top that filters posts by title and content.
+  * Year filter:
+    * Filter by `publishedAt` year (e.g., 2023, 2024, 2025).
+    * Year groupings are collapsible/expandable.
+  * Tag filter:
+    * Clickable tag chips or checkboxes.
+    * Selecting multiple tags constrains results (logical AND).
+  * Results area:
+    * Shows posts grouped by year, respecting active filters and search query.
+
+* **Search Behavior:**
+  * Search is applied client‑side against a pre‑built index:
+    * At minimum, `title`, `excerpt`, and lightweight content snippet fields.
+  * Search and filters combine:
+    * Search text AND year AND tags.
+  * Clearing search and filters resets to all posts.
+
+### 2.4 Sidebar and Table of Contents (TOC)
+
+* **Requirement:** Provide a contextual sidebar with an optional collapsible TOC.
+
+* **Sidebar Content:**
+  * About/Profile card:
+    * Short description and link to “About”/“Services”.
+  * Highlights:
+    * Configurable list of pinned posts or series.
+  * Tag cloud or tag list:
+    * Limited to a curated set of top tags for compactness.
+  * Back to Top button:
+    * Smoothly scrolls to the top of the page when clicked.
+    * should be visible after scrolling down a certain distance.
+
+* **TOC Behavior:**
+  * The TOC is shown only on single post pages.
+  * It is generated from the post’s heading structure (H2/H3).
+  * A “Contents” or “On this page” header labels the TOC.
+  * Collapsible:
+    * Desktop: expanded by default.
+    * Mobile: collapsed by default with a chevron or “Show contents” control.
+  * Clicking a TOC item scrolls smoothly to the corresponding heading.
+  * The currently visible section is highlighted (scrollspy‑style state).
+
+### 2.5 Interaction and Sharing
+
+* **Requirement:** Keep interaction minimal and focused on navigation and sharing.
+
+* **Initial Interaction Features:**
+  * A “Copy link” action on single posts (copies canonical URL to clipboard).
+  * Optional light‑weight share button that triggers the browser’s native share dialog where supported.
+  * Clear call‑to‑action at the end of posts (e.g., “Contact VVG ONLINE” or “Explore services”).
+
+* **Deferred Features (Out of Scope for v1):**
+  * Custom comment system.
+  * Like counters or visible subscriber counts.
+  * In‑browser blog post editing and publishing UI.
+
 
 ### 3. Theme Toggle
 

@@ -34,7 +34,11 @@
                         <ul class="list-unstyled mt-3">
                             @foreach (var subservice in s.subservices)
                             {
-                                <li>- @subservice.name</li>
+                                <li class="mb-2">
+                                    <i class="bi bi-check2 text-accent me-1"></i>
+                                    <strong>@subservice.name</strong>
+                                    <div class="small text-muted ms-3">@subservice.description</div>
+                                </li>
                             }
                         </ul>
                     }

@@ -32,7 +32,7 @@
         content="https://github.com/vvgonline/test.vvgonline.net/blob/main/src/wwwroot/assets/images/twitter-cards/vvg-online-home-twitter-card.png?raw=true" />
     <meta name="theme-color" content="#ffdd33" />
     <base href="/test.vvgonline.net/">
-    <link href="_framework/dotnet.1e5ikzwn7v.js" rel="preload" as="script" fetchpriority="high" crossorigin="anonymous" integrity="sha256-N1TBhI+ZBpfWUAiYST0cC/UkYcO3fyocF2TLmjKi4EQ=" />
+    <link href="_framework/dotnet.ias1efu8nn.js" rel="preload" as="script" fetchpriority="high" crossorigin="anonymous" integrity="sha256-hnB/vXpUEEaq2EIKj/B1iM4gtRQNe2jqKnEqjRgnVhI=" />
     <link
         href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;600&display=swap"
         rel="stylesheet">
@@ -48,7 +48,7 @@
     <script type="importmap">{
   "imports": {
     "./_framework/blazor.webassembly.js": "./_framework/blazor.webassembly.66stpp682q.js",
-    "./_framework/dotnet.js": "./_framework/dotnet.1e5ikzwn7v.js",
+    "./_framework/dotnet.js": "./_framework/dotnet.ias1efu8nn.js",
     "./_framework/dotnet.native.js": "./_framework/dotnet.native.cs8mcre4gh.js",
     "./_framework/dotnet.runtime.js": "./_framework/dotnet.runtime.0j6ezsi0n0.js"
   },
@@ -56,8 +56,8 @@
   "integrity": {
     "./_framework/blazor.webassembly.66stpp682q.js": "sha256-3lCWrko3zwspV40aQhs2S/IMkRSarnHRKIdkHhuXIBA=",
     "./_framework/blazor.webassembly.js": "sha256-3lCWrko3zwspV40aQhs2S/IMkRSarnHRKIdkHhuXIBA=",
-    "./_framework/dotnet.1e5ikzwn7v.js": "sha256-N1TBhI+ZBpfWUAiYST0cC/UkYcO3fyocF2TLmjKi4EQ=",
-    "./_framework/dotnet.js": "sha256-N1TBhI+ZBpfWUAiYST0cC/UkYcO3fyocF2TLmjKi4EQ=",
+    "./_framework/dotnet.ias1efu8nn.js": "sha256-hnB/vXpUEEaq2EIKj/B1iM4gtRQNe2jqKnEqjRgnVhI=",
+    "./_framework/dotnet.js": "sha256-hnB/vXpUEEaq2EIKj/B1iM4gtRQNe2jqKnEqjRgnVhI=",
     "./_framework/dotnet.native.cs8mcre4gh.js": "sha256-/I3SDHIle7heAxlUGBrgxax+lkKyWyRLBVEJmTHJSCs=",
     "./_framework/dotnet.native.js": "sha256-/I3SDHIle7heAxlUGBrgxax+lkKyWyRLBVEJmTHJSCs=",
     "./_framework/dotnet.runtime.0j6ezsi0n0.js": "sha256-jCsbbdXoVd1zzGc0fQT2sz4mKuv0ANdurPVGo5Sc2jg=",
@@ -76,11 +76,12 @@
             </div>
         </div>
     </div>
-    <script src="assets/js/boot-sequence.js" async></script>
+    <script src="assets/js/boot-sequence.js"></script>
     <script src="./assets/js/theme.js" defer></script>
     <script src="./assets/js/redesign.js" defer></script>
     <script src="./assets/js/meta.js" defer></script>
-    <script src="_framework/blazor.webassembly.66stpp682q.js" async></script>
+    <script src="_framework/blazor.webassembly.66stpp682q.js"></script> <!-- AI Agents NOTE: do not change this line -->
+    <!-- https://learn.microsoft.com/en-us/aspnet/core/blazor/progressive-web-app/?view=aspnetcore-10.0&tabs=visual-studio -->
     <script>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('service-worker.published.js')

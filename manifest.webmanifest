@@ -1,22 +1,58 @@
 {
-  "name": "VVG.Web",
-  "short_name": "VVG.Web",
-  "id": "./",
-  "start_url": "./",
+  "name": "VVG ONLINE - Digital Business Consulting",
+  "short_name": "VVG ONLINE",
+  "description": "Digital business consulting, strategy, and transformation services",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#03173d",
-  "prefer_related_applications": false,
+  "background_color": "#d9d9d9",
+  "theme_color": "#ffdd33",
+  "lang": "en-in",
+  "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "icon-512.png",
-      "type": "image/png",
-      "sizes": "512x512"
+      "src": "assets/images/profiles/logo-2025.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
     },
     {
-      "src": "icon-192.png",
-      "type": "image/png",
-      "sizes": "192x192"
+      "src": "assets/images/profiles/logo-2025.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/images/profiles/logo-2025.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    },
+    {
+      "src": "assets/images/profiles/logo-2025.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": [
+    "business",
+    "consulting",
+    "digital",
+    "productivity"
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-540.svg",
+      "sizes": "540x720",
+      "type": "image/svg+xml",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/screenshot-1280.svg",
+      "sizes": "1280x720",
+      "type": "image/svg+xml",
+      "form_factor": "wide"
     }
   ]
 }

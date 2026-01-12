@@ -2,8 +2,8 @@
   "name": "VVG ONLINE - Digital Business Consulting",
   "short_name": "VVG ONLINE",
   "description": "Digital business consulting, strategy, and transformation services",
-  "start_url": "./",
-  "scope": "./",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#d9d9d9",
   "theme_color": "#ffdd33",
@@ -12,12 +12,14 @@
     {
       "src": "icon-192.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "any"
     },
     {
       "src": "icon-512.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any"
     },
     {
       "src": "icon-512-maskable.png",

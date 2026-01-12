@@ -32,7 +32,7 @@
         content="https://github.com/vvgonline/test.vvgonline.net/blob/main/src/wwwroot/assets/images/twitter-cards/vvg-online-home-twitter-card.png?raw=true" />
    <meta name="theme-color" content="#ffdd33" />
    <base href="/test.vvgonline.net/">
-    <link href="_framework/dotnet.6peub3bnyh.js" rel="preload" as="script" fetchpriority="high" crossorigin="anonymous" integrity="sha256-FhMtG+1Ot5mh1EJ0eT/HRs5CKsVv+gjgrPe3uEC+g4w=" />
+    <link href="_framework/dotnet.38v72cvrp9.js" rel="preload" as="script" fetchpriority="high" crossorigin="anonymous" integrity="sha256-0zspmBu2ZVIGVezTPKCkMwm4NWZNTFIaxIHPhXDFQtU=" />
     <link
         href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;600&display=swap"
         rel="stylesheet">
@@ -48,7 +48,7 @@
     <script type="importmap">{
   "imports": {
     "./_framework/blazor.webassembly.js": "./_framework/blazor.webassembly.66stpp682q.js",
-    "./_framework/dotnet.js": "./_framework/dotnet.6peub3bnyh.js",
+    "./_framework/dotnet.js": "./_framework/dotnet.38v72cvrp9.js",
     "./_framework/dotnet.native.js": "./_framework/dotnet.native.cs8mcre4gh.js",
     "./_framework/dotnet.runtime.js": "./_framework/dotnet.runtime.0j6ezsi0n0.js"
   },
@@ -56,8 +56,8 @@
   "integrity": {
     "./_framework/blazor.webassembly.66stpp682q.js": "sha256-3lCWrko3zwspV40aQhs2S/IMkRSarnHRKIdkHhuXIBA=",
     "./_framework/blazor.webassembly.js": "sha256-3lCWrko3zwspV40aQhs2S/IMkRSarnHRKIdkHhuXIBA=",
-    "./_framework/dotnet.6peub3bnyh.js": "sha256-FhMtG+1Ot5mh1EJ0eT/HRs5CKsVv+gjgrPe3uEC+g4w=",
-    "./_framework/dotnet.js": "sha256-FhMtG+1Ot5mh1EJ0eT/HRs5CKsVv+gjgrPe3uEC+g4w=",
+    "./_framework/dotnet.38v72cvrp9.js": "sha256-0zspmBu2ZVIGVezTPKCkMwm4NWZNTFIaxIHPhXDFQtU=",
+    "./_framework/dotnet.js": "sha256-0zspmBu2ZVIGVezTPKCkMwm4NWZNTFIaxIHPhXDFQtU=",
     "./_framework/dotnet.native.cs8mcre4gh.js": "sha256-/I3SDHIle7heAxlUGBrgxax+lkKyWyRLBVEJmTHJSCs=",
     "./_framework/dotnet.native.js": "sha256-/I3SDHIle7heAxlUGBrgxax+lkKyWyRLBVEJmTHJSCs=",
     "./_framework/dotnet.runtime.0j6ezsi0n0.js": "sha256-jCsbbdXoVd1zzGc0fQT2sz4mKuv0ANdurPVGo5Sc2jg=",
@@ -81,7 +81,17 @@
     <script src="./assets/js/redesign.js" defer async></script>
     <script src="./assets/js/meta.js" defer async></script>
     <script src="_framework/blazor.webassembly.66stpp682q.js"></script>
-    <script>navigator.serviceWorker.register('service-worker.js', { updateViaCache: 'none' });</script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.published.js')
+                .then(function(registration) {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                })
+                .catch(function(error) {
+                    console.log('Service Worker registration failed:', error);
+                });
+        }
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer async></script>
     <script>
         window.addEventListener('load', function () {

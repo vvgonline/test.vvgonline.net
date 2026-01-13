@@ -1,5 +1,5 @@
 self.assetsManifest = {
-  "version": "r2Mq79fO",
+  "version": "asu58Ikd",
   "assets": [
     {
       "hash": "sha256-rW8cWS8jo90jOb4i3LwtuqGRFyEEhofc+tfAmUwRqwY=",
@@ -374,16 +374,16 @@ self.assetsManifest = {
       "url": "_framework/System.Xml.XmlSerializer.bfsm7rg8bh.wasm"
     },
     {
-      "hash": "sha256-bzO0Eo+3HhpSaIKbonUJYlBbO2BerjW9KxSsK5pvLUU=",
-      "url": "_framework/VVG.Web.n6wm78yloq.wasm"
+      "hash": "sha256-uMNend9BkC2AvAgRhSw4bzt74bjoLzga28+beZW+7aw=",
+      "url": "_framework/VVG.Web.kd2hqj1qzv.wasm"
     },
     {
       "hash": "sha256-3lCWrko3zwspV40aQhs2S/IMkRSarnHRKIdkHhuXIBA=",
       "url": "_framework/blazor.webassembly.66stpp682q.js"
     },
     {
-      "hash": "sha256-5/Q75HKAGL7sn0A4WEOTt+8Zmcv2YCmVYF8XNNu+ew4=",
-      "url": "_framework/dotnet.hmnaxxhq5a.js"
+      "hash": "sha256-DuyW2EBhYDtmT6uZAYP9cnZXxb99gfo2qCODIXxXO20=",
+      "url": "_framework/dotnet.27h4ohg30z.js"
     },
     {
       "hash": "sha256-/I3SDHIle7heAxlUGBrgxax+lkKyWyRLBVEJmTHJSCs=",
@@ -558,7 +558,7 @@ self.assetsManifest = {
       "url": "icon-512.png"
     },
     {
-      "hash": "sha256-DK09zmsARVzrJGpiNVrD0hUnp1W3xCKLGiBMCOrPI9c=",
+      "hash": "sha256-J6fiVLq+a+D6bSm72dblBY/B1XLB2sk+B1NbZnV/DJ4=",
       "url": "index.html"
     },
     {

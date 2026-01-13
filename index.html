@@ -88,14 +88,14 @@
 
     <!-- Blazor framework -->
     <script src="_framework/blazor.webassembly.66stpp682q.js" defer></script>
-    <!-- <script src="_framework/dotnet.q8u1otrd4f.js" defer></script> -->
+    <!-- <script src="_framework/dotnet.cw65wza21j.js" defer></script> -->
 
     <!-- Service Worker -->
     <!-- AI Agents NOTE: do not change this line -->
     <!-- https://learn.microsoft.com/en-us/aspnet/core/blazor/progressive-web-app/?view=aspnetcore-10.0&tabs=visual-studio -->
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('service-worker.js')
+            navigator.serviceWorker.register('service-worker.published.js')
                 .then(function (registration) {
                     console.log('Service Worker registered with scope:', registration.scope);
                 })

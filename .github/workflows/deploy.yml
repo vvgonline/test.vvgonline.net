@@ -21,22 +21,23 @@ jobs:
         with:
           dotnet-version: '10.0.101'
 
+      # Add this clean step
+      - name: Clean Build Artifacts
+        run: dotnet clean src/VVG.Web.csproj -c Release
+
       - name: Publish Project
-        run: dotnet publish src/VVG.Web.csproj -c Release -o release --nologo
+        run: dotnet publish src/VVG.Web.csproj -c Release -o release /p:StaticWebAssetBasePath=/ --nologo
 
-      - name: Adjust base href for GitHub Pages
-        run: |
-          # Set the base href to the repository name so the SPA loads correctly from a subpath
-          repo="${GITHUB_REPOSITORY#*/}"
-          echo "Setting base href to /$repo/"
-          sed -i "s#<base href=\"/\"#<base href=\"/$repo/\"#" release/wwwroot/index.html
-
-      - name: Fix GitHub Pages Compatibility
+      - name: Prepare GitHub Pages Artifacts
         run: |
           # Ensure folders starting with '_' are served
           touch release/wwwroot/.nojekyll
           # Copy index for SPA routing fallback
           cp release/wwwroot/index.html release/wwwroot/404.html
+          # Copy CNAME if it exists (for custom domain)
+          if [ -f "CNAME" ]; then
+            cp CNAME release/wwwroot/CNAME
+          fi
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4

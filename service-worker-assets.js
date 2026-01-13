@@ -1,5 +1,5 @@
 self.assetsManifest = {
-  "version": "0jHz1Ux+",
+  "version": "QSMrNLNN",
   "assets": [
     {
       "hash": "sha256-rW8cWS8jo90jOb4i3LwtuqGRFyEEhofc+tfAmUwRqwY=",
@@ -374,16 +374,16 @@ self.assetsManifest = {
       "url": "_framework/System.Xml.XmlSerializer.bfsm7rg8bh.wasm"
     },
     {
-      "hash": "sha256-hH5ubI7ZjqDyNDj4bK3D15pogfYJ7dEPULCfFfYBVoY=",
-      "url": "_framework/VVG.Web.8h1gyloz73.wasm"
+      "hash": "sha256-nH3Ph1UHZiFQRU3WgsSQVtJQnpaAiHpa2qGO8YSdwpw=",
+      "url": "_framework/VVG.Web.c4wwr6smte.wasm"
     },
     {
       "hash": "sha256-3lCWrko3zwspV40aQhs2S/IMkRSarnHRKIdkHhuXIBA=",
       "url": "_framework/blazor.webassembly.66stpp682q.js"
     },
     {
-      "hash": "sha256-YasgqP61cFRckJvPMGX1u8JMjjtEpT0fRY6P3JypSRY=",
-      "url": "_framework/dotnet.lja8obqco1.js"
+      "hash": "sha256-YtDhTh2YDNldyRHY+/0sStBbpZ0srpmVTUbBJ60exOU=",
+      "url": "_framework/dotnet.24x3qf18sy.js"
     },
     {
       "hash": "sha256-/I3SDHIle7heAxlUGBrgxax+lkKyWyRLBVEJmTHJSCs=",
@@ -514,7 +514,7 @@ self.assetsManifest = {
       "url": "assets/data/twitter-card.json"
     },
     {
-      "hash": "sha256-OdXH5ZOuvHWKPztaGVsCjOLmO437i2TQC5ok5sPA2Wk=",
+      "hash": "sha256-5EorvTKPBz0VBaxS26oe5DzOC569GDpfELRcVD1Q5iI=",
       "url": "assets/images/profiles/logo-2025.svg"
     },
     {
@@ -546,19 +546,7 @@ self.assetsManifest = {
       "url": "assets/js/theme.js"
     },
     {
-      "hash": "sha256-yVv2OFRBoXv8mOyDBLZ92Zbsny6ADmWcvbVuLNj7J8s=",
-      "url": "icon-192.png"
-    },
-    {
-      "hash": "sha256-9wylWoPv0e6t39+R4GO2lm3vjc2pIL5GJjG+pV4IR24=",
-      "url": "icon-512-maskable.png"
-    },
-    {
-      "hash": "sha256-9wylWoPv0e6t39+R4GO2lm3vjc2pIL5GJjG+pV4IR24=",
-      "url": "icon-512.png"
-    },
-    {
-      "hash": "sha256-BPmPc0NcAgoZCYxzStfZl4p1UgxfKEMDmMwIKLbV9To=",
+      "hash": "sha256-ONo+3JS9c1WlllcuiYQu8SypNrzJ17QpboPkHFQCAp0=",
       "url": "index.html"
     },
     {
@@ -738,11 +726,7 @@ self.assetsManifest = {
       "url": "lib/bootstrap/dist/js/bootstrap.min.js.map"
     },
     {
-      "hash": "sha256-pznsrIIIcS7ZEgm9VPbj5Mnldi+SVig29A1mwXA3cZg=",
-      "url": "manifest.json"
-    },
-    {
-      "hash": "sha256-mV0R0NaOkOX/nRgosHiwBBpMh0p5zSTvWkrWXKwGwbA=",
+      "hash": "sha256-D3hkqoz5MEmVRgMphIGTuaiCEfgqlLIY66hoPYfvSzk=",
       "url": "manifest.webmanifest"
     },
     {

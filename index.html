@@ -30,48 +30,44 @@
     <meta name="twitter:description" content="A test website for VVG online." />
     <meta name="twitter:image"
         content="https://github.com/vvgonline/test.vvgonline.net/blob/main/src/wwwroot/assets/images/twitter-cards/vvg-online-home-twitter-card.png?raw=true" />
-
-    <meta name="theme-color" content="#ffdd33" />
-
-    <!-- Base path for GitHub Pages -->
-    <base href="/" />
-
-    <!-- Preload critical CSS -->
-    <link rel="preload" href="assets/css/app.css" as="style" />
-    <link rel="preload" href="VVG.Web.styles.css" as="style" />
-
-    <!-- Stylesheets -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
-    <link rel="stylesheet" href="assets/css/app.css" />
-    <link rel="stylesheet" href="VVG.Web.styles.css" />
-
-    <!-- Manifest & Icons -->
-    <link href="manifest.json" rel="manifest" />
-    <link rel="icon" type="image/png" href="icon-192.png" />
-    <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png" />
-    <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png" />
-
-    <!-- Fonts preload -->
-    <link rel="preload"
+   <base href="/test.vvgonline.net/">
+    <link href="_framework/dotnet.24x3qf18sy.js" rel="preload" as="script" fetchpriority="high" crossorigin="anonymous" integrity="sha256-YtDhTh2YDNldyRHY+/0sStBbpZ0srpmVTUbBJ60exOU=" />
+    <link
         href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;600&display=swap"
-        as="style" onload="this.onload=null;this.rel='stylesheet'" />
-    <noscript>
-        <link rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;600&display=swap" />
-    </noscript>
-
-    <!-- Preload Blazor framework -->
-    <!-- <link rel="preload" href="_framework/blazor.webassembly.js" as="script" />
-  <link rel="preload" href="_framework/dotnet.js" as="script" /> -->
-
-    <!-- Preload large external library -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" as="script" />
+        rel="stylesheet">
+    <!-- <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css" /> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="./assets/css/app.css" />
+    <link rel="icon" type="image/png" href="./assets/images/profiles/logo-2025.svg" />
+    <link href="VVG.Web.styles.css" rel="stylesheet" />
+    <link href="manifest.webmanifest" rel="manifest" />
+    <link rel="apple-touch-icon" sizes="512x512" href="./assets/images/profiles/logo-2025.svg" />
+    <link rel="apple-touch-icon" sizes="192x192" href="./assets/images/profiles/logo-2025.svg" />
+    <script type="importmap">{
+  "imports": {
+    "./_framework/blazor.webassembly.js": "./_framework/blazor.webassembly.66stpp682q.js",
+    "./_framework/dotnet.js": "./_framework/dotnet.24x3qf18sy.js",
+    "./_framework/dotnet.native.js": "./_framework/dotnet.native.cs8mcre4gh.js",
+    "./_framework/dotnet.runtime.js": "./_framework/dotnet.runtime.0j6ezsi0n0.js"
+  },
+  "scopes": {},
+  "integrity": {
+    "./_framework/blazor.webassembly.66stpp682q.js": "sha256-3lCWrko3zwspV40aQhs2S/IMkRSarnHRKIdkHhuXIBA=",
+    "./_framework/blazor.webassembly.js": "sha256-3lCWrko3zwspV40aQhs2S/IMkRSarnHRKIdkHhuXIBA=",
+    "./_framework/dotnet.24x3qf18sy.js": "sha256-YtDhTh2YDNldyRHY+/0sStBbpZ0srpmVTUbBJ60exOU=",
+    "./_framework/dotnet.js": "sha256-YtDhTh2YDNldyRHY+/0sStBbpZ0srpmVTUbBJ60exOU=",
+    "./_framework/dotnet.native.cs8mcre4gh.js": "sha256-/I3SDHIle7heAxlUGBrgxax+lkKyWyRLBVEJmTHJSCs=",
+    "./_framework/dotnet.native.js": "sha256-/I3SDHIle7heAxlUGBrgxax+lkKyWyRLBVEJmTHJSCs=",
+    "./_framework/dotnet.runtime.0j6ezsi0n0.js": "sha256-jCsbbdXoVd1zzGc0fQT2sz4mKuv0ANdurPVGo5Sc2jg=",
+    "./_framework/dotnet.runtime.js": "sha256-jCsbbdXoVd1zzGc0fQT2sz4mKuv0ANdurPVGo5Sc2jg="
+  }
+}</script>
 </head>
 
 <body>
     <div id="app">
-        <div class="preloader" id="preloader">
+        <div class="preloader">
             <div class="loading-box">
                 <div class="loader"></div>
                 <div class="terminal-output msg-1">_</div>
@@ -79,34 +75,24 @@
             </div>
         </div>
     </div>
-
-    <!-- App scripts -->
-    <script src="assets/js/boot-sequence.js" defer></script>
-    <script src="assets/js/theme.js" defer></script>
-    <script src="assets/js/redesign.js" defer></script>
-    <script src="assets/js/meta.js" defer></script>
-
-    <!-- Blazor framework -->
-    <script src="_framework/blazor.webassembly.66stpp682q.js" autostart="false"></script>
+    <script src="assets/js/boot-sequence.js" defer async></script>
+    <script src="./assets/js/theme.js" defer async></script>
+    <script src="./assets/js/redesign.js" defer async></script>
+    <script src="./assets/js/meta.js" defer async></script>
+    <script src="_framework/blazor.webassembly.66stpp682q.js"></script>
+    <script>navigator.serviceWorker.register('service-worker.js', { updateViaCache: 'none' });</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer async></script>
     <script>
         window.addEventListener('load', function () {
-            Blazor.start().then(function () {
-                var preloader = document.getElementById('preloader');
-                if (preloader) {
-                    preloader.style.transition = 'opacity 0.5s ease';
-                    preloader.style.opacity = '0';
-                    setTimeout(function () {
-                        preloader.style.display = 'none';
-                    }, 500); // Should match transition duration
-                }
-            });
+            var preloader = document.getElementById('preloader');
+            if (preloader) {
+                preloader.style.transition = 'opacity 0.5s ease';
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 500); // Should match transition duration
+            }
         });
-    </script>
-    <!-- External library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
-    <!-- https://learn.microsoft.com/en-us/aspnet/core/blazor/progressive-web-app/?view=aspnetcore-10.0&tabs=visual-studio -->
-    <script>
-        navigator.serviceWorker.register('service-worker.js', { updateViaCache: 'none' });
     </script>
 </body>
 

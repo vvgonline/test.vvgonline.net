@@ -87,39 +87,26 @@
     <script src="assets/js/meta.js" defer></script>
 
     <!-- Blazor framework -->
-    <script src="_framework/blazor.webassembly.66stpp682q.js" defer></script>
-    <!-- <script src="_framework/dotnet.cw65wza21j.js" defer></script> -->
-
-    <!-- Service Worker -->
-    <!-- AI Agents NOTE: do not change this line -->
-    <!-- https://learn.microsoft.com/en-us/aspnet/core/blazor/progressive-web-app/?view=aspnetcore-10.0&tabs=visual-studio -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('service-worker.published.js')
-                .then(function (registration) {
-                    console.log('Service Worker registered with scope:', registration.scope);
-                })
-                .catch(function (error) {
-                    console.log('Service Worker registration failed:', error);
-                });
-        }
-    </script>
-
-    <!-- External library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
-
-    <!-- Preloader fade-out -->
+    <script src="_framework/blazor.webassembly.66stpp682q.js" autostart="false"></script>
     <script>
         window.addEventListener('load', function () {
-            var preloader = document.getElementById('preloader');
-            if (preloader) {
-                preloader.style.transition = 'opacity 0.5s ease';
-                preloader.style.opacity = '0';
-                setTimeout(function () {
-                    preloader.style.display = 'none';
-                }, 500); // Should match transition duration
-            }
+            Blazor.start().then(function () {
+                var preloader = document.getElementById('preloader');
+                if (preloader) {
+                    preloader.style.transition = 'opacity 0.5s ease';
+                    preloader.style.opacity = '0';
+                    setTimeout(function () {
+                        preloader.style.display = 'none';
+                    }, 500); // Should match transition duration
+                }
+            });
         });
+    </script>
+    <!-- External library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <!-- https://learn.microsoft.com/en-us/aspnet/core/blazor/progressive-web-app/?view=aspnetcore-10.0&tabs=visual-studio -->
+    <script>
+        navigator.serviceWorker.register('service-worker.js', { updateViaCache: 'none' });
     </script>
 </body>
 

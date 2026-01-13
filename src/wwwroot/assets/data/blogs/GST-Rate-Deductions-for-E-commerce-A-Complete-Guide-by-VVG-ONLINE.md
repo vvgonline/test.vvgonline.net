@@ -1,3 +1,13 @@
+---
+title: "GST Rate Deductions for E-commerce: A Complete Guide by VVG ONLINE"
+slug: "gst-rate-deductions-for-e-commerce-a-complete-guide-by-vvg-online"
+publishedAt: "2025-09-04"
+tags: ["GST", "E-commerce", "Tax"]
+excerpt: "The recent Goods and Services Tax (GST) rate deductions in India are transforming the e-commerce landscape, offering significant opportunities for businesses to enhance profitability and achieve strategic growth."
+draft: false
+category: "Article"
+featured: false
+---
 GST Rate Deductions for E-commerce: A Complete Guide by VVG ONLINE
 
 GST Rate Deductions for E-commerce: A Complete Guide by VVG ONLINE

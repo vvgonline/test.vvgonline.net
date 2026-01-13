@@ -28,6 +28,41 @@ jobs:
       - name: Publish Project
         run: dotnet publish src/VVG.Web.csproj -c Release -o release /p:StaticWebAssetBasePath=/ --nologo
 
+      - name: Generate blog-index.json
+        run: |
+          BLOG_DIR="src/wwwroot/assets/data/blogs"
+          OUTPUT_FILE="src/wwwroot/data/blog-index.json"
+          echo "[]" > "$OUTPUT_FILE"
+          for file in "$BLOG_DIR"/*.md; do
+            front_matter=$(sed -n '/^---$/,/^---$/p' "$file" | sed '1d;$d')
+            json_object=$(echo "$front_matter" | awk -F': ' '
+              BEGIN {
+                printf "{"
+                first = 1
+              }
+              {
+                key = $1
+                value = substr($0, index($0, ":") + 2)
+                gsub(/^[ \t]+|[ \t]+$/, "", value)
+                gsub(/"/, "", value)
+                if (!first) {
+                  printf ","
+                }
+                first = 0
+                if (substr(value, 1, 1) == "[") {
+                  printf "\"%s\": %s", key, value
+                } else {
+                  printf "\"%s\": \"%s\"", key, value
+                }
+              }
+              END {
+                printf "}"
+              }
+            ')
+            jq --argjson new_obj "$json_object" '. += [$new_obj]' "$OUTPUT_FILE" > tmp.json && mv tmp.json "$OUTPUT_FILE"
+          done
+
+
       - name: Prepare GitHub Pages Artifacts
         run: |
           # Ensure folders starting with '_' are served

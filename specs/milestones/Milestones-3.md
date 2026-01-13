@@ -10,19 +10,19 @@
 - [x] Scrape existing blog posts from `https://vvgonline.net` into markdown.
 - [x] Normalize filenames and front-matter fields (title, slug, date, tags, excerpt, draft).
 - [x] Store markdown files under `wwwroot/data/blogs`.
-- [ ] Define a markdown content model for blog posts, including front-matter keys (`title`, `slug`, `publishedAt`, `tags`, `excerpt`, `draft`, `category`, `featured`).
-- [ ] Create a build-time script to generate `blog-index.json` from the markdown front-matter.
+- [x] Define a markdown content model for blog posts, including front-matter keys (`title`, `slug`, `publishedAt`, `tags`, `excerpt`, `draft`, `category`, `featured`).
+- [x] Create a build-time script to generate `blog-index.json` from the markdown front-matter.
 
 ### 3.1 Blog Index JSON
-- [ ] Implement a build-time script or tool to generate a single `wwwroot/data/blog-index.json` from markdown front-matter for every markdown file in `wwwroot/data/blogs`.
-- [ ] Include `title`, `slug`, `publishedAt`, `tags`, `excerpt`, `draft`, `category`, and `featured` fields in the index entries.
-- [ ] Add this step to CI/CD so `blog-index.json` is always up-to-date.
+- [x] Implement a build-time script or tool to generate a single `wwwroot/data/blog-index.json` from markdown front-matter for every markdown file in `wwwroot/data/blogs`.
+- [x] Include `title`, `slug`, `publishedAt`, `tags`, `excerpt`, `draft`, `category`, and `featured` fields in the index entries.
+- [x] Add this step to CI/CD so `blog-index.json` is always up-to-date.
 
 ### 3.2 Blog Listing with Search and Tag Filter
-- [ ] Implement basic `Blog.razor`. This page should handle the listing, search, years and tag filtering. Tags (e.g. '# Digital', '# Blockchain') should be clickable to filter posts.
+- [ ] Implement basic `Blog.razor`. This page should handle the listing, search, years and tag filtering. Tags (e.g. '#Digital', '#Blockchain') should be clickable to filter posts.
 - [ ] Load `blog-index.json` and render a list of posts with title, date, tags, and excerpt.
 - [ ] Add client-side search by title and excerpt.
-- [ ] Add a tag filter (single or multi-select) above the list.
+- [ ] Add a tag filter (single or multi-select) above the list. Tags should be displayed like #Digital, #Blockchain, etc.
 - [ ] Ensure the blog listing is responsive and accessible.
 - [ ] Implement pagination if the post count exceeds a certain threshold (10 posts per page).
 

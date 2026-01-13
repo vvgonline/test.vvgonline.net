@@ -1,3 +1,13 @@
+---
+title: "Key Performance Indicators (KPIs)"
+slug: "key-performance-indicators-kpis"
+publishedAt: "2025-05-20"
+tags: ["KPIs", "Digital Marketing", "Business"]
+excerpt: "Unlock the Power of Data-Driven Insights: Discover How VVG ONLINE Measures KPIs for Digital Marketing Success"
+draft: false
+category: "Article"
+featured: false
+---
 Key Performance Indicators (KPIs)
 
 Key Performance Indicators (KPIs)

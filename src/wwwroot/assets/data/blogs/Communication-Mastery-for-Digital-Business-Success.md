@@ -5,7 +5,7 @@ publishedAt: "2025-10-13"
 tags: ["Leadership", "Communication", "Digital Business"]
 excerpt: "In a rapidly evolving world and hyperconnected business environment, digital business consulting serves as both a catalyst and partner for organizations seeking transformation."
 draft: false
-category: "Article"
+category: "Business"
 featured: true
 ---
 Communication Mastery for Digital Business Success | VVG ONLINE

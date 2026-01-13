@@ -1,0 +1,155 @@
+@page "/blog/{Slug}"
+@using System.Net.Http.Json
+@using VVG.Web.Models
+@using System.Text.RegularExpressions
+@inject HttpClient Http
+@inject VVG.Web.Services.MetadataService MetadataService
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
+
+@if (post is not null)
+{
+    <article class="container py-5">
+        <header class="mb-5 text-center">
+            <h1 class="display-4">@post.Title</h1>
+            <p class="lead text-muted">Published on @post.PublishedAt.ToString("MMMM dd, yyyy") by VVG ONLINE</p>
+            <div>
+                @if(post.Tags is not null)
+                {
+                    @foreach(var tag in post.Tags)
+                    {
+                        <a href="/blog?tag=@tag" class="badge bg-light text-dark me-1 mb-1">#@tag</a>
+                    }
+                }
+            </div>
+        </header>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="markdown-body">
+                    @((MarkupString)postContent)
+                </div>
+
+                <hr class="my-5" />
+
+                <!-- Social Sharing -->
+                <div class="text-center">
+                    <h5 class="mb-3">Share this post</h5>
+                    <a href="https://twitter.com/intent/tweet?url=@GetPostUrl()&text=@post.Title" target="_blank" class="btn btn-light mx-1">
+                        <i class="bi bi-twitter"></i> Twitter
+                    </a>
+                    <a href="https://www.linkedin.com/shareArticle?mini=true&url=@GetPostUrl()&title=@post.Title&summary=@post.Excerpt" target="_blank" class="btn btn-light mx-1">
+                        <i class="bi bi-linkedin"></i> LinkedIn
+                    </a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=@GetPostUrl()" target="_blank" class="btn btn-light mx-1">
+                        <i class="bi bi-facebook"></i> Facebook
+                    </a>
+                    <button @onclick="CopyLink" class="btn btn-light mx-1">
+                        <i class="bi bi-link-45deg"></i> @copyLinkText
+                    </button>
+                </div>
+                
+                <hr class="my-5" />
+
+                <!-- Prev/Next Navigation -->
+                <div class="d-flex justify-content-between">
+                    @if (prevPost is not null)
+                    {
+                        <a href="/blog/@prevPost.Slug" class="mono">&lt; Prev: @prevPost.Title</a>
+                    }
+                    @if (nextPost is not null)
+                    {
+                        <a href="/blog/@nextPost.Slug" class="mono ms-auto">Next: @nextPost.Title &gt;</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </article>
+}
+else
+{
+    <div class="text-center py-5">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+}
+
+
+@code {
+    [Parameter]
+    public string? Slug { get; set; }
+
+    private VVG.Web.Models.BlogPost? post;
+    private VVG.Web.Models.BlogPost? prevPost;
+    private VVG.Web.Models.BlogPost? nextPost;
+    private string? postContent;
+    private string copyLinkText = "Copy Link";
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Slug is null) return;
+
+        var defaultMetadata = await MetadataService.GetMetadataAsync();
+        var defaultTwitterCard = await MetadataService.GetTwitterCardAsync();
+        var defaultOpenGraph = await MetadataService.GetOpenGraphAsync();
+        var defaultJsonLd = await MetadataService.GetJsonLdAsync();
+        
+        var blogIndex = await Http.GetFromJsonAsync<BlogIndex>("data/blog-index.json");
+        if (blogIndex?.Posts is null) return;
+        
+        post = blogIndex.Posts.FirstOrDefault(p => p.Slug == Slug);
+
+        if (post is not null)
+        {
+            var postsByDate = blogIndex.Posts.OrderBy(p => p.PublishedAt).ToList();
+            var postIndex = postsByDate.FindIndex(p => p.Slug == Slug);
+            
+            prevPost = postIndex > 0 ? postsByDate[postIndex - 1] : null;
+            nextPost = postIndex < postsByDate.Count - 1 ? postsByDate[postIndex + 1] : null;
+            
+            var markdownContent = await Http.GetStringAsync($"assets/data/blogs/{Slug}.md");
+            var (frontMatter, markdown) = SeparateFrontMatter(markdownContent);
+            postContent = Markdig.Markdown.ToHtml(markdown ?? "");
+
+            MetadataService.SetPageMetadata(new PageMetadata
+            {
+                Title = $"{post.Title} - VVG ONLINE",
+                Description = post.Excerpt,
+                Keywords = string.Join(",", post.Tags ?? Array.Empty<string>()),
+
+                OgType = defaultOpenGraph?.Type ?? "article", // Blog posts are typically "article"
+                OgTitle = $"{post.Title} - VVG ONLINE",
+                OgDescription = post.Excerpt,
+                OgImage = defaultOpenGraph?.Image, // Use default OpenGraph image as fallback
+                OgUrl = NavigationManager.ToAbsoluteUri($"/blog/{post.Slug}").ToString(),
+
+                TwitterCard = defaultTwitterCard?.Card ?? "summary_large_image",
+                TwitterSite = defaultTwitterCard?.Site ?? "@vvgonline",
+                TwitterCreator = defaultTwitterCard?.Creator ?? "@vvgonline",
+                TwitterTitle = $"{post.Title} - VVG ONLINE",
+                TwitterDescription = post.Excerpt,
+                TwitterImage = defaultTwitterCard?.Image, // Use default Twitter image as fallback
+                JsonLd = defaultJsonLd // Assuming default for blog posts, or you can construct specific JSON-LD here
+            });
+        }
+    }
+    
+    private string GetPostUrl() => NavigationManager.ToAbsoluteUri($"/blog/{post?.Slug}").ToString();
+
+    private async Task CopyLink()
+    {
+        await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", GetPostUrl());
+        copyLinkText = "Copied!";
+        StateHasChanged();
+        await Task.Delay(2000);
+        copyLinkText = "Copy Link";
+        StateHasChanged();
+    }
+    
+    private static (string? frontMatter, string? markdown) SeparateFrontMatter(string content)
+    {
+        var match = new Regex(@"^---\s*\n(.*?)\n---\s*\n(.*)", RegexOptions.Singleline).Match(content);
+        return match.Success ? (match.Groups[1].Value, match.Groups[2].Value) : (null, content);
+    }
+}

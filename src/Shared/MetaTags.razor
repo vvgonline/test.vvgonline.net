@@ -6,6 +6,7 @@
     private VVG.Web.Models.Metadata? _defaultMetadata;
     private VVG.Web.Models.TwitterCard? _defaultTwitterCard;
     private VVG.Web.Models.OpenGraph? _defaultOpenGraph;
+    private string? _defaultJsonLd;
 
     protected override async Task OnInitializedAsync()
     {
@@ -13,6 +14,7 @@
         _defaultMetadata = await MetadataService.GetMetadataAsync();
         _defaultTwitterCard = await MetadataService.GetTwitterCardAsync();
         _defaultOpenGraph = await MetadataService.GetOpenGraphAsync();
+        _defaultJsonLd = await MetadataService.GetJsonLdAsync();
         await UpdateMeta();
     }
 
@@ -34,8 +36,8 @@
             ["title"] = pageMeta?.Title ?? _defaultMetadata?.DefaultTitle,
             ["description"] = description,
             ["keywords"] = pageMeta?.Keywords ?? _defaultMetadata?.Keywords,
-            ["image"] = image, 
-            ["jsonLd"] = pageMeta?.JsonLd,
+            ["image"] = image,
+            ["jsonLd"] = pageMeta?.JsonLd ?? _defaultJsonLd,
 
             ["ogType"] = pageMeta?.OgType ?? _defaultOpenGraph?.Type,
             ["ogTitle"] = pageMeta?.OgTitle ?? pageMeta?.Title ?? _defaultOpenGraph?.Title,

@@ -1,30 +1,19 @@
 #!/bin/bash
 
-# Directory containing the blog posts
-BLOG_DIR="src/wwwroot/assets/data/blogs"
+# This script builds and runs the C# indexer tool to generate the blog index.
 
-# Output JSON file
-OUTPUT_FILE="src/wwwroot/data/blog-index.json"
+set -e
 
-# Create or truncate the output file
-echo "[]" > "$OUTPUT_FILE"
+# Get the directory of the script
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+PROJECT_DIR="$SCRIPT_DIR/../tools/Indexer"
+OUTPUT_DIR="$SCRIPT_DIR/../src/wwwroot/data"
 
-# Loop through all markdown files in the blog directory
-for file in "$BLOG_DIR"/*.md; do
-  # Extract front-matter using sed
-  front_matter=$(sed -n '/^---$/,/^---$/p' "$file" | sed '1d;$d')
+echo "Building the indexer tool..."
+dotnet build "$PROJECT_DIR" -c Release
 
-  # Parse front-matter and convert to JSON
-  json_object=$(echo "$front_matter" | awk -F': ' '
-    BEGIN {
-      printf "{"
-      first = 1
-    }
-    {
-      key = $1
-      # The rest of the line is the value
-      value = substr($0, index($0, ":") + 2)
-      # Remove leading/trailing whitespace from value
-      gsub(/^[ \t]+|[ \t]+$/, "", value)
-      # Remove quotes from value
-      gsub(/
+echo "Running the indexer tool..."
+dotnet run --project "$PROJECT_DIR" -c Release
+
+echo "Blog index generation complete."
+

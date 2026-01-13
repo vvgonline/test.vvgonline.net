@@ -1,0 +1,133 @@
+@page "/blog2"
+@inject HttpClient Http
+
+<div class="blog-listing">
+    <input type="text" @bind="searchQuery" placeholder="Search..." />
+
+    <div class="filter-section">
+        <select @bind="selectedTags" multiple>
+            @foreach (var tag in tags)
+            {
+                <option value="@tag">@tag</option>
+            }
+        </select>
+
+        <select @bind="selectedYear">
+            @foreach (var year in years)
+            {
+                <option value="@year">@year</option>
+            }
+        </select>
+    </div>
+
+    <ul class="posts-list">
+        @if (isLoading)
+        {
+            <li>Loading...</li>
+        }
+        else if (!filteredPosts.Any())
+        {
+            <li>No posts found.</li>
+        }
+        else
+        {
+            foreach (var post in filteredPosts)
+            {
+                <li>
+                    <a href="@post.Slug">@post.Category | @post.Title</a>
+                    <span>@post.PublishedAt.ToShortDateString()</span>
+                    <span>@string.Join(", ", post.Tags)</span>
+                    <p>@post.Excerpt</p>
+                </li>
+            }
+        }
+    </ul>
+
+    <button @onclick="SortByDateAscending">Sort by Date (A-Z)</button>
+    <button @onclick="SortByTitleDescending">Sort by Title (Z-A)</button>
+
+    <!-- Pagination controls -->
+    <div class="pagination">
+        @for (int i = 1; i <= totalPages; i++)
+        {
+            <span>@i</span>
+        }
+    </div>
+
+    <social-sharing-buttons></social-sharing-buttons>
+</div>
+
+@code {
+    private int totalPages;
+    private string searchQuery;
+    private List<string> selectedTags = new List<string>();
+    private int selectedYear;
+    private bool isLoading;
+    private List<Post> allPosts;
+    private List<Post> filteredPosts;
+    private List<string> tags;
+    private List<int> years;
+    private int currentPage = 1;
+    private int postsPerPage = 10;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadBlogIndex();
+    }
+
+    private async Task LoadBlogIndex()
+    {
+        isLoading = true;
+        try
+        {
+            var response = await Http.GetFromJsonAsync<List<Post>>("wwwroot/data/blog-index.json");
+            allPosts = response ?? new List<Post>();
+            tags = allPosts.SelectMany(p => p.Tags).Distinct().ToList();
+            years = allPosts.Select(p => p.PublishedAt.Year).Distinct().OrderByDescending(y => y).ToList();
+            ApplyFilters();
+        }
+        finally
+        {
+            isLoading = false;
+        }
+
+        // Initialize totalPages after filtering and sorting
+        totalPages = (int)Math.Ceiling(filteredPosts.Count / (double)postsPerPage);
+    }
+
+    private void ApplyFilters()
+    {
+        filteredPosts = allPosts
+        .Where(post =>
+        (string.IsNullOrEmpty(searchQuery) || post.Title.Contains(searchQuery, StringComparison.OrdinalIgnoreCase)) &&
+        (!selectedTags.Any() || selectedTags.All(tag => post.Tags.Contains(tag))) &&
+        (selectedYear == 0 || post.PublishedAt.Year == selectedYear)
+        )
+        .OrderByDescending(p => p.PublishedAt)
+        .Skip((currentPage - 1) * postsPerPage)
+        .Take(postsPerPage)
+        .ToList();
+    }
+
+    private void SortByDateAscending()
+    {
+        ApplyFilters();
+    }
+
+    private void SortByTitleDescending()
+    {
+        filteredPosts = allPosts
+        .OrderByDescending(p => p.Title)
+        .ToList();
+    }
+
+    public class Post
+    {
+        public string Title { get; set; }
+        public DateTime PublishedAt { get; set; }
+        public List<string> Tags { get; set; }
+        public string Excerpt { get; set; }
+        public string Category { get; set; }
+        public string Slug { get; set; }
+    }
+}

@@ -68,28 +68,31 @@
 
     protected override async Task OnInitializedAsync()
     {
+        var defaultMetadata = await MetadataService.GetMetadataAsync();
+        var defaultTwitterCard = await MetadataService.GetTwitterCardAsync();
+        var defaultOpenGraph = await MetadataService.GetOpenGraphAsync();
+        var defaultJsonLd = await MetadataService.GetJsonLdAsync();
+
         MetadataService.SetPageMetadata(new PageMetadata
         {
             Title = "Services - VVG ONLINE",
             Description = "Digital consulting services to transform your business.",
             Keywords = "services, strategy, innovation, digital transformation",
-            Image =
-        "https://github.com/vvgonline/test.vvgonline.net/assets/images//twitter-cards/vvg-online-home-twitter-card.png?raw=true",
+            Image = "https://github.com/vvgonline/test.vvgonline.net/assets/images//twitter-cards/vvg-online-home-twitter-card.png?raw=true",
 
-            OgType = "website",
+            OgType = defaultOpenGraph?.Type ?? "website",
             OgTitle = "Services - VVG ONLINE",
             OgDescription = "Digital consulting services to transform your business.",
-            OgImage =
-        "https://github.com/vvgonline/test.vvgonline.net/assets/images//twitter-cards/vvg-online-home-twitter-card.png?raw=true",
-            OgUrl = "https://test.vvgonline.net/services",
+            OgImage = "https://github.com/vvgonline/test.vvgonline.net/assets/images//twitter-cards/vvg-online-home-twitter-card.png?raw=true",
+            OgUrl = defaultOpenGraph?.Url ?? "https://test.vvgonline.net/services",
 
-            TwitterCard = "summary_large_image",
-            TwitterSite = "@vvgonline",
-            TwitterCreator = "@vvgonline",
+            TwitterCard = defaultTwitterCard?.Card ?? "summary_large_image",
+            TwitterSite = defaultTwitterCard?.Site ?? "@vvgonline",
+            TwitterCreator = defaultTwitterCard?.Creator ?? "@vvgonline",
             TwitterTitle = "Services - VVG ONLINE",
             TwitterDescription = "Digital consulting services to transform your business.",
-            TwitterImage =
-        "https://github.com/vvgonline/test.vvgonline.net/assets/images//twitter-cards/vvg-online-home-twitter-card.png?raw=true"
+            TwitterImage = "https://github.com/vvgonline/test.vvgonline.net/assets/images//twitter-cards/vvg-online-home-twitter-card.png?raw=true",
+            JsonLd = defaultJsonLd
         });
 
         var doc = await Http.GetFromJsonAsync<ServiceDoc>("assets/data/services.json");

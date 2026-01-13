@@ -11,6 +11,7 @@ namespace VVG.Web.Services
         private Metadata? _metadata;
         private TwitterCard? _twitterCard;
         private OpenGraph? _openGraph;
+        private string? _jsonLd;
 
         public PageMetadata PageMetadata { get; private set; } = new PageMetadata();
         public event Action? OnMetadataChanged;
@@ -51,6 +52,15 @@ namespace VVG.Web.Services
                 _openGraph = await _http.GetFromJsonAsync<OpenGraph>("assets/data/open-graph.json");
             }
             return _openGraph;
+        }
+
+        public async Task<string?> GetJsonLdAsync()
+        {
+            if (_jsonLd == null)
+            {
+                _jsonLd = await _http.GetStringAsync("assets/data/json-ld.json");
+            }
+            return _jsonLd;
         }
     }
 }

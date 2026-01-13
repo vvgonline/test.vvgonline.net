@@ -92,7 +92,7 @@ This document outlines the specific product requirements and details the impleme
   * Slugs must be unique; navigating to `/blog/{slug}` loads the corresponding post.
 * **Index Generation:**
   * A build step generates a `blog-index.json` file containing:
-    * `title`, `slug`, `publishedAt`, `tags`, `excerpt`, `draft` (no full body content).
+    * `title`, `slug`, `publishedAt`, `tags`, `excerpt`, `draft`, `category`, and `featured` (no full body content).
   * The Blazor WASM app loads `blog-index.json` to power listings, archives, and search.
 
 ### 2.2 Blog Layouts and Views
@@ -186,7 +186,6 @@ This document outlines the specific product requirements and details the impleme
   * Custom comment system.
   * Like counters or visible subscriber counts.
   * In‑browser blog post editing and publishing UI.
-
 
 ### 3. Theme Toggle
 

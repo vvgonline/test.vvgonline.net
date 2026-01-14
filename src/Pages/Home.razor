@@ -7,7 +7,8 @@
 <PageTitle>Home</PageTitle>
 
 <HeroBanner Title="Transform Your Vision into Reality."
-    Subtitle="Driving you beyond growth, through unique, innovative, and result-oriented digital consulting." TagUser="// SYSTEM_ARCHITECTURE" TagPath="// EVENT_DRIVEN_ARCHITECTURE" />
+    Subtitle="Driving you beyond growth, through unique, innovative, and result-oriented digital consulting."
+    TagUser="// SYSTEM_ARCHITECTURE" TagPath="// EVENT_DRIVEN_ARCHITECTURE" />
 
 <section class="container py-5" id="services">
     <div class="row g-0 border-top border-start">
@@ -38,7 +39,7 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-end mb-5">
             <h2 class="display-4">Latest Insights</h2>
-            <a href="/blog" class="mono text-dark mb-2">View Archive _</a>
+            <NavLink href="/BlogArchives" class="mono text-dark mb-2">View Archive _</NavLink>
         </div>
         @if (latestPosts is not null)
         {
@@ -103,41 +104,40 @@
 </section>
 
 @code {
-    private VVG.Web.Models.BlogPost[]? latestPosts;
+    private Models.BlogPost[]? latestPosts;
+    private bool isLoading = true;
+    private string? errorMessage = null;
 
     protected override async Task OnInitializedAsync()
     {
-        var defaultMetadata = await MetadataService.GetMetadataAsync();
-        var defaultTwitterCard = await MetadataService.GetTwitterCardAsync();
-        var defaultOpenGraph = await MetadataService.GetOpenGraphAsync();
-        var defaultJsonLd = await MetadataService.GetJsonLdAsync();
-
-        MetadataService.SetPageMetadata(new PageMetadata
+        try
         {
-            Title = "VVG ONLINE — Home",
-            Description = "VVG ONLINE digital business consulting",
-            Keywords = "digital,consulting,ai,transformation",
-            Image = "https://test.vvgonline.net/assets/images/banners/home.png", // Specific image for home page
+            Console.WriteLine("Home: Starting to load blog posts...");
 
-            OgType = defaultOpenGraph?.Type ?? "website",
-            OgTitle = "VVG ONLINE — Home",
-            OgDescription = "VVG ONLINE digital business consulting",
-            OgImage = "https://test.vvgonline.net/assets/images/banners/home.png", // Specific image for home page
-            OgUrl = defaultOpenGraph?.Url ?? "https://test.vvgonline.net/",
+            var allPosts = await Http.GetFromJsonAsync<Models.BlogPost[]>("data/blog-index.json");
 
-            TwitterCard = defaultTwitterCard?.Card ?? "summary_large_image",
-            TwitterSite = defaultTwitterCard?.Site ?? "@vvgonline",
-            TwitterCreator = defaultTwitterCard?.Creator ?? "@vvgonline",
-            TwitterTitle = "VVG ONLINE — Home",
-            TwitterDescription = "VVG ONLINE digital business consulting",
-            TwitterImage = "https://test.vvgonline.net/assets/images/twitter-cards/vvg-online-home-twitter-card.png", // Specific image for home page
-            JsonLd = defaultJsonLd
-        });
-        
-        var blogIndex = await Http.GetFromJsonAsync<BlogIndex>("data/blog-index.json");
-        if (blogIndex?.Posts is not null)
-        {
-            latestPosts = blogIndex.Posts.Where(p => !p.Draft).OrderByDescending(p => p.PublishedAt).Take(3).ToArray();
+            Console.WriteLine($"Home: Loaded {allPosts?.Length ?? 0} posts");
+
+            if (allPosts != null)
+            {
+                latestPosts = allPosts
+                .Where(p => !p.Draft)
+                .OrderByDescending(p => p.PublishedAt)
+                .Take(3)
+                .ToArray();
+
+                Console.WriteLine($"Home: Filtered to {latestPosts.Length} latest posts");
+            }
         }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+            Console.WriteLine($"Home ERROR: {ex.Message}");
+            Console.WriteLine($"Home STACK: {ex.StackTrace}");
+        }
+        finally
+        {
+            isLoading = false;
+        }    
     }
 }

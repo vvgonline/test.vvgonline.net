@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace VVG.Web.Models;
 
 public class BlogPost
@@ -8,7 +10,10 @@ public class BlogPost
     public string[]? Tags { get; set; }
     public string? Excerpt { get; set; }
     public bool Draft { get; set; }
-    public string? Category { get; set; }
+
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+    public Category? Category { get; set; }  // Make it nullable Category?
+
     public bool Featured { get; set; }
     public int TimeToRead { get; set; }
 }

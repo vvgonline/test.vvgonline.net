@@ -23,22 +23,22 @@
 
 ### 3.2 Blog Listing with Search and Tag Filter
 
-- [ ] Implement basic `Blog.razor`. This page should handle the listing, search, years and tag filtering. Tags (e.g. '#Digital', '#Blockchain') should be clickable to filter posts.
-- [ ] Load `blog-index.json` and render a list of posts with title, date, tags, and excerpt.
-- [ ] Add client-side search by title and excerpt.
-- [ ] Add a tag filter (single or multi-select) above the list. Tags should be displayed like #Digital, #Blockchain, etc. Filtering should update the post list dynamically.
-- [ ] Add a year filter dropdown to filter posts by publication year.
-- [ ] Display posts in reverse chronological order by default.
-- [ ] Highlight active filters and search query.
-- [ ] Show a message when no posts match the current filters/search.
-- [ ] Implement sorting options (e.g., by date ascending/descending, by title A-Z/Z-A, by time to read).
-- [ ] Include a featured posts section at the top if any posts are marked as `featured` in the front-matter. First 3 featured posts should be displayed prominently.
-- [ ] Ensure each post item links to its individual blog post page using the slug.
-- [ ] Tags in the post listing should be clickable to apply the tag filter. They should displayed like [#Digital](#), [#Blockchain](#), etc. Here (#) represents number of posts with that tag. First 3 tag filters should be `Must`, `Recommended`, `Top`.
-- [ ] Implement responsive design for the blog listing page.
+- [x] Implement basic `Blog.razor`. This page should handle the listing, search, years and tag filtering. Tags (e.g. '#Digital', '#Blockchain') should be clickable to filter posts.
+- [x] Load `blog-index.json` and render a list of posts with title, date, tags, and excerpt.
+- [x] Add client-side search by title and excerpt.
+- [x] Add a tag filter (single or multi-select) above the list. Tags should be displayed like #Digital, #Blockchain, etc. Filtering should update the post list dynamically.
+- [x] Add a year filter dropdown to filter posts by publication year.
+- [x] Display posts in reverse chronological order by default.
+- [x] Highlight active filters and search query.
+- [x] Show a message when no posts match the current filters/search.
+- [x] Implement sorting options (e.g., by date ascending/descending, by title A-Z/Z-A, by time to read).
+- [x] Include a featured posts section at the top if any posts are marked as `featured` in the front-matter. First 3 featured posts should be displayed prominently.
+- [x] Ensure each post item links to its individual blog post page using the slug.
+- [x] Tags in the post listing should be clickable to apply the tag filter. They should displayed like [#Digital](#), [#Blockchain](#), etc. Here (#) represents number of posts with that tag. First 3 tag filters should be `Must`, `Recommended`, `Top`.
+- [x] Implement responsive design for the blog listing page.
 - [ ] Implement SEO-friendly URLs for blog listing and filtered views.
 - [ ] Add unit and integration tests for filtering, searching, and rendering logic.
-- [ ] Add a visually distinct loading indicator while fetching and rendering the blog list, similar to the website's preloader.
+- [x] Add a visually distinct loading indicator while fetching and rendering the blog list, similar to the website's preloader.
 - [ ] Style the blog listing to match the overall site design and ensure readability.
 - [ ] Optimize performance for loading and rendering the blog list.
 - [ ] Implement lazy loading for images within the blog excerpts.
@@ -61,14 +61,17 @@
 - [ ] Load the corresponding markdown file from `wwwroot/data/blogs/{slug}.md` and render it as HTML.
 - [ ] Include navigation links to previous/next posts based on publish date.
 - [ ] Ensure proper SEO metadata (title, description) is set for each blog post page.
+- [ ] Style the blog post page to match the overall site design and ensure readability.
+- [ ] Implement responsive design for the blog post page.
+- [ ] Add unit and integration tests for blog post rendering logic.
 
 ### 3.4 Archives, Filters, and Search
 
-- [ ] Provide a dedicated archives view with year/tag filters and search. Search box should be at the top. Followed by Years filter and then Tags filter.
-- [ ] Implement the `BlogArchives.razor` page with a search box at the top that filters posts by title and content.
-- [ ] Add year filter functionality.
-- [ ] Add tag filter functionality (single or multi-select).
-- [ ] Display posts grouped by year, respecting active filters and search query.
+- [x] Provide a dedicated archives view with year/tag filters and search. Search box should be at the top. Followed by Years filter and then Tags filter.
+- [x] Implement the `BlogArchives.razor` page with a search box at the top that filters posts by title and content.
+- [x] Add year filter functionality.
+- [x] Add tag filter functionality (single or multi-select).
+- [x] Display posts grouped by year, respecting active filters and search query.
 
 ### 3.5 Sidebar and Table of Contents (TOC)
 

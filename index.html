@@ -46,7 +46,7 @@
     <script type="importmap">{
   "imports": {
     "./_framework/blazor.webassembly.js": "./_framework/blazor.webassembly.66stpp682q.js",
-    "./_framework/dotnet.js": "./_framework/dotnet.6mkkqdigyj.js",
+    "./_framework/dotnet.js": "./_framework/dotnet.3frlv7dshc.js",
     "./_framework/dotnet.native.js": "./_framework/dotnet.native.cs8mcre4gh.js",
     "./_framework/dotnet.runtime.js": "./_framework/dotnet.runtime.0j6ezsi0n0.js"
   },
@@ -54,8 +54,8 @@
   "integrity": {
     "./_framework/blazor.webassembly.66stpp682q.js": "sha256-3lCWrko3zwspV40aQhs2S/IMkRSarnHRKIdkHhuXIBA=",
     "./_framework/blazor.webassembly.js": "sha256-3lCWrko3zwspV40aQhs2S/IMkRSarnHRKIdkHhuXIBA=",
-    "./_framework/dotnet.6mkkqdigyj.js": "sha256-ooz7EIekFfLiJP3iXiwiCDU12KB+5SY45hJ9ted39uc=",
-    "./_framework/dotnet.js": "sha256-ooz7EIekFfLiJP3iXiwiCDU12KB+5SY45hJ9ted39uc=",
+    "./_framework/dotnet.3frlv7dshc.js": "sha256-8bbXK8wXcWrCHhAJRLO9/uVArZjcFreUMAmjF1WTAQs=",
+    "./_framework/dotnet.js": "sha256-8bbXK8wXcWrCHhAJRLO9/uVArZjcFreUMAmjF1WTAQs=",
     "./_framework/dotnet.native.cs8mcre4gh.js": "sha256-/I3SDHIle7heAxlUGBrgxax+lkKyWyRLBVEJmTHJSCs=",
     "./_framework/dotnet.native.js": "sha256-/I3SDHIle7heAxlUGBrgxax+lkKyWyRLBVEJmTHJSCs=",
     "./_framework/dotnet.runtime.0j6ezsi0n0.js": "sha256-jCsbbdXoVd1zzGc0fQT2sz4mKuv0ANdurPVGo5Sc2jg=",
@@ -81,7 +81,7 @@
     <script src="_framework/blazor.webassembly.66stpp682q.js"></script>
     <script>navigator.serviceWorker.register('service-worker.js', { updateViaCache: 'none' });</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer async></script>
-    <script>
+    <script type="text/javascript">
         window.addEventListener('load', function () {
             var preloader = document.getElementById('preloader');
             if (preloader) {
@@ -93,7 +93,7 @@
             }
         });
     </script>
-    <script>
+    <script type="text/javascript">
         window.setPageMetadata = function (metadata) {
             console.log('Setting page metadata:', metadata);
 
@@ -168,7 +168,23 @@
         }
     </script>
 
-
+    <!-- GitHub Pages SPA redirect script - ADD THIS -->
+    <script type="text/javascript">
+        // Single Page Apps for GitHub Pages
+        // MIT License
+        // https://github.com/rafgraph/spa-github-pages
+        (function (l) {
+            if (l.search[1] === '/') {
+                var decoded = l.search.slice(1).split('&').map(function (s) {
+                    return s.replace(/~and~/g, '&')
+                }).join('?');
+                window.history.replaceState(null, null,
+                    l.pathname.slice(0, -1) + decoded + l.hash
+                );
+            }
+        }(window.location))
+    </script>
+    <!-- End GitHub Pages SPA redirect script -->
 </body>
 
 </html>

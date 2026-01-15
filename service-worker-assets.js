@@ -1,33 +1,33 @@
 self.assetsManifest = {
-  "version": "NH7NMBp4",
+  "version": "XhlRgTs4",
   "assets": [
     {
-      "hash": "sha256-6nGZ0xmYN7Lb7mzRcpgozsS1QQikYqzl19WCLQhqZlE=",
+      "hash": "sha256-8Ug6ZvCvzQgwjDGhJgTGGJ/oiRqOmR5seVxOz4UYedQ=",
       "url": "VVG.Web.styles.css"
     },
     {
-      "hash": "sha256-szYZJI0jDnC2SUYHJHWR1zxzQ1bKw3G12Sq28LOGpCw=",
+      "hash": "sha256-YKVDuPPHaB1MmrEmJ2jX+5YKNk1lhwM87g93oW097XQ=",
       "url": "_content/Microsoft.AspNetCore.Components.WebAssembly.Authentication/AuthenticationService.js"
     },
     {
-      "hash": "sha256-BAoKhn9p/awGaDgWhStRE62mV0fCBUZklaou0mgBd30=",
-      "url": "_framework/AngleSharp.Css.8ngn2plbvp.wasm"
+      "hash": "sha256-jJeL4ir0qfzqqYK6nw0VPVsZio8L0fZmh0oTTS8Q66A=",
+      "url": "_framework/AngleSharp.Css.0t6wmu3plx.wasm"
     },
     {
       "hash": "sha256-QaFFsgfXwBbDi7+iM1r20lJ1SkEyr/+t6XV7nZFnzXk=",
       "url": "_framework/AngleSharp.Diffing.7u0ejwzz3c.wasm"
     },
     {
-      "hash": "sha256-OWdQxeSHO8PSGDuYa559tdWbBzwWGvmQm1aA0oMFhCE=",
-      "url": "_framework/AngleSharp.rf9ksob2a6.wasm"
+      "hash": "sha256-Y4sEENvtK/83f8mNpWJK5bO08oFlVvOWzaQV82kDcb4=",
+      "url": "_framework/AngleSharp.bix3b1fduh.wasm"
     },
     {
-      "hash": "sha256-7U5yXgzEX2zcvATV+wAp9PFas6kKarcXit34KRUnj04=",
-      "url": "_framework/Bunit.Core.nf2b4rc9r4.wasm"
+      "hash": "sha256-BHekS+czPkgVWI+RR+8670vyrMkfy6M5NzXhcBZuszk=",
+      "url": "_framework/Bunit.Core.gd63ciqekz.wasm"
     },
     {
-      "hash": "sha256-yVNSBgtpLbpfxhYJwfW0furBTUpJngDg4YqNRjW260k=",
-      "url": "_framework/Bunit.Web.psc8hkin1b.wasm"
+      "hash": "sha256-XPBWHcP4fYVXCrdPuuLwWBLJ1QXM3co0zm8w5mTXrHU=",
+      "url": "_framework/Bunit.Web.kamifsx96u.wasm"
     },
     {
       "hash": "sha256-t3lFppQa0mtcJhnAgH0CjaUgx5yVh9lHRfx3jZagZmQ=",
@@ -42,8 +42,8 @@ self.assetsManifest = {
       "url": "_framework/Microsoft.AspNetCore.Authorization.h7xioon6px.wasm"
     },
     {
-      "hash": "sha256-VT0acgiHRN1C8rdgLOKNJ6kyggzq/HG0TyE10+SzzlY=",
-      "url": "_framework/Microsoft.AspNetCore.Components.Authorization.1t87pjba2l.wasm"
+      "hash": "sha256-yTTpGp8y/Fr71slNsRQeSKHJQFMT4VYzha9j9Juot0M=",
+      "url": "_framework/Microsoft.AspNetCore.Components.Authorization.703kf01kgr.wasm"
     },
     {
       "hash": "sha256-jT8HTBtX7ODPhIWO7zmiMeKDJMcmYXh1JvKeR5+4aEo=",
@@ -54,8 +54,8 @@ self.assetsManifest = {
       "url": "_framework/Microsoft.AspNetCore.Components.Web.xz5xxxluqq.wasm"
     },
     {
-      "hash": "sha256-7eisEY7MMgGz72oW5r5pbzEP802jpwJDTY2ecEPuZpg=",
-      "url": "_framework/Microsoft.AspNetCore.Components.WebAssembly.Authentication.ri3lqy3jwd.wasm"
+      "hash": "sha256-s2ozGPBm/DN0zRbZTcuVEjwVKRbLPHp5BqjiUD/A9Rk=",
+      "url": "_framework/Microsoft.AspNetCore.Components.WebAssembly.Authentication.b2abras9rr.wasm"
     },
     {
       "hash": "sha256-3EvTa8/DjPvFOVGKPwo60x4rfuQs+aEor5L4DTXEfDs=",
@@ -94,8 +94,8 @@ self.assetsManifest = {
       "url": "_framework/Microsoft.Extensions.DependencyInjection.Abstractions.oxll3n5ano.wasm"
     },
     {
-      "hash": "sha256-2MwbYGTRa8JuyFJ6S1p9CAYhwB/dp6Ggj0YL0HMLNEA=",
-      "url": "_framework/Microsoft.Extensions.Localization.Abstractions.0ilwc7h2im.wasm"
+      "hash": "sha256-/iDsfZxoLNisttYRq6DPEdWoemZXHSYCOEmyXC7s7yE=",
+      "url": "_framework/Microsoft.Extensions.Localization.Abstractions.u5zojh40m9.wasm"
     },
     {
       "hash": "sha256-dJ0/65njbBe6eALpQOlxjYJi/J5k0Z51P2EUi0ZHql4=",
@@ -266,8 +266,8 @@ self.assetsManifest = {
       "url": "_framework/System.ObjectModel.63jqpa8n84.wasm"
     },
     {
-      "hash": "sha256-lzgZkoUVSJWyCZ7Tc7ApKF7/vCZViFwAkeYDfdCRRhY=",
-      "url": "_framework/System.Private.CoreLib.xmjk7gwmr9.wasm"
+      "hash": "sha256-GUOFcAPIXOH6678YSXJSPQupOXpEje45kBcvOmq5NFk=",
+      "url": "_framework/System.Private.CoreLib.jtoxx00sqr.wasm"
     },
     {
       "hash": "sha256-LHfLrqLDimd2UnCPYdKsT1wQUPcd90RkTv+d8+U0RpA=",
@@ -378,16 +378,16 @@ self.assetsManifest = {
       "url": "_framework/System.Xml.XmlSerializer.bfsm7rg8bh.wasm"
     },
     {
-      "hash": "sha256-y9ei1DcIAeirnm8ZMj9r9KgF9IGAPEVIXjYIERIrwrA=",
-      "url": "_framework/VVG.Web.5scmijccqn.wasm"
+      "hash": "sha256-0pWz82i1vUGH6RattbWWqqciIWMksACs1SMuFf07rz8=",
+      "url": "_framework/VVG.Web.mqfiasdxnh.wasm"
     },
     {
       "hash": "sha256-3lCWrko3zwspV40aQhs2S/IMkRSarnHRKIdkHhuXIBA=",
       "url": "_framework/blazor.webassembly.66stpp682q.js"
     },
     {
-      "hash": "sha256-fck9YX1YMeh12v1gAlhYYnxT1QWoBS2gQRCuZbnE4mE=",
-      "url": "_framework/dotnet.9x9114j2yr.js"
+      "hash": "sha256-ooz7EIekFfLiJP3iXiwiCDU12KB+5SY45hJ9ted39uc=",
+      "url": "_framework/dotnet.6mkkqdigyj.js"
     },
     {
       "hash": "sha256-/I3SDHIle7heAxlUGBrgxax+lkKyWyRLBVEJmTHJSCs=",
@@ -470,7 +470,7 @@ self.assetsManifest = {
       "url": "assets/css/app.scss"
     },
     {
-      "hash": "sha256-xJDOw42snwSNXdPvYPYjuLjNnqopDNkVv7JkWYC/EeI=",
+      "hash": "sha256-4IXfXqY+fisVwEAA7S+skp/Pc+JTFZ805zSV31b/27c=",
       "url": "assets/data/blogs/Communication-Mastery-for-Digital-Business-Success.md"
     },
     {
@@ -494,7 +494,7 @@ self.assetsManifest = {
       "url": "assets/data/blogs/Operating-Model-Design.md"
     },
     {
-      "hash": "sha256-vnLn0JIgBKZJyOJtF5kUrKFX9AYdhTcSDxqTXI3gLaQ=",
+      "hash": "sha256-F6lq6cK/pTCaLjiwpYeES3cXCCmp3DcHAFNsuFL287w=",
       "url": "assets/data/blogs/The-Digital-Marketing-Investment-Imperative.md"
     },
     {
@@ -550,7 +550,7 @@ self.assetsManifest = {
       "url": "assets/js/theme.js"
     },
     {
-      "hash": "sha256-+FI6ncLtLG//okbM3A5Y8AaOBrGDkEPPy+kNLQicquQ=",
+      "hash": "sha256-wIWSIzPUG/hdPZ0Ed7ZmIsIHODy2ZPMXEr5cUVk4gi0=",
       "url": "data/blog-index.json"
     },
     {
@@ -570,7 +570,7 @@ self.assetsManifest = {
       "url": "data/twitter-card.json"
     },
     {
-      "hash": "sha256-ViXarJ5Zx/TGeyNfBThTLMVfPSdVbr6JVjCltDJcxlg=",
+      "hash": "sha256-bWyZTRsgJUVjL5/RqQEjmg5OqaX4/d31Ub5Z4G7/9MQ=",
       "url": "index.html"
     },
     {

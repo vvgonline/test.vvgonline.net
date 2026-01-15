@@ -21,47 +21,81 @@ jobs:
         with:
           dotnet-version: '10.0.101'
 
-      # Add this clean step
       - name: Clean Build Artifacts
         run: dotnet clean src/VVG.Web.csproj -c Release
 
       - name: Publish Project
         run: dotnet publish src/VVG.Web.csproj -c Release -o release /p:StaticWebAssetBasePath=/ --nologo
 
-      - name: Generate blog-index.json
+      - name: Generate Blog Index
         run: |
-          BLOG_DIR="src/wwwroot/assets/data/blogs"
-          OUTPUT_FILE="src/wwwroot/data/blog-index.json"
-          echo "[]" > "$OUTPUT_FILE"
-          for file in "$BLOG_DIR"/*.md; do
-            front_matter=$(sed -n '/^---$/,/^---$/p' "$file" | sed '1d;$d')
-            json_object=$(echo "$front_matter" | awk -F': ' '
-              BEGIN {
-                printf "{"
-                first = 1
-              }
-              {
-                key = $1
-                value = substr($0, index($0, ":") + 2)
-                gsub(/^[ \t]+|[ \t]+$/, "", value)
-                gsub(/"/, "", value)
-                if (!first) {
-                  printf ","
+          cat > generate-blog-index.js << 'EOF'
+          const fs = require('fs');
+          const path = require('path');
+          
+          const blogDir = 'src/wwwroot/assets/data/blogs';
+          const outputFile = 'src/wwwroot/data/blog-index.json';
+          
+          const posts = [];
+          
+          // Create output directory if it doesn't exist
+          fs.mkdirSync(path.dirname(outputFile), { recursive: true });
+          
+          if (fs.existsSync(blogDir)) {
+            fs.readdirSync(blogDir).forEach(file => {
+              if (file.endsWith('.md')) {
+                const content = fs.readFileSync(path.join(blogDir, file), 'utf8');
+                const frontMatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
+                
+                if (frontMatterMatch) {
+                  const frontMatter = frontMatterMatch[1];
+                  const post = {};
+                  
+                  frontMatter.split('\n').forEach(line => {
+                    const match = line.match(/^(\w+):\s*(.+)$/);
+                    if (match) {
+                      const [, key, value] = match;
+                      
+                      // Handle arrays like ["tag1", "tag2"] or [tag1, tag2]
+                      if (value.trim().startsWith('[')) {
+                        try {
+                          post[key] = JSON.parse(value.replace(/'/g, '"'));
+                        } catch {
+                          post[key] = [];
+                        }
+                      }
+                      // Handle booleans
+                      else if (value.trim() === 'true' || value.trim() === 'false') {
+                        post[key] = value.trim() === 'true';
+                      }
+                      // Handle numbers
+                      else if (!isNaN(value.trim())) {
+                        post[key] = parseInt(value.trim());
+                      }
+                      // Handle strings
+                      else {
+                        post[key] = value.replace(/^["']|["']$/g, '').trim();
+                      }
+                    }
+                  });
+                  
+                  posts.push(post);
                 }
-                first = 0
-                if (substr(value, 1, 1) == "[") {
-                  printf "\"%s\": %s", key, value
-                } else {
-                  printf "\"%s\": \"%s\"", key, value
-                }
               }
-              END {
-                printf "}"
-              }
-            ')
-            jq --argjson new_obj "$json_object" '. += [$new_obj]' "$OUTPUT_FILE" > tmp.json && mv tmp.json "$OUTPUT_FILE"
-          done
+            });
+          }
+          
+          fs.writeFileSync(outputFile, JSON.stringify(posts, null, 2));
+          console.log(`✅ Generated blog index with ${posts.length} posts`);
+          console.log(JSON.stringify(posts, null, 2));
+          EOF
+          
+          node generate-blog-index.js
 
+      - name: Copy Blog Index to Release
+        run: |
+          mkdir -p release/wwwroot/data
+          cp src/wwwroot/data/blog-index.json release/wwwroot/data/
 
       - name: Prepare GitHub Pages Artifacts
         run: |

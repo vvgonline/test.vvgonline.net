@@ -5,6 +5,7 @@ namespace VVG.Web.Models;
 public class BlogPost
 {
     public string? Title { get; set; }
+    public string Filename { get; set; } = string.Empty;
     public string? Slug { get; set; }
     public DateTime PublishedAt { get; set; }
     public string[]? Tags { get; set; }

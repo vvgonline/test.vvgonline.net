@@ -67,9 +67,9 @@
         NavigationManager.NavigateTo(mailtoUrl);
     }
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        MetadataService.SetPageMetadata(new PageMetadata
+        await MetadataService.SetPageMetadata(new PageMetadata
         {
             Title = "Contact - VVG ONLINE",
             Description = "Get in touch with VVG ONLINE for digital consulting services.",

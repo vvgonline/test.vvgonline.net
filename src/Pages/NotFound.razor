@@ -17,9 +17,9 @@
 </section>
 
 @code {
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        MetadataService.SetPageMetadata(new PageMetadata
+        await MetadataService.SetPageMetadata(new PageMetadata
         {
             Title = "404 Not Found - VVG ONLINE",
             Description = "The page you were looking for was not found.",

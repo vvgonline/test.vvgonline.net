@@ -255,7 +255,7 @@ culture, and develop leaders fit for uncertainty and innovation.
 
 *In a digital world, clarity, context, and character remain non-negotiable for success. For those
 embarking on digital transformation, partnering with VVG ONLINE means investing in communication
-mastery that endures. [Contact](../contact.html)
+mastery that endures. [Contact](../contact)
 VVG ONLINE today to learn how
 our digital business consulting services can help you build leadership communication capabilities
 that drive competitive advantage.*

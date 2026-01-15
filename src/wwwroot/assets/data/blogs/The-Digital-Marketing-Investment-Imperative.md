@@ -121,7 +121,7 @@ overall Return on Investment (ROI).*
 > 🔍 Forbes ROI Guide and Quest Journals ROI Analysis offer frameworks to calculate and optimize
 > returns
 
-> 🔍 VVG ONLINE's blog delves into the [key performance indicators (KPIs)](./Key-Performance-Indicators-a-vvg-online-approach.html) of digital marketing,
+> 🔍 VVG ONLINE's blog delves into the [key performance indicators (KPIs)](./blog/key-performance-indicators-kpis) of digital marketing,
 > providing clients with the tools to evaluate the return on investment (ROI) of their campaigns
 > effectively.
 
@@ -305,7 +305,7 @@ prices are only going up.
 
 *This blog post represents current market analysis and projections based on available industry
 data. For personalized digital marketing strategies tailored to your business and target
-markets, [contact](../contact.html) our
+markets, [contact](../contact) our
 consulting team
 for a
 comprehensive

@@ -44,10 +44,10 @@
 - [ ] Implement lazy loading for images within the blog excerpts.
 - [ ] Test filtering and search functionality thoroughly.
 - [ ] Ensure the blog listing is responsive across different devices including mobile, tablet, and desktop.
-- [ ] Implement pagination if the post count exceeds a certain threshold (10 posts per page).
+- [x] Implement pagination if the post count exceeds a certain threshold (10 posts per page).
 - [ ] Ensure proper SEO metadata (title, description) is set for the blog listing page.
 - [ ] Add social sharing buttons for popular platforms like Twitter, Facebook, LinkedIn.
-- [ ] Include a clear call-to-action at the end of the blog listing (e.g., “Subscribe to Newsletter” or “Contact VVG ONLINE”).
+- [x] Include a clear call-to-action at the end of the blog listing (e.g., “Subscribe to Newsletter” or “Contact VVG ONLINE”).
 - [ ] Update `wwwroot/data/blog-index.json` generation script to include a summary of tags with post counts for display in the tag filter section. Also, ensure the tags are sorted by post count in descending order. And, update the script to include a list of years with post counts for the year filter dropdown. `wwwroot/data/blog-index.json` should now have a `tagsSummary` and `yearsSummary` section. `wwwroot/data/blogs` markdown files should updated accordingly if needed.
 - [ ] Each blog listing should display blog category first (e.g., 'Tech', 'Business') before the title. Just like in `Home.razor`.
 - [ ]`Home.razor` shoud have 3 most recent blog posts from `Blog.razor` under 'Latest Insights' section. Each post should display category, title, date, time to read, and link to blog post.

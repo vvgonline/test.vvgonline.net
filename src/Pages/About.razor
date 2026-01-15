@@ -62,9 +62,9 @@
 
 
 @code {
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        MetadataService.SetPageMetadata(new PageMetadata
+        await MetadataService.SetPageMetadata(new PageMetadata
         {
             Title = "About VVG ONLINE",
             Description = "Learn about VVG ONLINE's mission, philosophy, and our commitment to driving digital transformation and innovation.",

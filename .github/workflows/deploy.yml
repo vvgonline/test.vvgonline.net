@@ -19,7 +19,7 @@ jobs:
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '10.0.101'
+          dotnet-version: '10.0.x'
 
       - name: Clean Build Artifacts
         run: dotnet clean src/VVG.Web.csproj -c Release
@@ -79,6 +79,9 @@ jobs:
                     }
                   });
                   
+                  // Add filename property (without .md extension)
+                  post.filename = file.replace('.md', '');
+                  
                   posts.push(post);
                 }
               }
@@ -97,15 +100,55 @@ jobs:
           mkdir -p release/wwwroot/data
           cp src/wwwroot/data/blog-index.json release/wwwroot/data/
 
+      - name: Copy Markdown Files to Release
+        run: |
+          echo "📝 Copying markdown blog files..."
+          mkdir -p release/wwwroot/assets/data/blogs
+          
+          if [ -d "src/wwwroot/assets/data/blogs" ]; then
+            cp -v src/wwwroot/assets/data/blogs/*.md release/wwwroot/assets/data/blogs/
+            echo "✅ Markdown files copied successfully"
+            echo "Files in release:"
+            ls -la release/wwwroot/assets/data/blogs/
+          else
+            echo "❌ Source directory not found: src/wwwroot/assets/data/blogs"
+            exit 1
+          fi
+
+      - name: Verify Deployment Files
+        run: |
+          echo "=== 📁 Checking deployment structure ==="
+          echo ""
+          echo "Root files:"
+          ls -la release/wwwroot/ | head -20
+          echo ""
+          echo "Data folder:"
+          ls -la release/wwwroot/data/ || echo "❌ data folder not found"
+          echo ""
+          echo "Blog markdown files:"
+          ls -la release/wwwroot/assets/data/blogs/ || echo "❌ blogs folder not found"
+          echo ""
+          echo "File count:"
+          echo "  - MD files: $(find release/wwwroot/assets/data/blogs/ -name '*.md' 2>/dev/null | wc -l)"
+          echo "  - JSON files: $(find release/wwwroot/data/ -name '*.json' 2>/dev/null | wc -l)"
+
       - name: Prepare GitHub Pages Artifacts
         run: |
           # Ensure folders starting with '_' are served
           touch release/wwwroot/.nojekyll
-          # Copy index for SPA routing fallback
-          cp release/wwwroot/index.html release/wwwroot/404.html
+          
+          # Copy custom 404.html for SPA routing
+          if [ -f "release/wwwroot/404.html" ]; then
+            echo "✅ 404.html already exists"
+          else
+            echo "⚠️ Creating 404.html from index.html"
+            cp release/wwwroot/index.html release/wwwroot/404.html
+          fi
+          
           # Copy CNAME if it exists (for custom domain)
           if [ -f "CNAME" ]; then
             cp CNAME release/wwwroot/CNAME
+            echo "✅ CNAME copied"
           fi
 
       - name: Deploy to GitHub Pages
@@ -113,3 +156,4 @@ jobs:
         with:
           folder: release/wwwroot
           branch: gh-pages
+          clean: true

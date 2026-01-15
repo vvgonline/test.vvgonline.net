@@ -11,16 +11,6 @@
     <StaticWebAssetBasePath>/</StaticWebAssetBasePath>
   </PropertyGroup>
 
-  <!-- Ensure markdown and json files are included -->
-  <ItemGroup>
-    <Content Include="wwwroot\assets\data\blogs\**\*.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="wwwroot\data\**\*.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
   <ItemGroup>
     <Compile Remove="MetaTest.cs" />
   </ItemGroup>

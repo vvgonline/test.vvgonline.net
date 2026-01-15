@@ -31,7 +31,7 @@ body {
   padding-top: 32px;
 }
 
-header {
+*, header, main {
     outline: none;
 }
 
@@ -148,4 +148,16 @@ footer {
   .hero-title {
     font-size: 2.5rem;
   }
+}
+
+.no-border-radius {
+    border-radius: 0 !important;
+}
+
+.btn {
+    border-radius: 0 !important;
+}
+
+input, textarea, select, button {
+    border-radius: 0 !important;
 }

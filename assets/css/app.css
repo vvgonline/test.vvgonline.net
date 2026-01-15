@@ -1,103 +1,47 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Fira+Code:wght@300..700&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap");
-.preloader-container {
+.preloader {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  background-color: #111113;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   z-index: 9999;
-  transition: opacity 0.5s ease, visibility 0.5s ease;
-}
-
-.preloader-content {
-  text-align: center;
-  color: white;
-}
-
-.logo-placeholder {
-  margin-bottom: 30px;
-}
-
-.logo-circle {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: linear-gradient(45deg, #ffbb33, #ffcc33);
-  margin: 0 auto 15px;
-  animation: pulse 2s infinite;
-}
-
-.logo-text {
   font-family: "IBM Plex Mono", monospace;
+  color: #ffdd33;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.terminal-output-area {
+  white-space: pre; /* Preserves ASCII spacing */
+  text-align: left; /* ASCII art aligns left */
   font-weight: bold;
-  font-size: 24px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
+  text-shadow: 0 0 5px rgba(255, 221, 51, 0.3);
 }
 
-.loading-bar {
-  width: 300px;
-  height: 6px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 3px;
-  margin: 0 auto 20px;
-  overflow: hidden;
-}
-
-.loading-progress {
-  width: 0%;
-  height: 100%;
-  background: linear-gradient(90deg, #00c9ff, #92fe9d);
-  border-radius: 3px;
-  animation: loading 3s ease-in-out infinite;
-}
-
-.status-text {
-  font-family: "IBM Plex Sans", monospace;
-  font-size: 16px;
-  opacity: 0.8;
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-@keyframes loading {
-  0% {
-    width: 0%;
-  }
-  50% {
-    width: 70%;
-  }
-  100% {
-    width: 100%;
+@media (max-width: 768px) {
+  .preloader {
+    font-size: 11px;
   }
 }
 /* Theme CSS (extracted from theme_sample_file/_web-layout/assets/styles/main.css) - essential parts */
 :root {
-  --accent: #ffdd33;
-  --bg: #ffffff;
-  --text: #111113;
-  --card-bg: #f8f8f8;
+  --accent: #00ff00; /* Green accent for sci-fi look */
+  --bg: #0d0d0d; /* Dark background */
+  --text: #e0e0e0; /* Light grey text */
+  --card-bg: #1a1a1a; /* Slightly lighter dark for cards */
 }
 
 [data-theme=dark] {
-  --bg: #111119;
-  --text: #ffffff;
-  --card-bg: #111116;
-  --accent: #ffdd33;
+  --bg: #0d0d0d;
+  --text: #e0e0e0;
+  --card-bg: #1a1a1a;
+  --accent: #00ff00;
 }
 
 .bg-accent {
@@ -112,12 +56,12 @@ body {
   background-color: var(--bg);
   color: var(--text);
   transition: background 0.3s;
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: "IBM Plex Mono", monospace; /* Monospaced font for terminal look */
   line-height: 1.6;
   padding-top: 32px;
 }
 
-header {
+*, header, main {
   outline: none;
 }
 
@@ -125,7 +69,7 @@ header {
   height: 32px;
   background: linear-gradient(90deg, #000 0%, #1a1a1a 100%);
   border-bottom: 1px solid var(--accent);
-  box-shadow: 0 0 10px rgba(255, 221, 51, 0.2);
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.2); /* Green glow */
   color: #fff;
   position: fixed;
   top: 0;
@@ -156,12 +100,14 @@ header {
   border: 1px solid #000;
   border-radius: 0;
   padding: 10px 25px;
+  color: #000;
 }
 
 .hero-title {
   font-size: 4.5rem;
   line-height: 0.95;
   margin-bottom: 2rem;
+  text-shadow: 0 0 5px var(--accent);
 }
 
 .hero {
@@ -188,12 +134,71 @@ footer {
   color: var(--text);
 }
 
+/* New terminal styles */
+.terminal-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--accent);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.1);
+}
+
+.terminal-card-title {
+  color: var(--accent);
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.terminal-card-title::before {
+  content: "[service]~# ";
+  color: var(--text);
+}
+
+.terminal-card ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.terminal-card ul li::before {
+  content: ">";
+  color: var(--accent);
+  margin-right: 10px;
+}
+
+@keyframes blink-caret {
+  from, to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: var(--accent);
+  }
+}
+.blinking-cursor::after {
+  content: "_";
+  animation: blink-caret 1s step-end infinite;
+  margin-left: 5px;
+  color: var(--accent);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .hero-title {
     font-size: 2.5rem;
   }
 }
+.no-border-radius {
+  border-radius: 0 !important;
+}
+
+.btn {
+  border-radius: 0 !important;
+}
+
+input, textarea, select, button {
+  border-radius: 0 !important;
+}
+
 /* Additional small helpers */
 .hero {
   min-height: 100vh;
@@ -292,6 +297,42 @@ footer {
   font-style: italic;
 }
 
+.blog-filters {
+  background-color: var(--card-bg);
+  padding: 1rem;
+  border: 1px solid var(--text);
+  margin-bottom: 2rem;
+}
+
+.featured-insights .card {
+  border-color: var(--accent);
+}
+
+.pagination .page-item .page-link {
+  background-color: var(--card-bg);
+  border: 1px solid var(--text);
+  color: var(--text);
+  margin: 0 2px;
+  border-radius: 0;
+}
+.pagination .page-item .page-link:hover {
+  background-color: var(--accent);
+  color: #000;
+}
+.pagination .page-item.active .page-link {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: #000;
+}
+
+.insight-tag {
+  cursor: pointer;
+}
+.insight-tag:hover {
+  background: var(--accent);
+  color: #000;
+}
+
 :root {
   --accent: #ffdd33;
   --bg: #ffffff;
@@ -310,12 +351,7 @@ body {
   background-color: var(--bg);
   color: var(--text);
   transition: background 0.3s;
-}
-
-body {
   font-family: "IBM Plex Sans", sans-serif;
-  background-color: var(--bg);
-  color: var(--text);
   line-height: 1.6;
   padding-top: 32px;
   /* Space for the fixed top panel */
@@ -398,7 +434,8 @@ h2,
 h3,
 h4,
 h5,
-h6 .serif {
+h6,
+.serif {
   font-family: "EB Garamond", serif;
   font-weight: 600;
 }
@@ -573,7 +610,7 @@ footer a:hover {
 
 .blink {
   animation: blinker 1s step-start infinite;
-  color: var(--111113);
+  color: var(--text);
 }
 
 /* Code blink used while code is being typed */
@@ -965,7 +1002,7 @@ a:not(.no-cursor):hover::after {
 
 .terminal-prompt {
   color: var(--accent);
-  margin-right: 3.226px;
+  margin-right: 10px;
   font-weight: bold;
 }
 

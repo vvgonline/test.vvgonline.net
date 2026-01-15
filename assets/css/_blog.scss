@@ -1,0 +1,43 @@
+// Blog specific styles
+
+.blog-filters {
+    background-color: var(--card-bg);
+    padding: 1rem;
+    border: 1px solid var(--text);
+    margin-bottom: 2rem;
+}
+
+.featured-insights {
+    .card {
+        border-color: var(--accent);
+    }
+}
+
+.pagination {
+    .page-item .page-link {
+        background-color: var(--card-bg);
+        border: 1px solid var(--text);
+        color: var(--text);
+        margin: 0 2px;
+        border-radius: 0;
+
+        &:hover {
+            background-color: var(--accent);
+            color: #000;
+        }
+    }
+
+    .page-item.active .page-link {
+        background-color: var(--accent);
+        border-color: var(--accent);
+        color: #000;
+    }
+}
+
+.insight-tag {
+    cursor: pointer;
+    &:hover {
+        background: var(--accent);
+        color: #000;
+    }
+}

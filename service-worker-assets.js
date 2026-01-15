@@ -1,8 +1,8 @@
 self.assetsManifest = {
-  "version": "BKjudQiq",
+  "version": "lhDwBrR6",
   "assets": [
     {
-      "hash": "sha256-rW8cWS8jo90jOb4i3LwtuqGRFyEEhofc+tfAmUwRqwY=",
+      "hash": "sha256-6nGZ0xmYN7Lb7mzRcpgozsS1QQikYqzl19WCLQhqZlE=",
       "url": "VVG.Web.styles.css"
     },
     {
@@ -34,6 +34,10 @@ self.assetsManifest = {
       "url": "_framework/Castle.Core.fqg0tyy8au.wasm"
     },
     {
+      "hash": "sha256-Jv9S5coLP28fMUd+sd72uOfd5e3pWx+IFMRNtR/lykc=",
+      "url": "_framework/Markdig.earcieyyzk.wasm"
+    },
+    {
       "hash": "sha256-neAgArvhZZ83bAvXp4Ty7+U1tXsW2FWJqsW649UrVCM=",
       "url": "_framework/Microsoft.AspNetCore.Authorization.h7xioon6px.wasm"
     },
@@ -58,8 +62,8 @@ self.assetsManifest = {
       "url": "_framework/Microsoft.AspNetCore.Components.WebAssembly.cqfuxaqd2b.wasm"
     },
     {
-      "hash": "sha256-CB/TpeCtl/BG2T7Ar4Yg6D5v4CvHI8imee9cU30wo8s=",
-      "url": "_framework/Microsoft.AspNetCore.Components.sz4rdg29a0.wasm"
+      "hash": "sha256-WQz8AHIN4xKYDxmz3cQ3qMdAfy/4iAuSkz1hmkS0VSA=",
+      "url": "_framework/Microsoft.AspNetCore.Components.fafhol4vja.wasm"
     },
     {
       "hash": "sha256-II2IMFFwMrZ8T7O1jcKjyTGYt1jy8oh5T4fzISc4Fso=",
@@ -146,8 +150,8 @@ self.assetsManifest = {
       "url": "_framework/System.Collections.Specialized.vrczlcpmb3.wasm"
     },
     {
-      "hash": "sha256-3VLgZ/oxqMWRsXfIocsw+ubOmEr4kILZPWckH+O2dVU=",
-      "url": "_framework/System.Collections.bajmeptgyp.wasm"
+      "hash": "sha256-bZzB4iPV7oeaZaw25fB7Ws43diyGg5HD+iYdv6Xzv6A=",
+      "url": "_framework/System.Collections.ratl4eu2fp.wasm"
     },
     {
       "hash": "sha256-8NVVlaw1PQYeqwaQ0Z2NInVqTckUvyrDHUh3h2sSFJc=",
@@ -226,16 +230,16 @@ self.assetsManifest = {
       "url": "_framework/System.Linq.sctnzgx6tc.wasm"
     },
     {
-      "hash": "sha256-CEKu+2fw1N/1FHogBLr21L5PSVlbaz1tsk5YML8+Kn0=",
-      "url": "_framework/System.Memory.02vvr91tvv.wasm"
+      "hash": "sha256-sVHgRKhls6+jDO0cgMggKKk5uf0o1DZAq8wMJ/drjJI=",
+      "url": "_framework/System.Memory.rtqq0pujkf.wasm"
     },
     {
       "hash": "sha256-xrA4d8XvJus9mPIXMhlNKLUyiG2OFBfBxvuimNRlnE8=",
       "url": "_framework/System.Net.Http.Json.eadu2cup0a.wasm"
     },
     {
-      "hash": "sha256-xhlJ9snu3gndY9ToE7PtY5/u2aEiag1v+J1//XVYqY0=",
-      "url": "_framework/System.Net.Http.qwujjc2gk3.wasm"
+      "hash": "sha256-CICSH3MSEKRkJy4ibQrip27k/6gLB5/kAm8k3Civh/g=",
+      "url": "_framework/System.Net.Http.c7007y9bpe.wasm"
     },
     {
       "hash": "sha256-965+tzurMENiNimTK48FUCNbNAmyqiknOHHJbwv6uWU=",
@@ -262,12 +266,12 @@ self.assetsManifest = {
       "url": "_framework/System.ObjectModel.63jqpa8n84.wasm"
     },
     {
-      "hash": "sha256-dhAnQhH7DgA2EXFAxH17bdmroAI4P61BkZg1Smcethk=",
-      "url": "_framework/System.Private.CoreLib.2x17vzaa27.wasm"
+      "hash": "sha256-LsSnKH4sm718Wfp9HCbpXz0uTJeZdhLsry/faN0RLo4=",
+      "url": "_framework/System.Private.CoreLib.m6k0maqyl6.wasm"
     },
     {
-      "hash": "sha256-XppEUedK5kN9q8wc3rldYTTE/NcJgIqFzy7wd6BlC5U=",
-      "url": "_framework/System.Private.Uri.e4s82uu4vw.wasm"
+      "hash": "sha256-LHfLrqLDimd2UnCPYdKsT1wQUPcd90RkTv+d8+U0RpA=",
+      "url": "_framework/System.Private.Uri.wrciemsz9n.wasm"
     },
     {
       "hash": "sha256-LGXD6a/DlJfXqFFsC4DrY5gZ0oDSbn4ArErmLdChbYM=",
@@ -298,16 +302,20 @@ self.assetsManifest = {
       "url": "_framework/System.Reflection.z9ok0knem8.wasm"
     },
     {
+      "hash": "sha256-1hduJcfkO8ii4deeePebdEMnVN/q5qXZS8tugapCqoc=",
+      "url": "_framework/System.Runtime.2mh0jnmu3b.wasm"
+    },
+    {
       "hash": "sha256-D4GrLDkF5Q0tv8ZmKGaIrkVXTsMQjYMlWazOKYnc5ro=",
       "url": "_framework/System.Runtime.Extensions.37pq3vwfmd.wasm"
     },
     {
-      "hash": "sha256-W9ESzMNrB0Cjt1YZL39Yb4daAPwKatQUst9AmVjw0M8=",
-      "url": "_framework/System.Runtime.InteropServices.JavaScript.50ez5m42lb.wasm"
+      "hash": "sha256-scYMJdFDDU1veoK1FkRmwspdeyMLHyUBG+FxsCxMKMI=",
+      "url": "_framework/System.Runtime.InteropServices.10r8kahq1u.wasm"
     },
     {
-      "hash": "sha256-SsSJcYsQZj2wJt0KkARneDo34CqLbhFbbYO7GFffwLw=",
-      "url": "_framework/System.Runtime.InteropServices.anztis2if3.wasm"
+      "hash": "sha256-W9ESzMNrB0Cjt1YZL39Yb4daAPwKatQUst9AmVjw0M8=",
+      "url": "_framework/System.Runtime.InteropServices.JavaScript.50ez5m42lb.wasm"
     },
     {
       "hash": "sha256-B8S8hrsPsQLnBDrX5vOAUu90NrEXaatByzNDmi7mG9Y=",
@@ -316,10 +324,6 @@ self.assetsManifest = {
     {
       "hash": "sha256-Hs3stwjUpWzRQiu/pHTVF/KYGpAJLB69lEbRub/ALAc=",
       "url": "_framework/System.Runtime.Serialization.Primitives.mzyrxqu4w0.wasm"
-    },
-    {
-      "hash": "sha256-yKXxNhvAxOfGCs542WSUXXH4t5+2ZpdYT/gTO3JoYdI=",
-      "url": "_framework/System.Runtime.cr6kndj41s.wasm"
     },
     {
       "hash": "sha256-ajnqmgQI6Z1yF2e3QYfG/h5vVLy/lKXIY1oSC+CQaps=",
@@ -346,8 +350,8 @@ self.assetsManifest = {
       "url": "_framework/System.Text.Encodings.Web.30g2bsoz6f.wasm"
     },
     {
-      "hash": "sha256-ZRfWrM/Nx3q287+aKVRlFiQWr/7MOThd9NN37Y2Rf64=",
-      "url": "_framework/System.Text.Json.7xrdiqy0e0.wasm"
+      "hash": "sha256-7yCCLlso6HNPlMGA/rXSIcSric0/DPCLjyB0aJ8l+68=",
+      "url": "_framework/System.Text.Json.zrw8ll2k35.wasm"
     },
     {
       "hash": "sha256-1DPAV7jnQn1n8Rd3XAhX2CstmiypP0g8Ny0lgFvlCUs=",
@@ -374,16 +378,16 @@ self.assetsManifest = {
       "url": "_framework/System.Xml.XmlSerializer.bfsm7rg8bh.wasm"
     },
     {
-      "hash": "sha256-dMlZYfrgs5isuZ48nJmr3dQcF2m9EmnIA9wKj+1xw4g=",
-      "url": "_framework/VVG.Web.cgore58sn6.wasm"
+      "hash": "sha256-xvFBW2rXeRT8rZqXbZO9fA0jkLRyyC1eOE6iCNOGnr0=",
+      "url": "_framework/VVG.Web.65o044gq90.wasm"
     },
     {
       "hash": "sha256-3lCWrko3zwspV40aQhs2S/IMkRSarnHRKIdkHhuXIBA=",
       "url": "_framework/blazor.webassembly.66stpp682q.js"
     },
     {
-      "hash": "sha256-tIJK6qTjqW49sCCXwiXZE8C3biPAgdJzyE9L7hdx+TQ=",
-      "url": "_framework/dotnet.8bux36rsgs.js"
+      "hash": "sha256-MxVkg6GKzl9IDxNGkA3H4WJkldLrYlSHo0rOFxNxtGQ=",
+      "url": "_framework/dotnet.3ox7na5tq9.js"
     },
     {
       "hash": "sha256-/I3SDHIle7heAxlUGBrgxax+lkKyWyRLBVEJmTHJSCs=",
@@ -430,6 +434,10 @@ self.assetsManifest = {
       "url": "_framework/xunit.execution.dotnet.idzueilo3g.wasm"
     },
     {
+      "hash": "sha256-A9a/195DlHqY9UzKLFPOHc3g5XLo4mDGJSN5jSisXtE=",
+      "url": "assets/css/_blog.scss"
+    },
+    {
       "hash": "sha256-i7/NFyc72yv5QcuQa7Fowv49Ay3sbyO2N6Pq/BG0syQ=",
       "url": "assets/css/_main.scss"
     },
@@ -458,40 +466,36 @@ self.assetsManifest = {
       "url": "assets/css/app.css.map"
     },
     {
-      "hash": "sha256-3UZ+UujcrAE8UYGpO3D7R53rqrFBuqc9bqvFC7lK7QA=",
+      "hash": "sha256-0y8xO6VX02aTRFSNPJn8klwnbdS/9hI3NqsxNsLB20E=",
       "url": "assets/css/app.scss"
     },
     {
-      "hash": "sha256-jyDGVNhvtib71nPaH2+QmP70sg1lqwwIEc0DuB3FqOY=",
-      "url": "assets/data/blog-posts.json"
+      "hash": "sha256-xJDOw42snwSNXdPvYPYjuLjNnqopDNkVv7JkWYC/EeI=",
+      "url": "assets/data/blogs/Communication-Mastery-for-Digital-Business-Success.md"
     },
     {
-      "hash": "sha256-/PMM+ZSDTL6FUVN/LtVJen7HESphz4G6yHnOiGMvlsE=",
-      "url": "assets/data/blogs-md/Communication-Mastery-for-Digital-Business-Success.md"
+      "hash": "sha256-kT/weTezn6t+QJFn7EngV9vXqacDuBbCYHnn9ubQj+8=",
+      "url": "assets/data/blogs/Digital-Assets-The-Real-Estate-of-the-Virtual-World.md"
     },
     {
-      "hash": "sha256-qbTUKjeJOQILCYsTYutr7SLKECiCsM/g7H119C6aa2A=",
-      "url": "assets/data/blogs-md/Digital-Assets-The-Real-Estate-of-the-Virtual-World.md"
+      "hash": "sha256-ngs3XQz7g+mjTQefYGNV9jopz4BMs5hEnFJjDEa/cDE=",
+      "url": "assets/data/blogs/Don-t-Normalize-Common-Things-A-Philosophy-for-Business-Excellence.md"
     },
     {
-      "hash": "sha256-+wvNum5QpDTXR3L4eVl4F3U9/p4KydK/HQi6uETkkHQ=",
-      "url": "assets/data/blogs-md/Don-t-Normalize-Common-Things-A-Philosophy-for-Business-Excellence.md"
+      "hash": "sha256-VswzN6as1sdn5H0SBTXWigK5Bhlb0GjMJK2zcGa2llA=",
+      "url": "assets/data/blogs/GST-Rate-Deductions-for-E-commerce-A-Complete-Guide-by-VVG-ONLINE.md"
     },
     {
-      "hash": "sha256-yRUJTlp/S9mr3HPVMZ+7Xyirtj+3jrmgy8R9BfDji1Q=",
-      "url": "assets/data/blogs-md/GST-Rate-Deductions-for-E-commerce-A-Complete-Guide-by-VVG-ONLINE.md"
+      "hash": "sha256-VE+L+7hwce3X57p0KbOkS80Pb+Bh1k1DJNHV4hYRKEo=",
+      "url": "assets/data/blogs/Key-Performance-Indicators-KPIs.md"
     },
     {
-      "hash": "sha256-CR60b27W67vlGuYZua7Lnk4LiwEVssxiAGGtoC/uuIY=",
-      "url": "assets/data/blogs-md/Key-Performance-Indicators-KPIs.md"
+      "hash": "sha256-y++4AeJQC66IU3T+Wgt6T/osSmHeUO3QaMeF1tXpWGg=",
+      "url": "assets/data/blogs/Operating-Model-Design.md"
     },
     {
-      "hash": "sha256-fk1OJPAMKXfDl0UhnX0T5uQ9hJvTgZhrl8Lkpmgaybo=",
-      "url": "assets/data/blogs-md/Operating-Model-Design.md"
-    },
-    {
-      "hash": "sha256-Owns8/L/z4uLYVkvwpfkDARMBpajtpgJ7VUqsc8iS1c=",
-      "url": "assets/data/blogs-md/The-Digital-Marketing-Investment-Imperative.md"
+      "hash": "sha256-vnLn0JIgBKZJyOJtF5kUrKFX9AYdhTcSDxqTXI3gLaQ=",
+      "url": "assets/data/blogs/The-Digital-Marketing-Investment-Imperative.md"
     },
     {
       "hash": "sha256-2Wvou+lYygqNAzxreQrcAmsRh59RfD69Ugna3Hb53F8=",
@@ -546,7 +550,27 @@ self.assetsManifest = {
       "url": "assets/js/theme.js"
     },
     {
-      "hash": "sha256-mRloF1w2KP4t1e5EzDoMAlG2Eu9V33kc4QJvgaQH2+s=",
+      "hash": "sha256-+FI6ncLtLG//okbM3A5Y8AaOBrGDkEPPy+kNLQicquQ=",
+      "url": "data/blog-index.json"
+    },
+    {
+      "hash": "sha256-2YcFL/VBzGWh/hDt5Z5HB4QPvPyCUTgcyImI7Kw/FCc=",
+      "url": "data/json-ld.json"
+    },
+    {
+      "hash": "sha256-bg3mTP+12wq+oNjL1gOwHs8t71whwhWfJe8/bDar2Bg=",
+      "url": "data/metadata.json"
+    },
+    {
+      "hash": "sha256-kwxmMtTFXIDZkjxrcPGM+iYgrNlYnS5vkjF0p3X9VHQ=",
+      "url": "data/open-graph.json"
+    },
+    {
+      "hash": "sha256-8aAlki+o40zCqr4xFF22PaGFH/lXSKVDXtPNmYSOn48=",
+      "url": "data/twitter-card.json"
+    },
+    {
+      "hash": "sha256-FoGsROW5MQcHTlSmT8qs8P5EACFGh5KWdy90rb4a3xg=",
       "url": "index.html"
     },
     {

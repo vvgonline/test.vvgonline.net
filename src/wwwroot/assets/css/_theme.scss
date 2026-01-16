@@ -1,19 +1,7 @@
-/* Theme CSS (extracted from theme_sample_file/_web-layout/assets/styles/main.css) - essential parts */
+// Theme CSS (extracted from theme_sample_file/_web-layout/assets/styles/main.css) - essential parts
 @charset "UTF-8";
-:root {
-  --accent: #00ff00; /* Green accent for sci-fi look */
-  --bg: #0d0d0d; /* Dark background */
-  --text: #e0e0e0; /* Light grey text */
-  --card-bg: #1a1a1a; /* Slightly lighter dark for cards */
-}
 
-[data-theme="dark"] {
-  --bg: #0d0d0d;
-  --text: #e0e0e0;
-  --card-bg: #1a1a1a;
-  --accent: #00ff00;
-}
-
+// Classes to apply background and text colors using accent
 .bg-accent {
     background-color: var(--accent) !important;
 }
@@ -22,26 +10,30 @@
     color: var(--accent) !important;
 }
 
+// Global body styling
 body {
   background-color: var(--bg);
   color: var(--text);
-  transition: background 0.3s;
-  font-family: "IBM Plex Mono", monospace; /* Monospaced font for terminal look */
+  transition: background 0.3s; // Smooth transition for background changes
+  font-family: "IBM Plex Mono", monospace; // Monospaced font for terminal look
   line-height: 1.6;
   padding-top: 32px;
 }
 
-*, header, main {
-    outline: none;
+*,
+header,
+main {
+    outline: none; // Remove default outline on focus
 }
 
+// System panel styling
 .system-panel {
   height: 32px;
   background: linear-gradient(90deg, #000 0%, #1a1a1a 100%);
   border-bottom: 1px solid var(--accent);
-  box-shadow: 0 0 10px rgba(0, 255, 0, 0.2); /* Green glow */
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.2); // Green glow
   color: #fff;
-  position: fixed;
+  position: fixed; // Fixed position at the top of the screen
   top: 0;
   width: 100%;
   z-index: 1050;
@@ -53,8 +45,8 @@ body {
 }
 
 .system-panel a {
-  color: var(--text);
-  text-decoration: none;
+  color: var(--text); // Link color
+  text-decoration: none; // No underline for links
   padding: 0 10px;
 }
 .system-panel .status-right {
@@ -63,25 +55,30 @@ body {
   gap: 12px;
   align-items: center;
 }
+
+// Button styles
 .btn-vvg {
   background: var(--accent);
   border: 1px solid #000;
-  border-radius: 0;
+  border-radius: 0; // No border radius for a sci-fi look
   padding: 10px 25px;
   color: #000;
 }
+
+// Hero section styles
 .hero-title {
   font-size: 4.5rem;
   line-height: 0.95;
   margin-bottom: 2rem;
-  text-shadow: 0 0 5px var(--accent);
+  text-shadow: 0 0 5px var(--accent); // Subtle shadow for the title
 }
 .hero {
-  min-height: 80vh;
+  min-height: 80vh; // Minimum height of the hero section
   display: flex;
   align-items: center;
 }
 
+// Workflow container and node styles
 .workflow-container {
   display: flex;
   gap: 1rem;
@@ -92,6 +89,7 @@ body {
   background: var(--card-bg);
 }
 
+// Footer styling
 footer {
   border-top: 1px solid var(--text);
   padding: 4rem 0;
@@ -99,13 +97,13 @@ footer {
   color: var(--text);
 }
 
-/* New terminal styles */
+// Terminal card styles
 .terminal-card {
   background-color: var(--card-bg);
   border: 1px solid var(--accent);
   padding: 1.5rem;
   margin-bottom: 1.5rem;
-  box-shadow: 0 0 15px rgba(0, 255, 0, 0.1);
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.1); // Soft green glow
 }
 
 .terminal-card-title {
@@ -121,35 +119,37 @@ footer {
 }
 
 .terminal-card ul {
-  list-style-type: none;
+  list-style-type: none; // Remove default bullet points
   padding-left: 0;
 }
 
 .terminal-card ul li::before {
   content: '>';
-  color: var(--accent);
+  color: var(--accent); // Green arrow for command prompt
   margin-right: 10px;
 }
 
+// Blinking cursor animation
 @keyframes blink-caret {
   from, to { border-color: transparent }
-  50% { border-color: var(--accent); }
+  50% { border-color: var(--accent); } // Green caret blinking
 }
 
 .blinking-cursor::after {
   content: '_';
-  animation: blink-caret 1s step-end infinite;
+  animation: blink-caret 1s step-end infinite; // Continuous blinking
   margin-left: 5px;
   color: var(--accent);
 }
 
-/* Responsive */
+// Responsive adjustments for smaller screens
 @media (max-width: 768px) {
   .hero-title {
-    font-size: 2.5rem;
+    font-size: 2.5rem; // Smaller font size for hero title on smaller screens
   }
 }
 
+// Utility classes to override default styling
 .no-border-radius {
     border-radius: 0 !important;
 }
@@ -158,6 +158,10 @@ footer {
     border-radius: 0 !important;
 }
 
-input, textarea, select, button, .badge {
-    border-radius: 0 !important;
+a, input, textarea, select, button, .badge {
+    border-radius: 0 !important; // Remove border radius for a clean look
+}
+
+a {
+    text-decoration: none !important; // No underline for links
 }

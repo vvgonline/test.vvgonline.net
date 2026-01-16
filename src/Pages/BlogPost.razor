@@ -10,18 +10,18 @@
 
 @if (isLoading)
 {
-    <div class="bg-dark text-white min-vh-100 d-flex align-items-center justify-content-center">
+    <div class="  min-vh-100 d-flex align-items-center justify-content-center">
         <div class="text-center">
             <div class="spinner-border text-warning mb-3" role="status" style="width: 3rem; height: 3rem;">
                 <span class="visually-hidden">Loading...</span>
             </div>
-            <p class="mono text-muted">// LOADING_POST</p>
+            <p class="mono opacity-75">// LOADING_POST</p>
         </div>
     </div>
 }
 else if (errorMessage != null)
 {
-    <div class="bg-dark text-white min-vh-100 py-5">
+    <div class="  min-vh-100 py-5">
         <div class="container">
             <div class="alert alert-danger" role="alert">
                 <h4 class="alert-heading"><i class="bi bi-exclamation-triangle-fill me-2"></i>Error</h4>
@@ -36,10 +36,10 @@ else if (errorMessage != null)
 }
 else if (blogPost == null)
 {
-    <div class="bg-dark text-white min-vh-100 py-5">
+    <div class="  min-vh-100 py-5">
         <div class="container text-center">
             <h3 class="mb-3">Blog post not found</h3>
-            <p class="text-muted mb-4">The post you're looking for doesn't exist.</p>
+            <p class="opacity-75 mb-4">The post you're looking for doesn't exist.</p>
             <a href="/Blog" class="btn btn-warning">← Back to Blog</a>
         </div>
     </div>
@@ -47,7 +47,7 @@ else if (blogPost == null)
 else
 {
     <!-- Hero Section -->
-    <section class="blog-post-content bg-dark text-white border-bottom border-secondary py-5">
+    <section class="blog-post-content   border-bottom border-secondary py-5">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto">
@@ -62,7 +62,7 @@ else
                         <div class="d-flex flex-wrap gap-2 mt-4">
                             @foreach (var tag in blogPost.Tags)
                             {
-                                <a href="/Blog?tag=@tag" class="badge bg-secondary text-white text-decoration-none px-3 py-2">
+                                <a href="/Blog?tag=@tag" class="badge bg-secondary  text-decoration-none px-3 py-2">
                                     #@tag
                                 </a>
                             }
@@ -74,7 +74,7 @@ else
                     <h1 class="display-4 fw-bold mb-4">@blogPost.Title</h1>
 
                     <!-- Meta Info -->
-                    <div class="d-flex flex-wrap gap-3 text-muted mono small mb-4">
+                    <div class="d-flex flex-wrap gap-3 opacity-75 mono small mb-4">
                         <span>
                             <i class="bi bi-calendar3 me-1"></i>
                             @blogPost.PublishedAt.ToString("MMMM dd, yyyy")
@@ -93,7 +93,7 @@ else
                     </div>
 
                     <!-- Excerpt -->
-                    <p class="lead text-muted border-start border-warning border-3 ps-3">
+                    <p class="lead opacity-75 border-start border-warning border-3 ps-3">
                         @blogPost.Excerpt
                     </p>
                 </div>
@@ -102,7 +102,7 @@ else
     </section>
 
     <!-- Blog Content -->
-    <article class="bg-dark text-white py-5 blog-post-content">
+    <article class="  py-5 blog-post-content">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto">
@@ -135,7 +135,7 @@ else
     </article>
 
     <!-- Navigation -->
-    <section class="bg-dark text-white border-top border-secondary py-4 blog-post-content">
+    <section class="  border-top border-secondary py-4 blog-post-content">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto">
@@ -144,15 +144,15 @@ else
                         @if (previousPost != null)
                         {
                             <a href="/blog/@previousPost.Slug" class="btn btn-outline-secondary text-start flex-fill"
-                                style="max-width: 300px;">
-                                <small class="d-block text-muted mono">← PREVIOUS</small>
-                                <span class="d-block text-truncate">@previousPost.Title</span>
+                                >
+                                <small class="d-block opacity-75 mono">← PREVIOUS</small>
+                                @* <span class="d-block text-truncate">@previousPost.Title</span> *@
                             </a>
                         }
                         else
                         {
-                            <div class="btn btn-outline-secondary disabled flex-fill" style="max-width: 300px;">
-                                <small class="d-block text-muted mono">← PREVIOUS</small>
+                            <div class="btn btn-outline-secondary disabled flex-fill" >
+                                <small class="d-block opacity-75 mono">← PREVIOUS</small>
                                 <span class="d-block">No previous post</span>
                             </div>
                         }
@@ -166,15 +166,15 @@ else
                         @if (nextPost != null)
                         {
                             <a href="/blog/@nextPost.Slug" class="btn btn-outline-secondary text-end flex-fill"
-                                style="max-width: 300px;">
-                                <small class="d-block text-muted mono">NEXT →</small>
-                                <span class="d-block text-truncate">@nextPost.Title</span>
+                                >
+                                <small class="d-block opacity-75 mono">NEXT →</small>
+                                @* <span class="d-block text-truncate">@nextPost.Title</span> *@
                             </a>
                         }
                         else
                         {
-                            <div class="btn btn-outline-secondary disabled flex-fill" style="max-width: 300px;">
-                                <small class="d-block text-muted mono">NEXT →</small>
+                            <div class="btn btn-outline-secondary disabled flex-fill" >
+                                <small class="d-block opacity-75 mono">NEXT →</small>
                                 <span class="d-block">No next post</span>
                             </div>
                         }
@@ -185,13 +185,13 @@ else
     </section>
 
     <!-- Call to Action -->
-    <section class="blog-post-content bg-dark text-white py-5 border-top border-warning">
+    <section class="blog-post-content   py-5 border-top border-warning">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto text-center">
                     <h3 class="mono text-warning mb-3">// TRANSFORM_YOUR_BUSINESS</h3>
                     <h2 class="h3 mb-4">Ready to Take the Next Step?</h2>
-                    <p class="text-muted mb-4">
+                    <p class="opacity-75 mb-4">
                         Let VVG ONLINE help you implement the strategies discussed in this article.
                     </p>
                     <div class="d-flex justify-content-center gap-3 flex-wrap">

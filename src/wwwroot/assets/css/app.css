@@ -195,7 +195,7 @@ footer {
   border-radius: 0 !important;
 }
 
-input, textarea, select, button {
+input, textarea, select, button, .badge {
   border-radius: 0 !important;
 }
 

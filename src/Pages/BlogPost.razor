@@ -47,7 +47,7 @@ else if (blogPost == null)
 else
 {
     <!-- Hero Section -->
-    <section class="bg-dark text-white border-bottom border-secondary py-5">
+    <section class="blog-post-content bg-dark text-white border-bottom border-secondary py-5">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto">
@@ -56,6 +56,18 @@ else
                         <span class="badge bg-warning text-dark px-3 py-2 mono">
                             @blogPost.Category
                         </span>
+                        <!-- Tags -->
+                    @if (blogPost.Tags != null && blogPost.Tags.Length > 0)
+                    {
+                        <div class="d-flex flex-wrap gap-2 mt-4">
+                            @foreach (var tag in blogPost.Tags)
+                            {
+                                <a href="/Blog?tag=@tag" class="badge bg-secondary text-white text-decoration-none px-3 py-2">
+                                    #@tag
+                                </a>
+                            }
+                        </div>
+                    }
                     </div>
 
                     <!-- Title -->
@@ -84,19 +96,6 @@ else
                     <p class="lead text-muted border-start border-warning border-3 ps-3">
                         @blogPost.Excerpt
                     </p>
-
-                    <!-- Tags -->
-                    @if (blogPost.Tags != null && blogPost.Tags.Length > 0)
-                    {
-                        <div class="d-flex flex-wrap gap-2 mt-4">
-                            @foreach (var tag in blogPost.Tags)
-                            {
-                                <a href="/Blog?tag=@tag" class="badge bg-secondary text-white text-decoration-none px-3 py-2">
-                                    #@tag
-                                </a>
-                            }
-                        </div>
-                    }
                 </div>
             </div>
         </div>
@@ -136,7 +135,7 @@ else
     </article>
 
     <!-- Navigation -->
-    <section class="bg-dark text-white border-top border-secondary py-4">
+    <section class="bg-dark text-white border-top border-secondary py-4 blog-post-content">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto">
@@ -144,7 +143,8 @@ else
                         <!-- Previous Post -->
                         @if (previousPost != null)
                         {
-                            <a href="/blog/@previousPost.Slug" class="btn btn-outline-secondary text-start flex-fill" style="max-width: 300px;">
+                            <a href="/blog/@previousPost.Slug" class="btn btn-outline-secondary text-start flex-fill"
+                                style="max-width: 300px;">
                                 <small class="d-block text-muted mono">← PREVIOUS</small>
                                 <span class="d-block text-truncate">@previousPost.Title</span>
                             </a>
@@ -165,7 +165,8 @@ else
                         <!-- Next Post -->
                         @if (nextPost != null)
                         {
-                            <a href="/blog/@nextPost.Slug" class="btn btn-outline-secondary text-end flex-fill" style="max-width: 300px;">
+                            <a href="/blog/@nextPost.Slug" class="btn btn-outline-secondary text-end flex-fill"
+                                style="max-width: 300px;">
                                 <small class="d-block text-muted mono">NEXT →</small>
                                 <span class="d-block text-truncate">@nextPost.Title</span>
                             </a>
@@ -184,7 +185,7 @@ else
     </section>
 
     <!-- Call to Action -->
-    <section class="bg-dark text-white py-5 border-top border-warning">
+    <section class="blog-post-content bg-dark text-white py-5 border-top border-warning">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto text-center">
@@ -259,16 +260,16 @@ else
 
             try
             {
-                var fileName = !string.IsNullOrEmpty(blogPost.Filename) 
-                    ? blogPost.Filename 
-                    : Slug;
-                    
+                var fileName = !string.IsNullOrEmpty(blogPost.Filename)
+                ? blogPost.Filename
+                : Slug;
+
                 var markdownContent = await Http.GetStringAsync($"assets/data/blogs/{fileName}.md");
                 markdownContent = RemoveFrontmatter(markdownContent);
-                
+
                 var pipeline = new MarkdownPipelineBuilder()
-                    .UseAdvancedExtensions()
-                    .Build();
+                .UseAdvancedExtensions()
+                .Build();
                 blogPostHtml = Markdown.ToHtml(markdownContent, pipeline);
             }
             catch (HttpRequestException ex)

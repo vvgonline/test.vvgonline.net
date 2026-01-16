@@ -437,6 +437,8 @@ h5,
 h6,
 .serif {
   font-family: "EB Garamond", serif;
+  font-family: "IBM Plex Mono", monospace;
+  font-family: "IBM Plex Sans", sans-serif;
   font-weight: 600;
 }
 
@@ -445,8 +447,9 @@ h1:focus {
   outline: none;
 }
 
+blockquote,
 code,
-.mono {
+.mono, .lead {
   font-family: "IBM Plex Mono", monospace;
   font-size: 0.85rem;
   color: var(--text);

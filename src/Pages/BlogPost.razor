@@ -1,3 +1,10 @@
+@* // src/Pages/BlogPost.razor
+// ---------------------------------------------------------------------------
+// This Razor component renders a single blog post. It handles data loading,
+// error states, markdown rendering, navigation controls, and social‑sharing logic.
+// The comments below are written as if explaining every step to a student.
+// --------------------------------------------------------------------------- *@
+
 @page "/blog/{slug}"
 @using VVG.Web.Models
 @using Markdig
@@ -10,7 +17,13 @@
 
 @if (isLoading)
 {
-    <div class="  min-vh-100 d-flex align-items-center justify-content-center">
+    /* --------------------------------------------
+     *  Loading UI
+     *  --------------------------------------------
+     *  - Full‑height container to center the spinner
+     *  - Uses Bootstrap classes for styling
+     *  -------------------------------------------- */
+    <div class="min-vh-100 d-flex align-items-center justify-content-center">
         <div class="text-center">
             <div class="spinner-border text-warning mb-3" role="status" style="width: 3rem; height: 3rem;">
                 <span class="visually-hidden">Loading...</span>
@@ -21,7 +34,13 @@
 }
 else if (errorMessage != null)
 {
-    <div class="  min-vh-100 py-5">
+    /* --------------------------------------------
+     *  Error UI
+     *  --------------------------------------------
+     *  - Shows Bootstrap alert component
+     *  - Provides a back button for quick recovery
+     * -------------------------------------------- */
+    <div class="min-vh-100 py-5">
         <div class="container">
             <div class="alert alert-danger" role="alert">
                 <h4 class="alert-heading"><i class="bi bi-exclamation-triangle-fill me-2"></i>Error</h4>
@@ -36,7 +55,13 @@ else if (errorMessage != null)
 }
 else if (blogPost == null)
 {
-    <div class="  min-vh-100 py-5">
+    /* --------------------------------------------
+     *  “Not found” UI
+     *  --------------------------------------------
+     *  - Informative message
+     *  - Back button styling matches the rest of the site
+     * -------------------------------------------- */
+    <div class="min-vh-100 py-5">
         <div class="container text-center">
             <h3 class="mb-3">Blog post not found</h3>
             <p class="opacity-75 mb-4">The post you're looking for doesn't exist.</p>
@@ -46,8 +71,19 @@ else if (blogPost == null)
 }
 else
 {
+    /* --------------------------------------------
+     *  Main content
+     *  --------------------------------------------
+     *  All the following sections compose the visible post:
+     *    • Hero section (category badge, title, excerpt, metadata)
+     *    • Markdown body
+     *    • Share controls
+     *    • Navigation links
+     *    • Call‑to‑action box
+     * -------------------------------------------- */
+
     <!-- Hero Section -->
-    <section class="blog-post-content   border-bottom border-secondary py-5">
+    <section class="blog-post-content border-bottom border-secondary py-5">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto">
@@ -56,18 +92,18 @@ else
                         <span class="badge bg-warning px-3 py-2 mono">
                             @blogPost.Category
                         </span>
-                        <!-- Tags -->
-                    @if (blogPost.Tags != null && blogPost.Tags.Length > 0)
-                    {
-                        <div class="d-flex flex-wrap gap-2 mt-4">
-                            @foreach (var tag in blogPost.Tags)
-                            {
-                                <a href="/Blog?tag=@tag" class="badge bg-secondary  text-decoration-none px-3 py-2">
-                                    #@tag
-                                </a>
-                            }
-                        </div>
-                    }
+                        <!-- Tags (if any) -->
+                        @if (blogPost.Tags != null && blogPost.Tags.Length > 0)
+                        {
+                            <div class="d-flex flex-wrap gap-2 mt-4">
+                                @foreach (var tag in blogPost.Tags)
+                                {
+                                    <a href="/Blog?tag=@tag" class="badge bg-secondary text-decoration-none px-3 py-2">
+                                        <span class="text-warning me-1">#</span>@tag
+                                    </a>
+                                }
+                            </div>
+                        }
                     </div>
 
                     <!-- Title -->
@@ -102,11 +138,11 @@ else
     </section>
 
     <!-- Blog Content -->
-    <article class="  py-5 blog-post-content">
+    <article class="py-5 blog-post-content">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto">
-                    <!-- Markdown Content -->
+                    <!-- Rendered Markdown -->
                     <div class="markdown-content">
                         @((MarkupString)(blogPostHtml ?? ""))
                     </div>
@@ -135,23 +171,22 @@ else
     </article>
 
     <!-- Navigation -->
-    <section class="  border-top border-secondary py-4 blog-post-content">
+    <section class="border-top border-secondary py-4 blog-post-content">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto">
                     <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+
                         <!-- Previous Post -->
                         @if (previousPost != null)
                         {
-                            <a href="/blog/@previousPost.Slug" class="btn btn-outline-secondary text-start flex-fill"
-                                >
+                            <a href="/blog/@previousPost.Slug" class="btn btn-outline-secondary text-start flex-fill">
                                 <small class="d-block opacity-75 mono">← PREVIOUS</small>
-                                @* <span class="d-block text-truncate">@previousPost.Title</span> *@
                             </a>
                         }
                         else
                         {
-                            <div class="btn btn-outline-secondary disabled flex-fill" >
+                            <div class="btn btn-outline-secondary disabled flex-fill">
                                 <small class="d-block opacity-75 mono">← PREVIOUS</small>
                                 <span class="d-block">No previous post</span>
                             </div>
@@ -159,21 +194,19 @@ else
 
                         <!-- Back to Blog -->
                         <a href="/Blog" class="btn btn-warning">
-                            <i class="bi bi-grid-3x3-gap me-1"></i> All Posts
+                            <i class="bi bi-grid-3x3-gap"></i>
                         </a>
 
                         <!-- Next Post -->
                         @if (nextPost != null)
                         {
-                            <a href="/blog/@nextPost.Slug" class="btn btn-outline-secondary text-end flex-fill"
-                                >
+                            <a href="/blog/@nextPost.Slug" class="btn btn-outline-secondary text-end flex-fill">
                                 <small class="d-block opacity-75 mono">NEXT →</small>
-                                @* <span class="d-block text-truncate">@nextPost.Title</span> *@
                             </a>
                         }
                         else
                         {
-                            <div class="btn btn-outline-secondary disabled flex-fill" >
+                            <div class="btn btn-outline-secondary disabled flex-fill">
                                 <small class="d-block opacity-75 mono">NEXT →</small>
                                 <span class="d-block">No next post</span>
                             </div>
@@ -208,32 +241,48 @@ else
     </section>
 }
 
+@* /* ---------------------------------------------------------------------------
+ * Code‑behind section
+ * --------------------------------------------------------------------------- */ *@
 @code {
-    [Parameter]
-    public string? Slug { get; set; }
+    /* ---------------------------------------------------------
+     * Parameters & Services
+     * --------------------------------------------------------- */
+    [Parameter] public string? Slug { get; set; }            // SEO friendly identifier from route
 
-    private Models.BlogPost? blogPost;
-    private Models.BlogPost[]? allPosts;
-    private Models.BlogPost? previousPost;
+    // Model state
+    private Models.BlogPost? blogPost;            // Current post
+    private Models.BlogPost[]? allPosts;          // Cached index for navigation
+    private Models.BlogPost? previousPost;        // Neighbor links
     private Models.BlogPost? nextPost;
-    private string? blogPostHtml;
-    private bool isLoading = true;
-    private string? errorMessage;
-    private bool showCopyConfirmation = false;
 
+    // Rendering & state helpers
+    private string? blogPostHtml;     // Markdown converted to HTML
+    private bool isLoading = true;    // Spinner flag
+    private string? errorMessage;     // Error text for UI
+    private bool showCopyConfirmation = false; // “copied” toast
+
+    /* ---------------------------------------------------------
+     * Lifecycle: Load the post on component init or route change
+     * --------------------------------------------------------- */
     protected override async Task OnInitializedAsync()
-    {
-        await LoadBlogPost();
-    }
+        => await LoadBlogPost();
 
     protected override async Task OnParametersSetAsync()
-    {
-        if (Slug != null)
-        {
-            await LoadBlogPost();
-        }
-    }
+        => await LoadBlogPost();      // Handles slug change
 
+    /* ---------------------------------------------------------
+     * LoadBlogPost()
+     * ---------------------------------------------------------
+     * Steps:
+     *  1. Reset loading & errors.
+     *  2. Fetch the entire post index (JSON).
+     *  3. Find the post matching the `Slug`.
+     *  4. Load the corresponding markdown file.
+     *  5. Render markdown → HTML.
+     *  6. Determine previous/next links.
+     *  7. Populate SEO metadata.
+     * --------------------------------------------------------- */
     private async Task LoadBlogPost()
     {
         try
@@ -241,6 +290,7 @@ else
             isLoading = true;
             errorMessage = null;
 
+            // 1️⃣ Load index
             allPosts = await Http.GetFromJsonAsync<Models.BlogPost[]>("data/blog-index.json");
 
             if (allPosts == null || allPosts.Length == 0)
@@ -249,7 +299,12 @@ else
                 return;
             }
 
-            allPosts = allPosts.Where(p => !p.Draft).OrderByDescending(p => p.PublishedAt).ToArray();
+            // Filter out drafts & sort newest first
+            allPosts = allPosts.Where(p => !p.Draft)
+                                .OrderByDescending(p => p.PublishedAt)
+                                .ToArray();
+
+            // 2️⃣ Find current post
             blogPost = allPosts.FirstOrDefault(p => p.Slug == Slug);
 
             if (blogPost == null)
@@ -258,44 +313,53 @@ else
                 return;
             }
 
+            // 3️⃣ Load markdown body
             try
             {
-                var fileName = !string.IsNullOrEmpty(blogPost.Filename)
-                ? blogPost.Filename
-                : Slug;
-
+                var fileName = !string.IsNullOrEmpty(blogPost.Filename) ? blogPost.Filename : Slug!;
                 var markdownContent = await Http.GetStringAsync($"assets/data/blogs/{fileName}.md");
                 markdownContent = RemoveFrontmatter(markdownContent);
 
+                // Build Markdig pipeline for advanced extensions
                 var pipeline = new MarkdownPipelineBuilder()
-                .UseAdvancedExtensions()
-                .Build();
+                    .UseAdvancedExtensions()
+                    .Build();
+
                 blogPostHtml = Markdown.ToHtml(markdownContent, pipeline);
             }
             catch (HttpRequestException ex)
             {
+                // 4️⃣ If file not found, set a clear error
                 errorMessage = $"Blog post content file not found: {ex.Message}";
                 return;
             }
 
+            // 5️⃣ Navigation links
             var currentIndex = Array.IndexOf(allPosts, blogPost);
             previousPost = currentIndex < allPosts.Length - 1 ? allPosts[currentIndex + 1] : null;
-            nextPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
+            nextPost     = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
 
-            await SetMetadata();
+            await SetMetadata();      // Push SEO tags to service
         }
         catch (Exception ex)
         {
+            // Unified error surface, useful for students to see “try‑catch‑finally” flow
             errorMessage = $"An error occurred: {ex.Message}";
             Console.WriteLine($"BlogPost ERROR: {ex}");
         }
         finally
         {
-            isLoading = false;
+            isLoading = false;   // Hide spinner regardless of success/failure
         }
     }
 
-    // Consolidated RemoveFrontmatter method
+    /* ---------------------------------------------------------
+     * RemoveFrontmatter()
+     * ---------------------------------------------------------
+     * The yaml‑style front‑matter (---)…--- is stripped away.
+     * It’s safe because we only strip the first block, keeping the rest
+     * of the markdown untouched. This method is used once per fetch.
+     * --------------------------------------------------------- */
     private string RemoveFrontmatter(string markdown)
     {
         if (markdown.StartsWith("---"))
@@ -309,52 +373,62 @@ else
         return markdown;
     }
 
-    // Consolidated SetMetadata method
+    /* ---------------------------------------------------------
+     * SetMetadata()
+     * ---------------------------------------------------------
+     * Populates meta tags (title, description, OpenGraph, Twitter, article details)
+     * to improve SEO and social‑preview quality.
+     * --------------------------------------------------------- */
     private async Task SetMetadata()
     {
         if (blogPost == null) return;
 
         var url = Navigation.ToAbsoluteUri($"/blog/{blogPost.Slug}").ToString();
-        var keywords = blogPost.Tags != null ? string.Join(", ", blogPost.Tags) : "";
+        var keywords = blogPost.Tags != null ? string.Join(", ", blogPost.Tags) : string.Empty;
 
         await MetadataService.SetPageMetadata(new PageMetadata
         {
-            Title = blogPost.Title,
-            Description = blogPost.Excerpt,
-            Keywords = keywords,
-            OgTitle = blogPost.Title,
-            OgDescription = blogPost.Excerpt,
-            OgType = "article",
-            OgUrl = url,
-            TwitterCard = "summary_large_image",
-            TwitterTitle = blogPost.Title,
+            Title              = blogPost.Title,
+            Description        = blogPost.Excerpt,
+            Keywords           = keywords,
+            OgTitle            = blogPost.Title,
+            OgDescription      = blogPost.Excerpt,
+            OgType             = "article",
+            OgUrl              = url,
+            TwitterCard        = "summary_large_image",
+            TwitterTitle       = blogPost.Title,
             TwitterDescription = blogPost.Excerpt,
             ArticlePublishedTime = blogPost.PublishedAt.ToString("o"),
-            ArticleSection = blogPost.Category?.ToString(),
-            ArticleTags = blogPost.Tags
+            ArticleSection       = blogPost.Category?.ToString(),
+            ArticleTags          = blogPost.Tags
         });
     }
 
-    // Consolidated CopyLink method
+    /* ---------------------------------------------------------
+     * Social‑Sharing helpers
+     * --------------------------------------------------------- */
     private async Task CopyLink()
     {
         var url = Navigation.ToAbsoluteUri($"/blog/{Slug}").ToString();
         await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", url);
+
         showCopyConfirmation = true;
-        await Task.Delay(3000);
+        await Task.Delay(3000);          // Toast lasts 3 seconds
         showCopyConfirmation = false;
-        StateHasChanged();
+
+        StateHasChanged(); // Forces UI to refresh
     }
 
-    // Consolidated SharePost method
     private async Task SharePost()
     {
         var url = Navigation.ToAbsoluteUri($"/blog/{Slug}").ToString();
+
+        // The data we would like to send to the native share dialog
         var shareData = new
         {
             title = blogPost?.Title,
-            text = blogPost?.Excerpt,
-            url = url
+            text  = blogPost?.Excerpt,
+            url
         };
 
         try
@@ -363,6 +437,7 @@ else
         }
         catch
         {
+            // If the browser doesn’t support `share`, fall back to copying
             await CopyLink();
         }
     }

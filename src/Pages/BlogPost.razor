@@ -53,7 +53,7 @@ else
                 <div class="col-lg-8 mx-auto">
                     <!-- Category Badge -->
                     <div class="mb-3">
-                        <span class="badge bg-warning text-dark px-3 py-2 mono">
+                        <span class="badge bg-warning px-3 py-2 mono">
                             @blogPost.Category
                         </span>
                         <!-- Tags -->
@@ -185,7 +185,7 @@ else
     </section>
 
     <!-- Call to Action -->
-    <section class="blog-post-content   py-5 border-top border-warning">
+    <section class="blog-post-content py-5 border-top border-warning">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto text-center">
@@ -295,7 +295,7 @@ else
         }
     }
 
-    // KEEP ONLY ONE RemoveFrontmatter method
+    // Consolidated RemoveFrontmatter method
     private string RemoveFrontmatter(string markdown)
     {
         if (markdown.StartsWith("---"))
@@ -309,7 +309,7 @@ else
         return markdown;
     }
 
-    // KEEP ONLY ONE SetMetadata method
+    // Consolidated SetMetadata method
     private async Task SetMetadata()
     {
         if (blogPost == null) return;
@@ -335,7 +335,7 @@ else
         });
     }
 
-    // KEEP ONLY ONE CopyLink method
+    // Consolidated CopyLink method
     private async Task CopyLink()
     {
         var url = Navigation.ToAbsoluteUri($"/blog/{Slug}").ToString();
@@ -346,7 +346,7 @@ else
         StateHasChanged();
     }
 
-    // KEEP ONLY ONE SharePost method
+    // Consolidated SharePost method
     private async Task SharePost()
     {
         var url = Navigation.ToAbsoluteUri($"/blog/{Slug}").ToString();

@@ -31,11 +31,11 @@
                     <div class="col-md-6 col-lg-4">
                         <div class="card h-100 p-4">
                             <div class="mb-3"><span class="insight-tag">@post.Category</span></div>
-                            <h4 class="serif mb-3"><a href="/blog/@post.Slug" class="text-dark">@post.Title</a></h4>
+                            <h4 class="serif mb-3"><a href="/blog/@post.Slug" class="">@post.Title</a></h4>
                             <p class="small opacity-75 mb-4">@post.Excerpt</p>
                             <div class="mt-auto mono border-top pt-3 d-flex justify-content-between">
                                 <span>@post.TimeToRead min read</span>
-                                <a href="/blog/@post.Slug" class="text-dark">READ -></a>
+                                <a href="/blog/@post.Slug" class="">READ -></a>
                             </div>
                         </div>
                     </div>
@@ -116,7 +116,7 @@
             <div class="spinner-border text-warning" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div>
-            <p class="mt-3 text-muted mono">LOADING INSIGHTS...</p>
+            <p class="mt-3 opacity-75 mono">LOADING INSIGHTS...</p>
         </div>
     }
     else if (!string.IsNullOrEmpty(errorMessage))
@@ -128,9 +128,9 @@
     else if (paginatedPosts == null || paginatedPosts.Length == 0)
     {
         <div class="text-center py-5">
-            <i class="bi bi-inbox display-1 text-muted"></i>
+            <i class="bi bi-inbox display-1 opacity-75"></i>
             <h3 class="mt-4">No posts found</h3>
-            <p class="text-muted">Try adjusting your filters or search query.</p>
+            <p class="opacity-75">Try adjusting your filters or search query.</p>
             @if (selectedTag != "All" || selectedYear != "All" || !string.IsNullOrWhiteSpace(searchTerm))
             {
                 <button class="btn btn-outline-warning mt-3" @onclick="ClearAllFilters">
@@ -149,11 +149,11 @@
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 p-4">
                         <div class="mb-3"><span class="insight-tag">@post.Category</span></div>
-                        <h4 class="serif mb-3"><a href="/blog/@post.Slug" class="text-dark">@post.Title</a></h4>
+                        <h4 class="serif mb-3"><a href="/blog/@post.Slug" class="">@post.Title</a></h4>
                         <p class="small opacity-75 mb-4">@post.Excerpt</p>
                         <div class="mt-auto mono border-top pt-3 d-flex justify-content-between">
                             <span>@post.TimeToRead min read</span>
-                            <a href="/blog/@post.Slug" class="text-dark">READ -></a>
+                            <a href="/blog/@post.Slug" class="">READ -></a>
                         </div>
                     </div>
                 </div>
@@ -177,7 +177,7 @@
                         var pageNum = i;
                         <li class="page-item @(currentPage == pageNum ? "active" : "")">
                             <button
-                                class="page-link @(currentPage == pageNum ? "bg-warning text-dark" : "bg-dark text-white") border-secondary"
+                                class="page-link @(currentPage == pageNum ? "bg-warning " : "bg-dark text-white") border-secondary"
                                 @onclick="() => GoToPage(pageNum)">
                                 @pageNum
                             </button>
@@ -203,7 +203,7 @@
                     <div class="card-body">
                         <h2 class="mono text-warning mb-3">// READY_TO_TRANSFORM</h2>
                         <h3 class="h2 mb-4">Let's Build Something Extraordinary</h3>
-                        <p class="lead text-muted mb-4">
+                        <p class="lead opacity-75 mb-4">
                             Transform your business with cutting-edge digital solutions.
                             Our team specializes in digital transformation, custom software development,
                             and strategic consulting.
@@ -219,7 +219,7 @@
                             </a>
                         </div>
                         <div class="mt-4">
-                            <p class="small text-muted mono">
+                            <p class="small opacity-75 mono">
                                 // JOIN_THE_DIGITAL_REVOLUTION
                             </p>
                         </div>

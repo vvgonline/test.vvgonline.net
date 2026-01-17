@@ -11,7 +11,7 @@
 // Our primary custom button style.
 .btn-vvg {
   background: var(--accent);
-  border: 1px solid #000;
+  border: 1px solid var(--text);
   border-radius: 0;
   font-family: "IBM Plex Mono", monospace;
   font-weight: 500;
@@ -20,8 +20,8 @@
   transition: all 0.2s;
 
   &:hover {
-    background: var(--text);
-    color: var(--accent);
+    background-color: #111119;
+    color: #ffdd33;
   }
 }
 
@@ -105,7 +105,8 @@
     box-shadow: 0 0 15px rgba(255, 221, 51, 0.4);
   }
 
-  &.active, &.visible {
+  &.active,
+  &.visible {
     opacity: 1;
   }
 
@@ -115,32 +116,42 @@
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
     transition: all 0.45s cubic-bezier(0.2, 0.9, 0.3, 1);
   }
-  
+
   &.visible {
     transform: translateY(0) scale(1.02);
-    transition: transform 0.45s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.4s ease;
+    transition:
+      transform 0.45s cubic-bezier(0.2, 0.9, 0.3, 1),
+      opacity 0.4s ease;
   }
 
   &.loop-fade {
     opacity: 0;
     transform: translateY(20px) scale(0.98);
-    transition: transform 0.45s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.45s ease;
+    transition:
+      transform 0.45s cubic-bezier(0.2, 0.9, 0.3, 1),
+      opacity 0.45s ease;
   }
 
   .flow-el {
     opacity: 0;
     transform: scale(0.98) translateY(6px);
-    transition: opacity 0.36s ease, transform 0.36s cubic-bezier(0.2, 0.9, 0.3, 1);
+    transition:
+      opacity 0.36s ease,
+      transform 0.36s cubic-bezier(0.2, 0.9, 0.3, 1);
 
     &.visible {
-        opacity: 1;
-        transform: scale(1) translateY(0);
+      opacity: 1;
+      transform: scale(1) translateY(0);
     }
   }
 
-  h5, p, code {
+  h5,
+  p,
+  code {
     opacity: 1;
-    transition: opacity 0.6s ease, transform 0.4s ease;
+    transition:
+      opacity 0.6s ease,
+      transform 0.4s ease;
     transform-origin: center center;
   }
 }
@@ -168,7 +179,6 @@
   }
 }
 
-
 // --- AI Terminal ---
 #ai-terminal {
   position: fixed;
@@ -189,7 +199,7 @@
   height: 40px;
   overflow: hidden;
   opacity: 0.8;
-  
+
   &:hover {
     opacity: 1;
     cursor: pointer;
@@ -261,36 +271,36 @@
 
 // --- Terminal Style Tags (Oh My Posh) ---
 .terminal-tag-group {
-    display: inline-flex;
-    align-items: stretch;
-    margin-bottom: 1.5rem;
-    filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.15));
+  display: inline-flex;
+  align-items: stretch;
+  margin-bottom: 1.5rem;
+  filter: drop-shadow(3px 3px 0px rgba(0, 0, 0, 0.15));
 }
 
 .tag-segment {
-    padding: 4px 15px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    height: 28px;
-    display: flex;
-    align-items: center;
+  padding: 4px 15px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  height: 28px;
+  display: flex;
+  align-items: center;
 }
 
 .tag-user {
-    background: #000;
-    color: #fff;
-    clip-path: polygon(0% 0%, 90% 0%, 100% 50%, 90% 100%, 0% 100%);
-    padding-right: 25px;
-    z-index: 2;
+  background: #000;
+  color: #fff;
+  clip-path: polygon(0% 0%, 90% 0%, 100% 50%, 90% 100%, 0% 100%);
+  padding-right: 25px;
+  z-index: 2;
 }
 
 .tag-path {
-    background: var(--accent);
-    color: #000;
-    margin-left: -10px; /* Overlap */
-    padding-left: 20px;
-    clip-path: polygon(0% 0%, 95% 0%, 100% 50%, 95% 100%, 0% 100%, 8% 50%);
-    z-index: 1;
+  background: var(--accent);
+  color: #000;
+  margin-left: -10px; /* Overlap */
+  padding-left: 20px;
+  clip-path: polygon(0% 0%, 95% 0%, 100% 50%, 95% 100%, 0% 100%, 8% 50%);
+  z-index: 1;
 }
 
 // --- Terminal Card from _theme.scss ---
@@ -307,9 +317,9 @@
   font-weight: bold;
   font-size: 1.2rem;
   margin-bottom: 1rem;
-  
+
   &::before {
-    content: '[service]~# ';
+    content: "[service]~# ";
     color: var(--text);
   }
 }
@@ -317,9 +327,9 @@
 .terminal-card ul {
   list-style-type: none;
   padding-left: 0;
-  
+
   li::before {
-    content: '>';
+    content: ">";
     color: var(--accent);
     margin-right: 10px;
   }
@@ -336,7 +346,7 @@
   .hero-title {
     font-size: 2.5rem;
   }
-  
+
   .workflow-container {
     flex-direction: column;
     gap: 30px;
@@ -349,12 +359,12 @@
   .workflow-connector {
     width: 1px;
     height: 30px;
-    
+
     &::after {
-        right: -4px;
-        bottom: -5px;
-        top: auto;
-        transform: rotate(90deg);
+      right: -4px;
+      bottom: -5px;
+      top: auto;
+      transform: rotate(90deg);
     }
   }
 
@@ -371,7 +381,7 @@
 
   .terminal-tag-group {
     margin-bottom: 1rem;
-    filter: drop-shadow(2px 2px 0px rgba(0,0,0,0.1));
+    filter: drop-shadow(2px 2px 0px rgba(0, 0, 0, 0.1));
   }
 
   .tag-segment {
@@ -382,28 +392,28 @@
 }
 
 @media (max-width: 480px) {
-    .hero-title {
-        font-size: 1.75rem;
-    }
+  .hero-title {
+    font-size: 1.75rem;
+  }
 
-    #ai-terminal {
-        width: 95vw;
-        right: 2.5vw;
-        bottom: 10px;
-    }
+  #ai-terminal {
+    width: 95vw;
+    right: 2.5vw;
+    bottom: 10px;
+  }
 
-    .terminal-body {
-        height: 250px !important;
-    }
-    
-    .terminal-tag-group {
-        flex-direction: column;
-        gap: 5px;
-    }
-    .tag-segment {
-        width: 100%;
-        clip-path: polygon(0% 0%, 95% 0%, 100% 50%, 95% 100%, 0% 100%) !important;
-        padding: 3px 10px !important;
-        margin: 0 !important;
-    }
+  .terminal-body {
+    height: 250px !important;
+  }
+
+  .terminal-tag-group {
+    flex-direction: column;
+    gap: 5px;
+  }
+  .tag-segment {
+    width: 100%;
+    clip-path: polygon(0% 0%, 95% 0%, 100% 50%, 95% 100%, 0% 100%) !important;
+    padding: 3px 10px !important;
+    margin: 0 !important;
+  }
 }

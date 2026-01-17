@@ -1,20 +1,22 @@
 // Blog specific styles
 
 .blog-filters {
+    // Styling for the blog filters container
     background-color: var(--card-bg);
     padding: 1rem;
     border: 1px solid var(--text);
     margin-bottom: 2rem;
-}
 
-.featured-insights {
     .card {
+        // Styling for cards within the featured insights section
         border-color: var(--accent);
     }
 }
 
 .pagination {
+    // Styling for pagination controls
     .page-item .page-link {
+        // Styling for individual page links
         background-color: var(--card-bg);
         border: 1px solid var(--text);
         color: var(--text);
@@ -22,12 +24,14 @@
         border-radius: 0;
 
         &:hover {
+            // Hover state for page links
             background-color: var(--accent);
             color: #000;
         }
     }
 
     .page-item.active .page-link {
+        // Styling for active page link
         background-color: var(--accent);
         border-color: var(--accent);
         color: #000;
@@ -35,8 +39,11 @@
 }
 
 .insight-tag {
+    // Styling for insight tags
     cursor: pointer;
+
     &:hover {
+        // Hover state for insight tags
         background: var(--accent);
         color: #000;
     }

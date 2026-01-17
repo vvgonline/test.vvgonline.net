@@ -3,11 +3,11 @@
 
 // Classes to apply background and text colors using accent
 .bg-accent {
-    background-color: var(--accent) !important;
+  background-color: var(--accent) !important;
 }
 
 .text-accent {
-    color: var(--accent) !important;
+  color: var(--accent) !important;
 }
 
 // Global body styling
@@ -23,46 +23,7 @@ body {
 *,
 header,
 main {
-    outline: none; // Remove default outline on focus
-}
-
-// System panel styling
-.system-panel {
-  height: 32px;
-  background: linear-gradient(90deg, #000 0%, #1a1a1a 100%);
-  border-bottom: 1px solid var(--accent);
-  box-shadow: 0 0 10px rgba(0, 255, 0, 0.2); // Green glow
-  color: #fff;
-  position: fixed; // Fixed position at the top of the screen
-  top: 0;
-  width: 100%;
-  z-index: 1050;
-  display: flex;
-  align-items: center;
-  padding: 0 15px;
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 12px;
-}
-
-.system-panel a {
-  color: var(--text); // Link color
-  text-decoration: none; // No underline for links
-  padding: 0 10px;
-}
-.system-panel .status-right {
-  margin-left: auto;
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-
-// Button styles
-.btn-vvg {
-  background: var(--accent);
-  border: 1px solid #000;
-  border-radius: 0; // No border radius for a sci-fi look
-  padding: 10px 25px;
-  color: #000;
+  outline: none; // Remove default outline on focus
 }
 
 // Hero section styles
@@ -114,7 +75,7 @@ footer {
 }
 
 .terminal-card-title::before {
-  content: '[service]~# ';
+  content: "[service]~# ";
   color: var(--text);
 }
 
@@ -124,19 +85,29 @@ footer {
 }
 
 .terminal-card ul li::before {
-  content: '>';
+  content: ">";
   color: var(--accent); // Green arrow for command prompt
   margin-right: 10px;
 }
 
 // Blinking cursor animation
 @keyframes blink-caret {
-  from, to { border-color: transparent }
-  50% { border-color: var(--accent); } // Green caret blinking
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: var(--accent);
+  } // Green caret blinking
+}
+
+.blink {
+  animation: blinker 1s step-start infinite;
+  color: var(--111113);
 }
 
 .blinking-cursor::after {
-  content: '_';
+  content: "_";
   animation: blink-caret 1s step-end infinite; // Continuous blinking
   margin-left: 5px;
   color: var(--accent);
@@ -151,17 +122,34 @@ footer {
 
 // Utility classes to override default styling
 .no-border-radius {
-    border-radius: 0 !important;
+  border-radius: 0 !important;
 }
 
 .btn {
-    border-radius: 0 !important;
+  border-radius: 0 !important;
 }
 
-a, input, textarea, select, button, .badge {
-    border-radius: 0 !important; // Remove border radius for a clean look
+a,
+input,
+textarea,
+select,
+button,
+.badge {
+  border-radius: 0 !important; // Remove border radius for a clean look
 }
 
 a {
-    text-decoration: none !important; // No underline for links
+  color: var(--text) !important; // Link color
+  text-decoration: none !important; // No underline for links
+}
+
+.nav-logo {
+  // Set the height of the logo to 24 pixels
+  height: 24px;
+
+  // Maintain the aspect ratio of the logo by setting width to auto
+  width: auto;
+
+  // Disable pointer events on the logo, making it non-interactive
+  pointer-events: none;
 }

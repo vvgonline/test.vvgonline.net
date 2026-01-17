@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VVG ONLINE | Digital Business Consulting</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+        :root {
+            --accent: #ffdd33;
+            --bg: #ffffff;
+            --text: #1a1a1a;
+            --card-bg: #f8f8f8;
+        }
+
+        [data-theme="dark"] {
+            --bg: #050505; /* Slightly darker for better contrast with the wireframe */
+            --text: #ffffff;
+            --card-bg: #1a1a1a;
+            --accent: #ffdd33;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            transition: background 0.3s;
+            overflow-x: hidden; /* Prevent horizontal scroll from 3D elements */
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding-top: 32px;
+        }
+
+        /* Scanline overlay effect */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+            z-index: 9999;
+            background-size: 100% 4px, 3px 100%;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        /* Character flicker animation */
+        @keyframes textFlicker {
+            0% { opacity: 0.1; }
+            2% { opacity: 1; }
+            8% { opacity: 0.1; }
+            9% { opacity: 1; }
+            12% { opacity: 0.1; }
+            20% { opacity: 1; }
+            100% { opacity: 1; }
+        }
+
+        /* Subtle glitch for the accent box */
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        .accent-box:hover {
+            animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+            background: #000;
+            color: var(--accent);
+        }
+
+        /* Hidden state for Terminal-style typing */
+        .typewriter-ready {
+            visibility: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        .serif {
+            font-family: 'EB Garamond', serif;
+            font-weight: 400;
+        }
+
+        code,
+        .mono {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text);
+        }
+
+        .text-accent {
+            color: var(--accent) !important;
+        }
+
+        /* i3/xfce style top panel */
+        .system-panel {
+            height: 32px;
+            background: #000;
+            color: #fff;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1050;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(5px);
+            border-bottom: 1px solid var(--accent);
+        }
+
+        .system-panel a {
+            color: var(--text);
+            text-decoration: none;
+            padding: 0 10px;
+            height: 100%;
+            display: inline-flex;
+            align-items: center;
+            border-right: 1px solid #333;
+            transition: all 0.2s;
+        }
+
+        .system-panel a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--accent);
+        }
+
+        .system-panel .status-right {
+            margin-left: auto;
+            display: flex;
+            gap: 15px;
+            color: var(--text);
+        }
+
+        /* Workflow Nodes */
+        .workflow-node {
+            background: var(--card-bg);
+            border: 1px solid var(--text);
+            padding: 15px;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .workflow-node.active {
+            border-color: var(--accent);
+            box-shadow: 0 0 15px rgba(255, 221, 51, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .btn-vvg {
+            background: var(--accent);
+            border: 1px solid #000;
+            border-radius: 0;
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 500;
+            padding: 10px 25px;
+            text-transform: uppercase;
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-vvg:hover {
+            background: var(--text);
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            line-height: 0.95;
+            margin-bottom: 2rem;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 1024px) {
+            .hero-title { font-size: 3.5rem; }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.5rem; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title { font-size: 1.75rem; }
+        }
+
+        .blink {
+            animation: blinker 1s step-start infinite;
+            color: var(--accent);
+        }
+
+        @keyframes blinker {
+            50% { opacity: 0; }
+        }
+
+        /* AI Terminal */
+        #ai-terminal {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            background: rgba(5, 5, 5, 0.95);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            font-family: 'IBM Plex Mono', monospace;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 10000;
+            box-shadow: 0 0 20px rgba(255, 221, 51, 0.1);
+            max-height: 90vh;
+            clip-path: polygon(
+                0 0, 
+                100% 0, 
+                100% calc(100% - 10px), 
+                calc(100% - 10px) 100%, 
+                0 100%
+            ); /* Tech corner cut */
+        }
+
+        .terminal-closed {
+            height: 0;
+            overflow: hidden;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .terminal-header {
+            background: var(--accent);
+            color: #000;
+            padding: 5px 10px;
+            font-size: 10px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            text-transform: uppercase;
+        }
+
+        .terminal-body {
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            overflow: hidden;
+        }
+
+        .chat-output {
+            flex-grow: 1;
+            overflow-y: auto;
+            font-size: 11px;
+            margin-bottom: 10px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent) #000;
+        }
+
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.6; /* Slightly more visible */
+        }
+
+        /* Workflow connectors */
+        .workflow-connector {
+            flex-grow: 1;
+            height: 1px;
+            background: var(--text);
+            position: relative;
+            opacity: 0.2;
+            transition: all 0.4s;
+        }
+        
+        .workflow-connector::after {
+            content: '';
+            position: absolute;
+            right: -5px;
+            top: -3px;
+            width: 0; 
+            height: 0; 
+            border-top: 4px solid transparent;
+            border-bottom: 4px solid transparent;
+            border-left: 6px solid var(--text);
+        }
+
+        .workflow-connector.active {
+            opacity: 1;
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--accent);
+        }
+
+        .workflow-connector.active::after {
+            border-left-color: var(--accent);
+        }
+
+        .tag-segment {
+            padding: 2px 12px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 700;
+            font-size: 10px;
+            display: inline-flex;
+            align-items: center;
+            text-transform: uppercase;
+        }
+        .tag-user {
+            background: #000;
+            color: #fff;
+            border: 1px solid var(--accent);
+        }
+        .tag-path {
+            background: var(--accent);
+            color: #000;
+            margin-left: -5px;
+            clip-path: polygon(0 0, 100% 0, 95% 50%, 100% 100%, 0 100%);
+            padding-left: 15px;
+        }
+
+        @media (max-width: 768px) {
+            #ai-terminal { width: 90vw; right: 5vw; bottom: 80px; }
+            .workflow-container { flex-direction: column; gap: 20px; }
+            .workflow-connector { width: 1px; height: 20px; }
+            .workflow-connector::after { transform: rotate(90deg); right: -3px; top: auto; bottom: -5px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 3D Background Container -->
+    <div id="canvas-container"></div>
+
+    <!-- Navigation -->
+    <nav class="system-panel">
+        <div class="d-flex align-items-center">
+            <!-- Simple SVG Logo Placeholder -->
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" class="me-2">
+                <rect x="0" y="0" width="20" height="20" fill="var(--accent)"/>
+                <path d="M5 15 L10 5 L15 15" stroke="#000" stroke-width="2"/>
+            </svg>
+            <span class="text-accent fw-bold me-4">VVG_ONLINE</span>
+        </div>
+        
+        <a href="#services" class="no-cursor"><i class="bi bi-cpu me-2"></i><span class="d-none d-md-inline">SERVICES</span></a>
+        <a href="#workflow" class="no-cursor"><i class="bi bi-diagram-3 me-2"></i><span class="d-none d-md-inline">WORKFLOW</span></a>
+        <a href="#contact" class="no-cursor"><i class="bi bi-terminal me-2"></i><span class="d-none d-md-inline">CONTACT</span></a>
+        
+        <div class="status-right d-flex align-items-center">
+            <button onclick="toggleTheme()" class="btn btn-sm py-0 px-2 text-reset" title="Toggle Theme">
+                <i class="bi bi-circle-half"></i>
+            </button>
+            <span class="d-none d-md-inline mono text-accent" id="clock">00:00:00</span>
+        </div>
+    </nav>
+
+    <!-- Header / Hero -->
+    <header class="container py-5 mt-4 position-relative">
+        <div class="row align-items-center">
+            <div class="col-lg-9">
+                <div class="mb-3">
+                    <span class="tag-segment tag-user">SYS_ADMIN</span>
+                    <span class="tag-segment tag-path">ROOT_ACCESS</span>
+                </div>
+                <h1 class="hero-title">
+                    <span id="typewriter-target"></span><span class="blink">_</span>
+                </h1>
+                <p class="lead fs-5 opacity-75 serif mb-4" style="max-width: 600px;">
+                    Architecting digital infrastructure for the modern enterprise. We bridge the gap between abstract strategy and executable code.
+                </p>
+                <div class="d-flex gap-3 align-items-center">
+                    <button class="btn btn-vvg">INITIALIZE_PROJECT</button>
+                    <code class="small opacity-50">> ./run_audit.sh --verbose</code>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Services Section -->
+    <section class="container py-5" id="services">
+        <div class="row g-0 border-top border-start">
+            <div class="col-md-4 p-4 border-bottom border-end hover-trigger">
+                <span class="mono text-accent">01.</span>
+                <h3 class="mt-2 h4">Strategic Architecture</h3>
+                <p class="small opacity-75 mt-2">Blueprinting scalable systems that adapt to market volatility.</p>
+            </div>
+            <div class="col-md-4 p-4 border-bottom border-end hover-trigger">
+                <span class="mono text-accent">02.</span>
+                <h3 class="mt-2 h4">Data Engineering</h3>
+                <p class="small opacity-75 mt-2">Refining raw inputs into actionable intelligence pipelines.</p>
+            </div>
+            <div class="col-md-4 p-4 border-bottom border-end hover-trigger">
+                <span class="mono text-accent">03.</span>
+                <h3 class="mt-2 h4">UI/UX Implementation</h3>
+                <p class="small opacity-75 mt-2">Translating complex logic into intuitive human interfaces.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Workflow Section -->
+    <section class="container py-5" id="workflow">
+        <div class="mb-5">
+            <h2 class="display-6 serif">Operational Workflow</h2>
+            <div class="h-1 w-25 bg-accent mt-2" style="background: var(--accent); height: 2px;"></div>
+        </div>
+
+        <div class="workflow-container">
+            <div class="workflow-node" id="node-1">
+                <code class="d-block mb-2 text-accent">> INPUT_RECEIVED</code>
+                <h5 class="h6 mb-1">Data Ingestion</h5>
+            </div>
+            <div class="workflow-connector" id="conn-1"></div>
+            
+            <div class="workflow-node" id="node-2">
+                <code class="d-block mb-2 text-accent">> PROCESSING</code>
+                <h5 class="h6 mb-1">Analysis</h5>
+            </div>
+            <div class="workflow-connector" id="conn-2"></div>
+
+            <div class="workflow-node" id="node-3">
+                <code class="d-block mb-2 text-accent">> COMPILING</code>
+                <h5 class="h6 mb-1">Development</h5>
+            </div>
+            <div class="workflow-connector" id="conn-3"></div>
+
+            <div class="workflow-node" id="node-4">
+                <code class="d-block mb-2 text-accent">> DEPLOYED</code>
+                <h5 class="h6 mb-1">Execution</h5>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="container py-5 border-top">
+        <div class="row">
+            <div class="col-md-6">
+                <h5 class="mb-3 mono">// ESTABLISHED_2025</h5>
+                <p class="small opacity-50">VVG ONLINE is a digital-first consultancy.</p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <div class="d-flex justify-content-md-end gap-3">
+                    <a href="#" class="text-reset hover-accent"><i class="bi bi-linkedin fs-4"></i></a>
+                    <a href="#" class="text-reset hover-accent"><i class="bi bi-github fs-4"></i></a>
+                    <a href="#" class="text-reset hover-accent"><i class="bi bi-envelope fs-4"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- AI Terminal Widget -->
+    <div id="ai-terminal">
+        <div class="terminal-header" onclick="toggleTerminal()">
+            <span>TERMINAL_V1.0</span>
+            <i class="bi bi-dash"></i><span class="fw-bold">VVG_AI_AGENT</span>
+            <i class="bi bi-x-lg d-flex align-items-center" style="cursor: pointer;" onclick="event.stopPropagation(); toggleTerminal()"></i>
+        </div>
+        <div class="terminal-body" id="terminal-content">
+            <div class="text-secondary small mb-2">> Initializing connection...</div>
+            <div class="text-white small mb-2">> Connected to VVG_Secure_Server</div>
+            <div class="text-accent small mb-3">> Welcome. How can I assist with your transformation?</div>
+        </div>
+        <div class="terminal-input-area d-flex align-items-center border-top border-secondary pt-2 mt-2">
+            <span class="text-accent me-2">user@vvg:~$</span>
+            <input type="text" id="user-input" class="bg-transparent border-0 text-white w-100" placeholder="Enter command..." autocomplete="off">
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // --- 1. STATE & UTILITIES ---
+        const state = {
+            theme: localStorage.getItem('theme') || 'dark', // Defaulting to dark for the architectural effect
+            terminalOpen: false
+        };
+
+        function updateClock() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
+            document.getElementById('clock').innerText = timeStr;
+        }
+
+        function toggleTheme() {
+            state.theme = state.theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', state.theme);
+            localStorage.setItem('theme', state.theme);
+            
+            // Update 3D Scene Colors
+            if (window.scene) {
+                const bgColor = state.theme === 'dark' ? 0x050505 : 0xffffff;
+                const gridColor = state.theme === 'dark' ? 0xffdd33 : 0x000000;
+                const lineColor = state.theme === 'dark' ? 0xffdd33 : 0x333333;
+
+                window.scene.fog.color.setHex(bgColor);
+                window.renderer.setClearColor(bgColor, 0); // Transparent background handled by CSS, but fog helps blend
+                
+                // Update Grid Color
+                window.gridHelper.material.color.setHex(gridColor);
+                
+                // Update Vertical Lines Color
+                window.pillarsGroup.children.forEach(line => {
+                    line.material.color.setHex(lineColor);
+                });
+            }
+        }
+
+        function toggleTerminal() {
+            const term = document.getElementById('ai-terminal');
+            state.terminalOpen = !state.terminalOpen;
+            if (state.terminalOpen) {
+                term.classList.remove('terminal-closed');
+                document.getElementById('user-input').focus();
+            } else {
+                term.classList.add('terminal-closed');
+            }
+        }
+
+        // --- 2. TYPEWRITER EFFECT ---
+        const typeText = "Transform Your Vision into Reality.";
+        let typeIndex = 0;
+
+        function typeWriter() {
+            if (typeIndex < typeText.length) {
+                document.getElementById('typewriter-target').innerHTML += typeText.charAt(typeIndex);
+                typeIndex++;
+                setTimeout(typeWriter, 50);
+            }
+        }
+
+        // --- 3. TERMINAL LOGIC ---
+        const terminalInput = document.getElementById('user-input');
+        terminalInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                const val = this.value;
+                if(val.trim() === "") return;
+                
+                // Add user message
+                const content = document.getElementById('terminal-content');
+                const userLine = document.createElement('div');
+                userLine.className = 'text-white small mb-1';
+                userLine.innerText = `> ${val}`;
+                content.appendChild(userLine);
+                
+                this.value = '';
+
+                // Auto scroll
+                content.scrollTop = content.scrollHeight;
+
+                // Simple simulated responses
+                setTimeout(() => {
+                    const aiLine = document.createElement('div');
+                    aiLine.className = 'text-accent small mb-2';
+                    if(val.toLowerCase().includes('help')) {
+                        aiLine.innerText = "Available commands: services, contact, status, clear";
+                    } else if (val.toLowerCase().includes('services')) {
+                        aiLine.innerText = "Running diagnostics on service modules... All systems operational.";
+                    } else if (val.toLowerCase().includes('contact')) {
+                        aiLine.innerText = "Opening channel via email: contact@vvg.online";
+                    } else {
+                        aiLine.innerText = `Command '${val}' processed. Executing logic...`;
+                    }
+                    content.appendChild(aiLine);
+                    content.scrollTop = content.scrollHeight;
+                }, 600);
+            }
+        });
+
+        // --- 4. WORKFLOW ANIMATION LOOP ---
+        async function runWorkflowAnimation() {
+            const nodes = [
+                document.getElementById('node-1'),
+                document.getElementById('node-2'),
+                document.getElementById('node-3'),
+                document.getElementById('node-4')
+            ];
+            const connectors = [
+                document.getElementById('conn-1'),
+                document.getElementById('conn-2'),
+                document.getElementById('conn-3')
+            ];
+
+            while(true) {
+                // Reset
+                nodes.forEach(n => n.classList.remove('active'));
+                connectors.forEach(c => c.classList.remove('active'));
+
+                for(let i=0; i<nodes.length; i++) {
+                    // Activate Node
+                    nodes[i].classList.add('active');
+                    await new Promise(r => setTimeout(r, 800)); // Wait on node
+
+                    // Activate Connector to next node
+                    if(connectors[i]) {
+                        connectors[i].classList.add('active');
+                        await new Promise(r => setTimeout(r, 600)); // Wait for connector animation
+                    }
+                }
+                
+                // Pause before restart
+                await new Promise(r => setTimeout(r, 2000));
+            }
+        }
+
+
+        // --- 5. THREE.JS BACKGROUND (The Integration) ---
+        function initBackground() {
+            const container = document.getElementById('canvas-container');
+            
+            // Scene Setup
+            window.scene = new THREE.Scene();
+            // Fog creates the depth (architectural fade into distance)
+            // Color matches the default dark theme initially
+            window.scene.fog = new THREE.FogExp2(0x050505, 0.035); 
+
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
+            camera.position.set(0, 1, 5); // Slightly elevated camera
+            camera.rotation.x = -0.1; // Look slightly down
+
+            window.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            window.renderer.setSize(window.innerWidth, window.innerHeight);
+            window.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            container.appendChild(window.renderer.domElement);
+
+            // --- ELEMENT 1: THE GRID (Floor) ---
+            // Infinite grid effect created by moving the grid helper
+            const gridColor = 0xffdd33; // VVG Accent
+            const gridHelper = new THREE.GridHelper(60, 60, gridColor, 0x333333);
+            window.gridHelper = gridHelper;
+            window.scene.add(gridHelper);
+
+            // --- ELEMENT 2: VERTICAL LINES (Architectural Pillars) ---
+            // Simulating the complex SVG lines from your source file
+            const lineMat = new THREE.LineBasicMaterial({ color: gridColor, transparent: true, opacity: 0.15 });
+            window.pillarsGroup = new THREE.Group();
+
+            for (let i = 0; i < 30; i++) {
+                const geometry = new THREE.BufferGeometry().setFromPoints([
+                    new THREE.Vector3(0, 0, 0),
+                    new THREE.Vector3(0, 20, 0) // Height of pillars
+                ]);
+                const line = new THREE.Line(geometry, lineMat);
+                
+                // Scatter lines randomly but keeping them in perspective
+                line.position.x = (Math.random() - 0.5) * 40; // Width spread
+                line.position.z = -Math.random() * 40; // Depth spread
+                
+                window.pillarsGroup.add(line);
+            }
+            window.scene.add(window.pillarsGroup);
+
+            // Animation Loop
+            function animate() {
+                requestAnimationFrame(animate);
+
+                // Move Grid forward to simulate flight
+                gridHelper.position.z += 0.05;
+                // Reset grid position when it moves 1 unit to create loop
+                if (gridHelper.position.z > 1) gridHelper.position.z = 0;
+
+                // Move Pillars
+                window.pillarsGroup.children.forEach(line => {
+                    line.position.z += 0.05;
+                    // If pillar passes camera, reset to back
+                    if (line.position.z > 5) {
+                        line.position.z = -35;
+                    }
+                });
+
+                window.renderer.render(window.scene, camera);
+            }
+
+            animate();
+
+            // Handle Window Resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                window.renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        // --- INITIALIZATION ---
+        window.addEventListener('DOMContentLoaded', () => {
+            // Set Theme
+            document.documentElement.setAttribute('data-theme', state.theme);
+            if(state.theme === 'light') {
+                // Trigger color update if initialized light
+                // (Handled in toggleTheme, but init sets defaults)
+            }
+
+            // Start Clock
+            setInterval(updateClock, 1000);
+            updateClock();
+
+            // Init Typewriter
+            typeWriter();
+
+            // Init Three.js Background
+            initBackground();
+
+            // Init Workflow Animation
+            runWorkflowAnimation();
+        });
+
+    </script>
+</body>
+</html>

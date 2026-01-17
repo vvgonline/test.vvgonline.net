@@ -103,7 +103,7 @@ footer {
 
 .blink {
   animation: blinker 1s step-start infinite;
-  color: var(--111113);
+  color: var(--accent);
 }
 
 .blinking-cursor::after {

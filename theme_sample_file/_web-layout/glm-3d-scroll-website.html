@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VVG ONLINE | Spatial Architecture</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;600&display=swap"
+        rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+        :root {
+            --accent: #ffdd33;
+            --bg: #ffffff;
+            --text: #1a1a1a;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(26, 26, 26, 0.1);
+        }
+
+        [data-theme="dark"] {
+            --bg: #050505;
+            --text: #ffffff;
+            --card-bg: rgba(10, 10, 10, 0.85);
+            --accent: #ffdd33;
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'IBM Plex Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            /* Height is manipulated by JS to allow infinite scroll feel */
+        }
+
+        /* --- 3D SCENE CONTAINER --- */
+        #scroll-container {
+            height: 300vh; /* Determines scroll length */
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Fixed Layers that move in 3D space */
+        .layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none; /* Let clicks pass through when inactive */
+            transition: opacity 0.5s;
+            opacity: 0;
+            will-change: transform, opacity;
+            padding-top: 32px; /* Space for nav */
+        }
+
+        .layer.active {
+            pointer-events: auto;
+            opacity: 1;
+        }
+
+        /* 3D Context Wrapper */
+        .scene-perspective {
+            perspective: 1000px;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* The Card/Content Wrapper */
+        .content-box {
+            width: 100%;
+            max-width: 1200px;
+            padding: 2rem;
+            /* Default Transform */
+            transform-style: preserve-3d;
+            transition: transform 0.1s linear; /* Smoothed via JS RAF usually, but linear here for direct control */
+        }
+
+        /* --- UI ELEMENTS --- */
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .system-panel {
+            height: 32px;
+            background: #000;
+            color: #fff;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1050;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(5px);
+        }
+
+        .system-panel a {
+            color: #fff; text-decoration: none; padding: 0 10px; height: 100%; display: inline-flex; align-items: center; border-right: 1px solid #333;
+        }
+        .system-panel a:hover { background: #222; color: var(--accent); }
+        .system-panel .status-right { margin-left: auto; display: flex; gap: 15px; color: var(--text); }
+
+        /* VVG Styling */
+        h1, h2, h3, .serif { font-family: 'EB Garamond', serif; font-weight: 400; }
+        code, .mono { font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; color: var(--text); }
+        .text-accent { color: var(--accent) !important; }
+
+        /* Terminal Tags */
+        .terminal-tag-group { display: inline-flex; align-items: stretch; margin-bottom: 1.5rem; filter: drop-shadow(3px 3px 0px rgba(0, 0, 0, 0.15)); }
+        .tag-segment { padding: 4px 15px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; height: 28px; display: flex; align-items: center; }
+        .tag-user { background: #000; color: #fff; clip-path: polygon(0% 0%, 90% 0%, 100% 50%, 90% 100%, 0% 100%); padding-right: 25px; z-index: 2; }
+        .tag-path { background: var(--accent); color: #000; margin-left: -10px; padding-left: 20px; clip-path: polygon(0% 0%, 95% 0%, 100% 50%, 95% 100%, 0% 100%, 8% 50%); z-index: 1; }
+
+        /* Cards within 3D space */
+        .spatial-card {
+            border: 1px solid var(--text);
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            transform: translateZ(20px); /* Pop out slightly */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: border-color 0.3s;
+        }
+        .spatial-card:hover { border-color: var(--accent); }
+
+        /* Buttons */
+        .btn-vvg {
+            background: var(--accent); border: 1px solid #000; border-radius: 0;
+            font-family: 'IBM Plex Mono', monospace; font-weight: 500; padding: 10px 25px; text-transform: uppercase;
+        }
+        .btn-vvg:hover { background: var(--text); color: var(--accent); }
+
+        /* Terminal */
+        #ai-terminal {
+            position: fixed; bottom: 20px; right: 20px; width: 350px;
+            background: rgba(10, 10, 10, 0.95); border: 1px solid var(--accent); color: var(--accent);
+            font-family: 'IBM Plex Mono', monospace; transition: all 0.4s; z-index: 10000; max-height: 90vh;
+        }
+        .terminal-closed { height: 40px; overflow: hidden; opacity: 0.8; }
+        .terminal-closed:hover { opacity: 1; cursor: pointer; }
+        .terminal-header { background: var(--accent); color: #000; padding: 8px 15px; display: flex; justify-content: space-between; font-weight: bold; font-size: 12px; cursor: pointer; }
+        .terminal-body { height: 400px; display: flex; flex-direction: column; padding: 15px; }
+        .chat-output { flex-grow: 1; overflow-y: auto; font-size: 13px; margin-bottom: 10px; }
+        .system-msg { color: #888; font-size: 11px; margin-bottom: 5px; }
+        .terminal-input-area { display: flex; border-top: 1px solid rgba(255, 221, 51, 0.3); padding-top: 10px; }
+        .terminal-prompt { color: var(--accent); margin-right: 10px; font-weight: bold; }
+        #user-input { background: transparent; border: none; color: var(--text); width: 100%; outline: none; font-family: inherit; }
+
+        .vvg-logo-nav { height: 22px !important; width: auto; }
+        .bi { color: var(--accent) !important; }
+        
+        /* Hide standard scrollbar for immersion */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
+    </style>
+</head>
+
+<body>
+
+    <!-- 3D Background -->
+    <div id="canvas-container"></div>
+
+    <!-- Nav -->
+    <nav class="system-panel">
+        <img src="https://raw.githubusercontent.com/vvgonline/vvgonline/d6ce91fa38831bf3009b2070a2c9a0f323faa8f8/public/logo-2025.svg"
+            alt="VVG" class="vvg-logo-nav me-2"> <span class="text-accent">VVG_ONLINE</span>
+        <div class="status-right d-flex align-items-center">
+            <button onclick="toggleTheme()" class="btn btn-sm py-0 px-1 me-1 btn-theme">
+                <i class="bi bi-brightness-high-fill"></i>
+            </button>
+            <button onclick="toggleTerminal()" class="btn btn-sm py-0 px-1 btn-terminal">
+                <i class="bi bi-terminal-fill"></i>
+            </button>
+            <span class="d-none d-md-inline"><span id="clock" class="text-center text-light bg-dark w-75 p-1">[ 00:00 ]</span></span>
+        </div>
+    </nav>
+
+    <!-- Scrollable Container -->
+    <div id="scroll-container">
+        
+        <!-- SECTION 1: HERO (Starts Front, moves to Floor) -->
+        <div class="layer layer-1 active" id="layer-1">
+            <div class="scene-perspective">
+                <div class="content-box">
+                    <div class="container">
+                        <div class="terminal-tag-group">
+                            <div class="tag-segment tag-user">// SYSTEM_ARCH</div>
+                            <div class="tag-segment tag-path">// EVENT_DRIVEN</div>
+                        </div>
+                        <h1 class="display-1 mb-4">Transform<br>Your Vision.</h1>
+                        <p class="lead fs-4 opacity-75 serif mb-4">
+                            Driving you beyond growth, through unique, innovative, and result-oriented digital consulting.
+                        </p>
+                        <button class="btn btn-vvg">Start Transformation</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 2: SERVICES (Starts Back, moves to Front, then to Ceiling) -->
+        <div class="layer layer-2" id="layer-2">
+            <div class="scene-perspective">
+                <div class="content-box">
+                    <div class="container">
+                        <div class="row g-4">
+                            <div class="col-md-4">
+                                <div class="spatial-card h-100">
+                                    <span class="mono text-accent">01.</span>
+                                    <h3 class="mt-3">Strategy</h3>
+                                    <p class="small opacity-75">Tailored roadmaps for business goals.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="spatial-card h-100">
+                                    <span class="mono text-accent">02.</span>
+                                    <h3 class="mt-3">Transformation</h3>
+                                    <p class="small opacity-75">Tech leverage for lasting value.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="spatial-card h-100">
+                                    <span class="mono text-accent">03.</span>
+                                    <h3 class="mt-3">Capability</h3>
+                                    <p class="small opacity-75">Strengthening internal team skills.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 3: INSIGHTS (Comes from Ceiling/Floor to Front) -->
+        <div class="layer layer-3" id="layer-3">
+            <div class="scene-perspective">
+                <div class="content-box text-center">
+                    <div class="container">
+                        <div class="spatial-card d-inline-block p-5">
+                            <h2 class="display-3 serif">Latest Insights</h2>
+                            <p class="lead mono">DIGITAL ASSETS // STRATEGY // KPIs</p>
+                            <div class="mt-4">
+                                <a href="#" class="btn btn-vvg">View Archive</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Terminal -->
+    <div id="ai-terminal" class="terminal-closed">
+        <div class="terminal-header" onclick="toggleTerminal()">
+            <span class="terminal-title"><i class="bi bi-robot me-2 text-dark bg-light w-75 p-1"></i>AI_AGENT_V0.109</span>
+            <span class="terminal-controls">
+                <span class="control-dot"></span>
+                <span class="control-dot"></span>
+            </span>
+        </div>
+        <div id="terminal-body" class="terminal-body">
+            <div id="chat-output" class="chat-output">
+                <div class="system-msg">// SECURE CONNECTION ESTABLISHED...</div>
+                <div class="system-msg">// AGENT READY. NAVIGATE THE VOID.</div>
+            </div>
+            <div class="terminal-input-area">
+                <span class="terminal-prompt">></span>
+                <input type="text" id="user-input" placeholder="Type command..." autocomplete="off">
+            </div>
+        </div>
+    </div>
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
+        // --- 1. STATE & UTILS ---
+        const state = { theme: localStorage.getItem('theme') || 'dark' };
+
+        function updateClock() {
+            const now = new Date();
+            const timeStr = `[ ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })} ]`;
+            document.getElementById('clock').innerText = timeStr;
+        }
+        setInterval(updateClock, 1000);
+
+        function toggleTheme() {
+            state.theme = state.theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', state.theme);
+            localStorage.setItem('theme', state.theme);
+            
+            // Update 3D Cube Color
+            if (window.cubeMesh) {
+                const color = state.theme === 'dark' ? 0xffdd33 : 0x1a1a1a;
+                window.cubeMesh.material.color.setHex(color);
+            }
+        }
+
+        function toggleTerminal() {
+            document.getElementById('ai-terminal').classList.toggle('terminal-closed');
+        }
+
+        // --- 2. THREE.JS: THE MORPHED CUBE BACKGROUND ---
+        let scene, camera, renderer, cubeMesh;
+        let geometry, originalPositions;
+        let time = 0;
+
+        function init3D() {
+            const container = document.getElementById('canvas-container');
+            scene = new THREE.Scene();
+            // Fog fades the cube into the background
+            scene.fog = new THREE.FogExp2(state.theme === 'dark' ? 0x050505 : 0xffffff, 0.035);
+
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
+            camera.position.z = 5;
+
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            container.appendChild(renderer.domElement);
+
+            // Create the Morphing Cube
+            // Using a BoxGeometry with many segments to allow "morphing" (vertex displacement)
+            geometry = new THREE.BoxGeometry(4, 4, 4, 32, 32, 32);
+            originalPositions = geometry.attributes.position.array.slice();
+
+            const material = new THREE.MeshBasicMaterial({
+                color: state.theme === 'dark' ? 0xffdd33 : 0x1a1a1a,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.3
+            });
+
+            cubeMesh = new THREE.Mesh(geometry, material);
+            scene.add(cubeMesh);
+
+            // Ambient particles for depth
+            const particlesGeo = new THREE.BufferGeometry();
+            const particleCount = 200;
+            const posArray = new Float32Array(particleCount * 3);
+            for(let i=0; i<particleCount*3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 15;
+            }
+            particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            const particlesMat = new THREE.PointsMaterial({ size: 0.05, color: state.theme === 'dark' ? 0xffffff : 0x000000 });
+            const particleMesh = new THREE.Points(particlesGeo, particlesMat);
+            scene.add(particleMesh);
+
+            window.particleMesh = particleMesh; // Save for theme update
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+            animate3D();
+        }
+
+        function animate3D() {
+            requestAnimationFrame(animate3D);
+            time += 0.005;
+
+            // 1. Morph the Cube (Vertex Displacement)
+            const positions = geometry.attributes.position.array;
+            
+            for (let i = 0; i < positions.length; i += 3) {
+                // Get original coords
+                const ox = originalPositions[i];
+                const oy = originalPositions[i+1];
+                const oz = originalPositions[i+2];
+
+                // Calculate noise-like offset using Sine waves
+                const dist = Math.sqrt(ox*ox + oy*oy + oz*oz);
+                const offset = Math.sin(dist * 2 + time * 2) * 0.1 + Math.sin(oy * 5 + time) * 0.05;
+
+                // Apply to current position (expanding/contracting slightly)
+                positions[i] = ox + ox * offset;
+                positions[i+1] = oy + oy * offset;
+                positions[i+2] = oz + oz * offset;
+            }
+            geometry.attributes.position.needsUpdate = true;
+
+            // 2. Rotate Cube
+            // We sync cube rotation with scroll in the Scroll Loop, but add a slow idle spin here
+            if (window.scrollProgress === undefined) window.scrollProgress = 0;
+            
+            // Base rotation
+            cubeMesh.rotation.x = time * 0.1;
+            cubeMesh.rotation.y = time * 0.15;
+
+            renderer.render(scene, camera);
+        }
+
+        // --- 3. SPATIAL SCROLL LOGIC (FLOOR -> FRONT -> CEILING) ---
+        
+        const layer1 = document.querySelector('.layer-1');
+        const content1 = layer1.querySelector('.content-box');
+        
+        const layer2 = document.querySelector('.layer-2');
+        const content2 = layer2.querySelector('.content-box');
+        
+        const layer3 = document.querySelector('.layer-3');
+        const content3 = layer3.querySelector('.content-box');
+
+        function handleScroll() {
+            const docHeight = document.body.scrollHeight - window.innerHeight;
+            const scrollTop = window.scrollY;
+            const progress = scrollTop / docHeight; // 0.0 to 1.0
+            window.scrollProgress = progress;
+
+            // --- ANIMATION PHASES ---
+            
+            // 1. CUBE REACTION
+            // Rotate the cube faster based on scroll to create the "tunnel" or "morph" sensation
+            cubeMesh.rotation.z = progress * Math.PI * 2;
+            cubeMesh.scale.setScalar(1 + (progress * 0.5)); // Cube gets slightly larger/breathes
+
+            // 2. TEXT SPATIAL MOVEMENT
+            
+            // PHASE 1: Start (0% -> 33%)
+            // Layer 1 (Hero) is Front. Layer 2 (Services) is Back.
+            if (progress < 0.33) {
+                // Layer 1 (Hero): Slowly moves to Floor
+                // Rotate X 90deg = Floor. Translate Z -500 = Into the distance.
+                const p1 = progress * 3; // Normalize 0-1 for this phase
+                const rotX1 = p1 * 90; 
+                const transZ1 = p1 * -500;
+
+                content1.style.transform = `rotateX(${rotX1}deg) translateZ(${transZ1}px)`;
+                
+                // Fade out Layer 1 as it hits floor
+                layer1.style.opacity = 1 - (p1 * 0.8);
+
+                // Layer 2 (Services): Starts deep in back (-1000), moves to Front (0)
+                const transZ2 = -1000 + (p1 * 1000);
+                content2.style.transform = `translateZ(${transZ2}px)`;
+                layer2.style.opacity = p1; // Fade in
+                layer2.classList.add('active');
+            } 
+            
+            // PHASE 2: Middle (33% -> 66%)
+            else if (progress >= 0.33 && progress < 0.66) {
+                // Layer 1 is gone on floor
+                layer1.style.opacity = 0;
+
+                // Layer 2 is now Front. Hold it briefly, then move to Ceiling.
+                const p2 = (progress - 0.33) * 3; // Normalize 0-1
+                
+                // Ceiling = Rotate X -90deg. Translate Z 500 = Up and away.
+                // Let's move it from Front (0) to Ceiling (-90deg rot, Z 500)
+                const rotX2 = p2 * -90;
+                const transZ2 = p2 * 500;
+
+                content2.style.transform = `rotateX(${rotX2}deg) translateZ(${transZ2}px)`;
+                layer2.style.opacity = 1 - (p2 * 0.5);
+
+                // Layer 3 (Insights): Starts coming from the side/back or dropping down
+                // Let's make it come from Right -> Center
+                const transX3 = 1000 - (p2 * 1000);
+                content3.style.transform = `translateX(${transX3}px)`;
+                layer3.style.opacity = p2;
+                layer3.classList.add('active');
+            }
+
+            // PHASE 3: End (66% -> 100%)
+            else {
+                layer1.style.opacity = 0;
+                layer2.style.opacity = 0;
+
+                const p3 = (progress - 0.66) * 3;
+                // Layer 3 settles in Center
+                content3.style.transform = `translateX(0px) scale(${1 + p3 * 0.1})`; // Slight zoom in
+                layer3.style.opacity = 1;
+            }
+        }
+
+        // --- INIT ---
+        window.addEventListener('DOMContentLoaded', () => {
+            document.documentElement.setAttribute('data-theme', state.theme);
+            updateClock();
+            
+            if(typeof THREE !== 'undefined') {
+                init3D();
+            }
+
+            // Use RAF for smooth scroll animation
+            let lastScrollY = window.scrollY;
+            let ticking = false;
+
+            window.addEventListener('scroll', () => {
+                lastScrollY = window.scrollY;
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        handleScroll();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>

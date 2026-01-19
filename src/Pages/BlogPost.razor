@@ -1,10 +1,3 @@
-@* // src/Pages/BlogPost.razor
-// ---------------------------------------------------------------------------
-// This Razor component renders a single blog post. It handles data loading,
-// error states, markdown rendering, navigation controls, and social‑sharing logic.
-// The comments below are written as if explaining every step to a student.
-// --------------------------------------------------------------------------- *@
-
 @page "/blog/{slug}"
 @using VVG.Web.Models
 @using Markdig
@@ -13,276 +6,64 @@
 @inject MetadataService MetadataService
 @inject IJSRuntime JSRuntime
 
-<PageTitle>@(blogPost?.Title ?? "Blog Post") - VVG ONLINE</PageTitle>
-
 @if (isLoading)
 {
-    /* --------------------------------------------
-     *  Loading UI
-     *  --------------------------------------------
-     *  - Full‑height container to center the spinner
-     *  - Uses Bootstrap classes for styling
-     *  -------------------------------------------- */
-    <div class="min-vh-100 d-flex align-items-center justify-content-center">
-        <div class="text-center">
-            <div class="spinner-border text-warning mb-3" role="status" style="width: 3rem; height: 3rem;">
-                <span class="visually-hidden">Loading...</span>
-            </div>
-            <p class="mono opacity-75">// LOADING_POST</p>
+    <div class="container py-5 text-center">
+        <div class="spinner-border text-warning" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-3 mono text-warning">// LOADING_POST</p>
+    </div>
+}
+else if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="container py-5">
+        <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">Error</h4>
+            <p>@errorMessage</p>
+            <hr>
+            <a href="/blog" class="btn btn-warning">← Back to Blog</a>
         </div>
     </div>
 }
-else if (errorMessage != null)
+else if (blogPost != null)
 {
-    /* --------------------------------------------
-     *  Error UI
-     *  --------------------------------------------
-     *  - Shows Bootstrap alert component
-     *  - Provides a back button for quick recovery
-     * -------------------------------------------- */
-    <div class="min-vh-100 py-5">
-        <div class="container">
-            <div class="alert alert-danger" role="alert">
-                <h4 class="alert-heading"><i class="bi bi-exclamation-triangle-fill me-2"></i>Error</h4>
-                <p>@errorMessage</p>
-                <hr>
-                <p class="mb-0">
-                    <a href="/Blog" class="btn btn-outline-warning">← Back to Blog</a>
-                </p>
-            </div>
-        </div>
-    </div>
-}
-else if (blogPost == null)
-{
-    /* --------------------------------------------
-     *  “Not found” UI
-     *  --------------------------------------------
-     *  - Informative message
-     *  - Back button styling matches the rest of the site
-     * -------------------------------------------- */
-    <div class="min-vh-100 py-5">
-        <div class="container text-center">
-            <h3 class="mb-3">Blog post not found</h3>
-            <p class="opacity-75 mb-4">The post you're looking for doesn't exist.</p>
-            <a href="/Blog" class="btn btn-warning">← Back to Blog</a>
-        </div>
-    </div>
-}
-else
-{
-    /* --------------------------------------------
-     *  Main content
-     *  --------------------------------------------
-     *  All the following sections compose the visible post:
-     *    • Hero section (category badge, title, excerpt, metadata)
-     *    • Markdown body
-     *    • Share controls
-     *    • Navigation links
-     *    • Call‑to‑action box
-     * -------------------------------------------- */
-
-    <!-- Hero Section -->
-    <section class="blog-post-content border-bottom border-secondary py-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 mx-auto">
-                    <!-- Category Badge -->
-                    <div class="mb-3">
-                        <span class="badge bg-warning px-3 py-2 mono">
-                            @blogPost.Category
-                        </span>
-                        <!-- Tags (if any) -->
-                        @if (blogPost.Tags != null && blogPost.Tags.Length > 0)
-                        {
-                            <div class="d-flex flex-wrap gap-2 mt-4">
-                                @foreach (var tag in blogPost.Tags)
-                                {
-                                    <a href="/Blog?tag=@tag" class="badge bg-secondary text-decoration-none px-3 py-2">
-                                        <span class="text-warning me-1">#</span>@tag
-                                    </a>
-                                }
-                            </div>
-                        }
-                    </div>
-
-                    <!-- Title -->
-                    <h1 class="display-4 fw-bold mb-4">@blogPost.Title</h1>
-
-                    <!-- Meta Info -->
-                    <div class="d-flex flex-wrap gap-3 opacity-75 mono small mb-4">
-                        <span>
-                            <i class="bi bi-calendar3 me-1"></i>
-                            @blogPost.PublishedAt.ToString("MMMM dd, yyyy")
-                        </span>
-                        <span>
-                            <i class="bi bi-clock me-1"></i>
-                            @blogPost.TimeToRead min read
-                        </span>
-                        @if (blogPost.Tags != null && blogPost.Tags.Length > 0)
-                        {
-                            <span>
-                                <i class="bi bi-tags me-1"></i>
-                                @blogPost.Tags.Length tags
-                            </span>
-                        }
-                    </div>
-
-                    <!-- Excerpt -->
-                    <p class="lead opacity-75 border-start border-warning border-3 ps-3">
-                        @blogPost.Excerpt
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Blog Content -->
-    <article class="py-5 blog-post-content">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 mx-auto">
-                    <!-- Rendered Markdown -->
-                    <div class="markdown-content">
-                        @((MarkupString)(blogPostHtml ?? ""))
-                    </div>
-
-                    <!-- Share Section -->
-                    <div class="border-top border-secondary mt-5 pt-4">
-                        <h5 class="mono text-warning mb-3">// SHARE_THIS_POST</h5>
-                        <div class="d-flex gap-2">
-                            <button class="btn btn-outline-secondary" @onclick="CopyLink" title="Copy Link">
-                                <i class="bi bi-link-45deg me-1"></i> Copy Link
-                            </button>
-                            <button class="btn btn-outline-secondary" @onclick="SharePost" title="Share">
-                                <i class="bi bi-share me-1"></i> Share
-                            </button>
-                        </div>
-                        @if (showCopyConfirmation)
-                        {
-                            <small class="text-success d-block mt-2">
-                                <i class="bi bi-check-circle-fill me-1"></i> Link copied to clipboard!
-                            </small>
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>
-    </article>
-
-    <!-- Navigation -->
-    <section class="border-top border-secondary py-4 blog-post-content">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 mx-auto">
-                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
-
-                        <!-- Previous Post -->
-                        @if (previousPost != null)
-                        {
-                            <a href="/blog/@previousPost.Slug" class="btn btn-outline-secondary text-start flex-fill">
-                                <small class="d-block opacity-75 mono">← PREVIOUS</small>
-                            </a>
-                        }
-                        else
-                        {
-                            <div class="btn btn-outline-secondary disabled flex-fill">
-                                <small class="d-block opacity-75 mono">← PREVIOUS</small>
-                                <span class="d-block">No previous post</span>
-                            </div>
-                        }
-
-                        <!-- Back to Blog -->
-                        <a href="/Blog" class="btn btn-warning">
-                            <i class="bi bi-grid-3x3-gap"></i>
-                        </a>
-
-                        <!-- Next Post -->
-                        @if (nextPost != null)
-                        {
-                            <a href="/blog/@nextPost.Slug" class="btn btn-outline-secondary text-end flex-fill">
-                                <small class="d-block opacity-75 mono">NEXT →</small>
-                            </a>
-                        }
-                        else
-                        {
-                            <div class="btn btn-outline-secondary disabled flex-fill">
-                                <small class="d-block opacity-75 mono">NEXT →</small>
-                                <span class="d-block">No next post</span>
-                            </div>
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Call to Action -->
-    <section class="blog-post-content py-5 border-top border-warning">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 mx-auto text-center">
-                    <h3 class="mono text-warning mb-3">// TRANSFORM_YOUR_BUSINESS</h3>
-                    <h2 class="h3 mb-4">Ready to Take the Next Step?</h2>
-                    <p class="opacity-75 mb-4">
-                        Let VVG ONLINE help you implement the strategies discussed in this article.
-                    </p>
-                    <div class="d-flex justify-content-center gap-3 flex-wrap">
-                        <a href="/contact" class="btn btn-warning px-4 py-2">
-                            <i class="bi bi-envelope-fill me-2"></i>CONTACT US
-                        </a>
-                        <a href="/BlogArchives" class="btn btn-outline-secondary px-4 py-2">
-                            <i class="bi bi-archive-fill me-2"></i>VIEW ARCHIVES
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <BlogHero Post="@blogPost" />
+    <BlogContent 
+        HtmlContent="@blogPostHtml" 
+        OnCopyLink="@CopyLink" 
+        OnShare="@SharePost"
+        ShowCopyToast="@showCopyConfirmation" />
+    <BlogNavigation PreviousPost="@previousPost" NextPost="@nextPost" />
+    <BlogCallToAction Post="@blogPost" />
 }
 
-@* /* ---------------------------------------------------------------------------
- * Code‑behind section
- * --------------------------------------------------------------------------- */ *@
 @code {
-    /* ---------------------------------------------------------
-     * Parameters & Services
-     * --------------------------------------------------------- */
-    [Parameter] public string? Slug { get; set; }            // SEO friendly identifier from route
+    [Parameter]
+    public string? Slug { get; set; }
 
-    // Model state
-    private Models.BlogPost? blogPost;            // Current post
-    private Models.BlogPost[]? allPosts;          // Cached index for navigation
-    private Models.BlogPost? previousPost;        // Neighbor links
+    private Models.BlogPost? blogPost;
+    private Models.BlogPost[]? allPosts;
+    private Models.BlogPost? previousPost;
     private Models.BlogPost? nextPost;
+    private string? blogPostHtml;
+    private bool isLoading = true;
+    private string? errorMessage;
+    private bool showCopyConfirmation = false;
 
-    // Rendering & state helpers
-    private string? blogPostHtml;     // Markdown converted to HTML
-    private bool isLoading = true;    // Spinner flag
-    private string? errorMessage;     // Error text for UI
-    private bool showCopyConfirmation = false; // “copied” toast
-
-    /* ---------------------------------------------------------
-     * Lifecycle: Load the post on component init or route change
-     * --------------------------------------------------------- */
     protected override async Task OnInitializedAsync()
-        => await LoadBlogPost();
+    {
+        await LoadBlogPost();
+    }
 
     protected override async Task OnParametersSetAsync()
-        => await LoadBlogPost();      // Handles slug change
+    {
+        if (Slug != null)
+        {
+            await LoadBlogPost();
+        }
+    }
 
-    /* ---------------------------------------------------------
-     * LoadBlogPost()
-     * ---------------------------------------------------------
-     * Steps:
-     *  1. Reset loading & errors.
-     *  2. Fetch the entire post index (JSON).
-     *  3. Find the post matching the `Slug`.
-     *  4. Load the corresponding markdown file.
-     *  5. Render markdown → HTML.
-     *  6. Determine previous/next links.
-     *  7. Populate SEO metadata.
-     * --------------------------------------------------------- */
     private async Task LoadBlogPost()
     {
         try
@@ -290,7 +71,6 @@ else
             isLoading = true;
             errorMessage = null;
 
-            // 1️⃣ Load index
             allPosts = await Http.GetFromJsonAsync<Models.BlogPost[]>("data/blog-index.json");
 
             if (allPosts == null || allPosts.Length == 0)
@@ -299,12 +79,7 @@ else
                 return;
             }
 
-            // Filter out drafts & sort newest first
-            allPosts = allPosts.Where(p => !p.Draft)
-                                .OrderByDescending(p => p.PublishedAt)
-                                .ToArray();
-
-            // 2️⃣ Find current post
+            allPosts = allPosts.Where(p => !p.Draft).OrderByDescending(p => p.PublishedAt).ToArray();
             blogPost = allPosts.FirstOrDefault(p => p.Slug == Slug);
 
             if (blogPost == null)
@@ -313,53 +88,43 @@ else
                 return;
             }
 
-            // 3️⃣ Load markdown body
             try
             {
-                var fileName = !string.IsNullOrEmpty(blogPost.Filename) ? blogPost.Filename : Slug!;
+                var fileName = !string.IsNullOrEmpty(blogPost.Filename) 
+                    ? blogPost.Filename 
+                    : Slug;
+                    
                 var markdownContent = await Http.GetStringAsync($"assets/data/blogs/{fileName}.md");
                 markdownContent = RemoveFrontmatter(markdownContent);
-
-                // Build Markdig pipeline for advanced extensions
+                
                 var pipeline = new MarkdownPipelineBuilder()
                     .UseAdvancedExtensions()
                     .Build();
-
                 blogPostHtml = Markdown.ToHtml(markdownContent, pipeline);
             }
             catch (HttpRequestException ex)
             {
-                // 4️⃣ If file not found, set a clear error
                 errorMessage = $"Blog post content file not found: {ex.Message}";
                 return;
             }
 
-            // 5️⃣ Navigation links
             var currentIndex = Array.IndexOf(allPosts, blogPost);
             previousPost = currentIndex < allPosts.Length - 1 ? allPosts[currentIndex + 1] : null;
-            nextPost     = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
+            nextPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
 
-            await SetMetadata();      // Push SEO tags to service
+            await SetMetadata();
         }
         catch (Exception ex)
         {
-            // Unified error surface, useful for students to see “try‑catch‑finally” flow
             errorMessage = $"An error occurred: {ex.Message}";
             Console.WriteLine($"BlogPost ERROR: {ex}");
         }
         finally
         {
-            isLoading = false;   // Hide spinner regardless of success/failure
+            isLoading = false;
         }
     }
 
-    /* ---------------------------------------------------------
-     * RemoveFrontmatter()
-     * ---------------------------------------------------------
-     * The yaml‑style front‑matter (---)…--- is stripped away.
-     * It’s safe because we only strip the first block, keeping the rest
-     * of the markdown untouched. This method is used once per fetch.
-     * --------------------------------------------------------- */
     private string RemoveFrontmatter(string markdown)
     {
         if (markdown.StartsWith("---"))
@@ -373,62 +138,49 @@ else
         return markdown;
     }
 
-    /* ---------------------------------------------------------
-     * SetMetadata()
-     * ---------------------------------------------------------
-     * Populates meta tags (title, description, OpenGraph, Twitter, article details)
-     * to improve SEO and social‑preview quality.
-     * --------------------------------------------------------- */
     private async Task SetMetadata()
     {
         if (blogPost == null) return;
 
         var url = Navigation.ToAbsoluteUri($"/blog/{blogPost.Slug}").ToString();
-        var keywords = blogPost.Tags != null ? string.Join(", ", blogPost.Tags) : string.Empty;
+        var keywords = blogPost.Tags != null ? string.Join(", ", blogPost.Tags) : "";
 
         await MetadataService.SetPageMetadata(new PageMetadata
         {
-            Title              = blogPost.Title,
-            Description        = blogPost.Excerpt,
-            Keywords           = keywords,
-            OgTitle            = blogPost.Title,
-            OgDescription      = blogPost.Excerpt,
-            OgType             = "article",
-            OgUrl              = url,
-            TwitterCard        = "summary_large_image",
-            TwitterTitle       = blogPost.Title,
+            Title = blogPost.Title,
+            Description = blogPost.Excerpt,
+            Keywords = keywords,
+            OgTitle = blogPost.Title,
+            OgDescription = blogPost.Excerpt,
+            OgType = "article",
+            OgUrl = url,
+            TwitterCard = "summary_large_image",
+            TwitterTitle = blogPost.Title,
             TwitterDescription = blogPost.Excerpt,
             ArticlePublishedTime = blogPost.PublishedAt.ToString("o"),
-            ArticleSection       = blogPost.Category?.ToString(),
-            ArticleTags          = blogPost.Tags
+            ArticleSection = blogPost.Category?.ToString(),
+            ArticleTags = blogPost.Tags
         });
     }
 
-    /* ---------------------------------------------------------
-     * Social‑Sharing helpers
-     * --------------------------------------------------------- */
     private async Task CopyLink()
     {
         var url = Navigation.ToAbsoluteUri($"/blog/{Slug}").ToString();
         await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", url);
-
         showCopyConfirmation = true;
-        await Task.Delay(3000);          // Toast lasts 3 seconds
+        await Task.Delay(3000);
         showCopyConfirmation = false;
-
-        StateHasChanged(); // Forces UI to refresh
+        StateHasChanged();
     }
 
     private async Task SharePost()
     {
         var url = Navigation.ToAbsoluteUri($"/blog/{Slug}").ToString();
-
-        // The data we would like to send to the native share dialog
         var shareData = new
         {
             title = blogPost?.Title,
-            text  = blogPost?.Excerpt,
-            url
+            text = blogPost?.Excerpt,
+            url = url
         };
 
         try
@@ -437,7 +189,6 @@ else
         }
         catch
         {
-            // If the browser doesn’t support `share`, fall back to copying
             await CopyLink();
         }
     }

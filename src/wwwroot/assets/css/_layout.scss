@@ -51,7 +51,7 @@ main {
   font-size: 12px;
 
   a {
-    color: var(--text); // Link color
+    // color: var(--text); // Link color
     text-decoration: none; // No underline for links
     padding: 0 10px;
     height: 100%;
@@ -60,7 +60,7 @@ main {
     border-right: 1px solid var(--border-color);
 
     &:hover {
-      background: var(--bg-hover);
+    //   background: var(--bg-hover);
       color: var(--accent);
     }
   }

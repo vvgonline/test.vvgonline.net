@@ -299,7 +299,6 @@ main {
   font-size: 12px;
 }
 .system-panel a {
-  color: var(--text);
   text-decoration: none;
   padding: 0 10px;
   height: 100%;
@@ -308,7 +307,6 @@ main {
   border-right: 1px solid var(--border-color);
 }
 .system-panel a:hover {
-  background: var(--bg-hover);
   color: var(--accent);
 }
 .system-panel .status-right {

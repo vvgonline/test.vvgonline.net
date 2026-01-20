@@ -11,6 +11,8 @@ namespace VVG.Web.Models
         Marketing,
         Design,
         Productivity,
-        Leadership
+        Leadership,
+        Strategy,
+        Innovation
     }
 }

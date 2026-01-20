@@ -7,13 +7,33 @@ models:
   - name: Qwen3 Coder 30B
     provider: ollama
     model: qwen3-coder:30b
-    apiBase: http://localhost:11434
+    apiBase: http://192.168.1.6:11434
     roles:
       - chat
       - edit
       - apply
+    capabilities:
+      - tool_use
     defaultCompletionOptions:
       contextLength: 24576
+      temperature: 0.3
+      topP: 0.5
+      topK: 40
+      maxTokens: 4096
+      stop:
+        - "\n\n"
+  - name: qwen2.5-coder:14b-instruct-q8_0
+    provider: ollama
+    model: qwen2.5-coder:14b-instruct-q8_0
+    apiBase: http://192.168.1.6:11434
+    roles:
+      - chat
+      - edit
+      - apply
+    capabilities:
+      - tool_use
+    defaultCompletionOptions:
+      contextLength: 102400
       temperature: 0.3
       topP: 0.5
       topK: 40
@@ -24,26 +44,24 @@ models:
   - name: GPT-OSS 20B
     provider: ollama
     model: hf.co/unsloth/gpt-oss-20b-GGUF:Q8_K_XL
-    apiBase: http://localhost:11434
+    apiBase: http://192.168.1.6:11434
     roles:
       - chat
       - edit
-      - apply
 
   - name: Qwen3 Coder 30B A3B
     provider: ollama
     model: hf.co/unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF:Q4_K_XL
-    apiBase: http://localhost:11434
+    apiBase: http://192.168.1.6:11434
     roles:
       - chat
       - edit
-      - apply
 
   # Vision model
   - name: Qwen3 VL 8B
     provider: ollama
     model: qwen3-vl:8b-instruct-q8_0
-    apiBase: http://localhost:11434
+    apiBase: http://192.168.1.6:11434
     roles:
       - chat
     capabilities:
@@ -53,132 +71,23 @@ models:
   - name: Qwen2.5 Coder 7B Instruct
     provider: ollama
     model: qwen2.5-coder:7b-instruct-q8_0
-    apiBase: http://localhost:11434
+    apiBase: http://192.168.1.6:11434
     roles:
       - autocomplete
       - chat
-
-  - name: NVIDIA-Nemotron-Nano-9B-v2
-    provider: ollama
-    model: hf.co/bartowski/nvidia_NVIDIA-Nemotron-Nano-9B-v2-GGUF:Q8_0
-    apiBase: http://localhost:11434
-    roles:
-      - chat
-      - edit
 
   - name: Qwen2.5 Coder 7B Base
     provider: ollama
     model: qwen2.5-coder:7b-base-q6_K
-    apiBase: http://localhost:11434
+    apiBase: http://192.168.1.6:11434
     roles:
       - autocomplete
-      - chat
-      - edit
-
-  - name: Qwen2.5 Coder 14B Instruct
-    provider: ollama
-    model: qwen2.5-coder:14b-instruct-q8_0
-    apiBase: http://localhost:11434
-    roles:
-      - autocomplete
-      - chat
-      - edit
-      - apply
-    defaultCompletionOptions:
-      contextLength: 24576
-      temperature: 0.3
-      topP: 0.5
-      topK: 40
-      maxTokens: 4096
-      stop:
-        - "\n\n"
-
-  - name: Qwen3 4B Kimi K2 Thinking Distill
-    provider: ollama
-    model: hf.co/Kimi-AI/Qwen3-4B-Thinking-2507-Kimi-K2-Thinking-Distill-q6_k
-    apiBase: http://localhost:11434
-    roles:
-      - chat
-      - edit
-    defaultCompletionOptions:
-      contextLength: 24576
-      temperature: 0.3
-      topP: 0.5
-      topK: 40
-      maxTokens: 4096
-      stop:
-        - "\n\n"
-
-  # Additional models from Ollama list
-  - name: Qwen3 4B Thinking FP16
-    provider: ollama
-    model: qwen3:4b-thinking-2507-fp16
-    apiBase: http://localhost:11434
-    roles:
-      - chat
-
-  - name: Qwen3 8B Q8
-    provider: ollama
-    model: qwen3:8b-q8_0
-    apiBase: http://localhost:11434
-    roles:
-      - chat
-      - edit
-
-  - name: Qwen3 4B FP16
-    provider: ollama
-    model: qwen3:4b-fp16
-    apiBase: http://localhost:11434
-    roles:
-      - chat
-
-  - name: Ministral 3 8B Instruct
-    provider: ollama
-    model: ministral-3:8b-instruct-2512-q8_0
-    apiBase: http://localhost:11434
-    roles:
-      - chat
-      - edit
-
-  - name: Ministral 3 3B FP16
-    provider: ollama
-    model: ministral-3:3b-instruct-2512-fp16
-    apiBase: http://localhost:11434
-    roles:
-      - chat
-
-  - name: Qwen3 VL 4B Instruct
-    provider: ollama
-    model: qwen3-vl:4b-instruct-bf16
-    apiBase: http://localhost:11434
-    roles:
-      - chat
-    capabilities:
-      - image_input
-
-  - name: Qwen3 VL 2B Thinking
-    provider: ollama
-    model: qwen3-vl:2b-thinking-bf16
-    apiBase: http://localhost:11434
-    roles:
-      - chat
-    capabilities:
-      - image_input
-
-  - name: My Unsloth Qwen3 Coder
-    provider: ollama
-    model: my-unsloth-qwen3-coder:latest
-    apiBase: http://localhost:11434
-    roles:
-      - chat
-      - edit
-      - apply
 
   # Embeddings
   - name: Nomic Embed
     provider: ollama
     model: nomic-embed-text:137m-v1.5-fp16
-    apiBase: http://localhost:11434
+    apiBase: http://192.168.1.6:11434
     roles:
       - embed
 
@@ -186,7 +95,7 @@ models:
   - name: Qwen3 Reranker
     provider: ollama
     model: AuditAid/Reranker_v2:Qwen3-Reranker-4B_Q5_K_M
-    apiBase: http://localhost:11434
+    apiBase: http://192.168.1.6:11434
     roles:
       - rerank
 
@@ -199,24 +108,36 @@ context:
     params:
       nRetrieve: 30
       nFinal: 3
-
-rules:
-  - Always give concise responses
-  - Always prefer C# (csharp)
-  - Prefer TypeScript over JavaScript
-  - Prefer SCSS over CSS
-  - Be very comprehensive
-  - Prefer bullet points over long paragraphs
-  - Use markdown code blocks with language identifiers
-  - Include examples when explaining concepts
-  - For C#, follow Microsoft naming conventions (PascalCase for public members)
-  - If you don't understand, say 'I don't know'
-  - Always confirm your thought process before giving answers
-  - Think deeply. No rush.
-  - Ask for more context if needed
-  - Tone - master explaining to student
+      includeUnstaged: false
 
 prompts:
+  - name: Conventional Commit Message
+    description: Generate a conventional commit message
+    prompt: |
+      You are an expert software engineer that generates standardized conventional commit messages based on provided diffs.
+
+      Review the diffs carefully and generate a one-line commit message that follows the Conventional Commits specification.
+
+      The commit message should be structured as: <type>[optional scope]: <description>
+
+      For <type>, use one of: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert
+
+      Your commit message must:
+      - Use the appropriate type based on the nature of the change
+      - Include a scope in parentheses where appropriate (e.g., feat(auth): ...)
+      - Be in the imperative mood (e.g., "add feature" not "added feature")
+      - Not capitalize the first letter of the description
+      - Not end with a period
+      - Not exceed 72 characters in total
+      - Be clear and descriptive about what changed
+      - Do not explain why this changes were made
+
+      For breaking changes, add "BREAKING CHANGE: " in the footer (though this is rare for a one-line message).
+
+      Reply only with the conventional commit message, without any additional text or explanations.
+
+      Here is the git diff:
+      @diff
   - name: check
     description: Check for mistakes in my code
     prompt: |
@@ -225,6 +146,38 @@ prompts:
       - Logic errors
       - Security vulnerabilities
       - Performance issues
+
+rules:
+  - always_give_concise_responses true
+  - always_be_comprehensive true
+  - prefer_bullet_points_over_paragraphs true
+  - tone "master explaining to student"
+  - prefer_language "C#"
+  - prefer_typescript_over_javascript true
+  - prefer_scss_over_css true
+  - confirm_thought_process_before_answering true
+  - think_deeply_no_rush true
+  - unknown_response "I don't know"
+  - ask_for_more_context_if_needed true
+  - add_comments_explaining_each_step_in_code true
+  - comments_style "master teaching student"
+  - coding_objective_write_clean_modular_code true
+  - coding_objective_focus_on_scalability_and_maintainability true
+  - coding_objective_prioritize_readability_and_student_friendly_explanations true
+  - coding_objective_use_best_practices_and_design_patterns true
+  - coding_objective_provide_sample_projects_and_use_cases true
+  - content_objective_write_clear_engaging_blogs true
+  - content_objective_focus_on_value_and_practical_takeaways true
+  - content_objective_use_structured_format_with_headings_and_bullets true
+  - content_objective_optimize_for_readability_and_flow true
+  - content_objective_balance_creativity_with_clarity true
+  - client_objective_focus_on_empathy_and_understanding true
+  - client_objective_build_trust_through_transparency_and_clarity true
+  - client_objective_handle_objections_with_patience_and_logic true
+  - client_objective_prioritize_long_term_relationships_over_short_term_gains true
+  - client_objective_use_storytelling_and_examples_for_persuasion true
+
+
 
 docs:
   - name: Continue Docs

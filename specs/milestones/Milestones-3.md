@@ -51,9 +51,10 @@
 - [ ] Update `wwwroot/data/blog-index.json` generation script to include a summary of tags with post counts for display in the tag filter section. Also, ensure the tags are sorted by post count in descending order. And, update the script to include a list of years with post counts for the year filter dropdown. `wwwroot/data/blog-index.json` should now have a `tagsSummary` and `yearsSummary` section. `wwwroot/data/blogs` markdown files should updated accordingly if needed.
 - [ ] Each blog listing should display blog category first (e.g., 'Tech', 'Business') before the title. Just like in `Home.razor`.
 - [ ]`Home.razor` shoud have 3 most recent blog posts from `Blog.razor` under 'Latest Insights' section. Each post should display category, title, date, time to read, and link to blog post.
-- [ ] `Home.razor` Should maintain current design and layout while adding the blog posts. And, the link to `BlogArchives.razor`
+- [x] `Home.razor` Should maintain current design and layout while adding the blog posts. And, the link to `BlogArchives.razor`
 - [ ] Update the blog listing page to include a "Time to Read" estimate for each post based on word count (e.g., 200 words = 1 minute).
 - [ ] Ensure that the time to read estimate is calculated accurately and displayed correctly in the blog listing.
+- [ ] Image urls in markdown should be converted to img tags with proper alt text for accessibility.
 
 ### 3.3 Individual Blog Post Page
 

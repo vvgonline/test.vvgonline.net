@@ -29,7 +29,7 @@ namespace VVG.Web.Tests
             Services.AddSingleton(new HttpClient());
 
             // Act
-            var cut = RenderComponent<Pages.BlogPost>(parameters => 
+            var cut = RenderComponent<Pages.BlogPostPage>(parameters => 
                 parameters.Add(p => p.Slug, "test-slug")
             );
 

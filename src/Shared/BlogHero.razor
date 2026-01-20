@@ -10,7 +10,7 @@
                         <span class="badge bg-warning text-dark">@Post.Category</span>
                     </div>
                 }
-                
+
                 <h1 class="display-4 fw-bold mb-3">@Post.Title</h1>
                 
                 @if (Post.Tags != null && Post.Tags.Length > 0)
@@ -25,9 +25,9 @@
                         }
                     </div>
                 }
-                
+
                 <p class="lead opacity-75 mb-4">@Post.Excerpt</p>
-                
+
                 <div class="d-flex gap-3 align-items-center opacity-75 small">
                     <span><i class="bi bi-calendar3 me-1"></i>@Post.PublishedAt.ToString("MMMM dd, yyyy")</span>
                     <span><i class="bi bi-clock me-1"></i>@Post.TimeToRead min read</span>

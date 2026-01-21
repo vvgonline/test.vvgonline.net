@@ -1,14 +1,13 @@
 @inherits LayoutComponentBase
-@inject IJSRuntime JS
-@inject VVG.Web.Services.ThemeService ThemeService
+@namespace VVG.Web.Layout
 
-<CascadingValue Value="this">
+<CascadingValue Value="this" IsFixed="true">
     <MetaTags />
     <div @onkeydown="HandleKeyDown" @ref="mainLayoutDiv" tabindex="0">
         <SystemPanel />
 
-        <main style="">
-            <article class="content">
+        <main>
+            <article class="content px-4">
                 @Body
             </article>
         </main>
@@ -16,23 +15,40 @@
         <div id="ai-terminal" class="@(isTerminalOpen ? "" : "terminal-closed")">
             <div class="terminal-header" @onclick="ToggleTerminal">
                 <span class="terminal-title">
-                    <i class="text-accent bi bi-robot me-2 w-75 px-2 py-1 bg-dark fw-5"></i>
-                    VIKAS_AI_AGENT_V0.108
-                </span>
-                <span class="terminal-controls">
-                    <span class="control-dot"></span>
-                    <span class="control-dot"></span>
+                    <i class="text-accent bi bi-robot me-2"></i>
+                    VIKAS_AI_AGENT_v0.108
                 </span>
             </div>
             <div id="terminal-body" class="terminal-body">
                 <div id="chat-output" class="chat-output">
-                    <div class="system-msg">// SECURE CONNECTION TO VVG ONLINE's VIKAS AI AGENT ESTABLISHED...</div>
-                    <div class="system-msg">// AGENT READY. HOW CAN I ASSIST YOU WITH YOUR VISION?</div>
+                    @foreach (var message in _chatHistory)
+                    {
+                        <div class="@(message.Role == "user" ? "user-msg" : "system-msg")">
+                            @if(message.Role == "user")
+                            {
+                                <span class="terminal-prompt">&gt;</span>
+                            }
+                            <span>@((MarkupString)message.Content)</span>
+                        </div>
+                    }
+                    @if (_isModelLoading)
+                    {
+                        <div class="system-msg">
+                            <span>// Model is loading, please wait...</span>
+                        </div>
+                    }
                 </div>
                 <div class="terminal-input-area">
-                    <span class="terminal-prompt">></span>
-                    <input class="text-accent fw-6 large" type="text" id="user-input" placeholder="START TYPING HERE..."
-                        autocomplete="off">
+                    <span class="terminal-prompt">&gt;</span>
+                    <input @bind="_userInput" 
+                           @bind:event="oninput" 
+                           @onkeydown="HandleTerminalInput"
+                           class="terminal-input" 
+                           type="text" 
+                           id="user-input" 
+                           placeholder="Ask Vikas AI..."
+                           autocomplete="off" 
+                           disabled="@_isModelLoading" />
                 </div>
             </div>
         </div>
@@ -40,7 +56,7 @@
     </div>
 </CascadingValue>
 
-<footer class="container mb-5">
+<footer class="container mt-5 mb-5">
     <div class="row">
         <div class="col-md-6">
             <h3 class="serif h2 mb-4">VVG ONLINE</h3>
@@ -48,56 +64,18 @@
         </div>
         <div class="col-md-6 text-md-end">
             <p class="mono small mb-1">CONNECT WITH US</p>
-            <div class="d-flex gap-1 justify-content-md-end">
-                <a class="text-dark bg-dark px-2 fs-4 social-link no-cursor" href="https://wa.me/919893261959"
-                    target="_blank" title="connect with us on whatsapp"><i class="text-warning bi bi-whatsapp"></i></a>
-                <a href="https://www.youtube.com/@@vvgonline" class="text-dark bg-dark px-2 fs-4 social-link no-cursor"
-                    title="YouTube" target="_blank"><i class="text-warning bi bi-youtube"></i></a>
-                <a href="https://github.com/vvgonline" target="_blank"
-                    class="text-dark bg-dark px-2 fs-4 social-link no-cursor" title="GitHub"><i
-                        class="text-warning bi bi-github"></i></a>
-                <a href="#" class="text-dark bg-dark px-2 fs-4 social-link no-cursor" title="Twitter/X"><i
-                        class="text-warning bi bi-twitter"></i></a>
+            <div class="d-flex gap-2 justify-content-md-end">
+                <a class="social-link" href="https://wa.me/919893261959" target="_blank" title="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+                <a class="social-link" href="https://www.youtube.com/@@vvgonline" target="_blank" title="YouTube"><i class="bi bi-youtube"></i></a>
+                <a class="social-link" href="https://github.com/vvgonline" target="_blank" title="GitHub"><i class="bi bi-github"></i></a>
+                <a class="social-link" href="https://x.com/vvgonline" target="_blank" title="X/Twitter"><i class="bi bi-twitter-x"></i></a>
             </div>
             <div class="mt-4">
-                <code class="bg-dark text-white px-2 py-1 opacity-75">© 2025 VVG ONLINE. ALL_RIGHTS_RESERVED.
-                    <br>
+                <code class="bg-dark text-white px-2 py-1 opacity-75">
+                    © 2025 VVG ONLINE. ALL_RIGHTS_RESERVED.<br>
                     // ESTABLISHED_2017
                 </code>
             </div>
         </div>
     </div>
 </footer>
-
-@code {
-    private ElementReference mainLayoutDiv;
-
-    public bool isTerminalOpen = false;
-
-    public void ToggleTerminal()
-    {
-        isTerminalOpen = !isTerminalOpen;
-        StateHasChanged();
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        await ThemeService.InitializeThemeAsync();
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            await mainLayoutDiv.FocusAsync();
-        }
-    }
-
-    public void HandleKeyDown(KeyboardEventArgs e)
-    {
-        if (e.Key == "F10")
-        {
-            ToggleTerminal();
-        }
-    }
-}

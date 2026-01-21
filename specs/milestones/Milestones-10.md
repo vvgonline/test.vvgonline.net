@@ -21,11 +21,16 @@ Implementation of an AI-powered chatbot ("Vikas Model") for vvgonline.net using 
 
 #### Tasks
 
-- [ ] Create `wwwroot/js/vvg-bridge.js` file structure
-- [ ] Import WebLLM library from CDN (`https://esm.run/@mlc-ai/web-llm`)
-- [ ] Configure model settings for qwen2.5:0.5b
-- [ ] Implement DotNetObjectReference pattern for C#-JS communication
-- [ ] Test basic JS Interop connectivity
+- [x] Create `wwwroot/assets/js/vvg-bridge.js` file structure
+- [x] Import WebLLM library from CDN (`https://esm.run/@mlc-ai/web-llm`) NOTE: THIS NOT WORKING. Webgpu is not a full proof method. Many browsers are not supporting it yet.
+- [x] Download the `qwen2.5:0.5b` model and configure model settings
+- [x] Implement DotNetObjectReference pattern for C#-JS communication
+- [x] Define `initializeVikasModel()` and `getVikasResponse()` JS functions
+- [x] Set up async handling for model loading and inference
+- [x] Implement progress reporting via callbacks
+- [x] Set up Chat using Blazor UI div id `terminal-body` in `MainLayout.razor`
+- [x] Test basic JS Interop connectivity
+- [x] Check model loading in supported browsers
 
 **Deliverables:**
 
@@ -37,7 +42,7 @@ Implementation of an AI-powered chatbot ("Vikas Model") for vvgonline.net using 
 ```javascript
 const modelId = "qwen2.5:0.5b";
 // Model size: ~300-500MB quantized
-// Requires: WebGPU-compatible browser (Chrome/Edge/Safari)
+// Requires: WebGPU-compatible browser (Chrome/Edge/Safari/Vivaldi)
 ```
 
 ---
@@ -97,11 +102,11 @@ const modelId = "qwen2.5:0.5b";
 
 #### Tasks
 
-- [ ] Create `ChatWidget.razor` component
 - [ ] Define `ChatState` enum (Loading, Active, Chatting, HandOff)
 - [ ] Implement component lifecycle methods
 - [ ] Set up reactive state management with `StateHasChanged()`
 - [ ] Create message data models (`ChatMessage` class)
+- [ ] Make sure `src/wwwroot/assets/data/blogs`
 
 **Deliverables:**
 
@@ -392,7 +397,7 @@ Let's architect a solution!
 
 ---
 
-### Milestone 5.3: Loading & Tooltip Refinement
+### Milestone 10.15: Loading & Tooltip Refinement
 
 **Priority:** Medium | **Duration:** 1-2 days
 
@@ -412,7 +417,7 @@ Let's architect a solution!
 
 ---
 
-## Milestone 10.15: Visionary Card Design
+## Milestone 10.16: Visionary Card Design
 
 **Priority:** High | **Duration:** 2 days
 
@@ -434,7 +439,7 @@ Let's architect a solution!
 
 ## Phase 6: Testing & Optimization 🧪
 
-### Milestone 10.16: Functional Testing
+### Milestone 10.17: Functional Testing
 
 **Priority:** Critical | **Duration:** 3-4 days
 
@@ -466,7 +471,7 @@ Let's architect a solution!
 
 ---
 
-### Milestone 10.17: Performance Optimization
+### Milestone 10.18: Performance Optimization
 
 **Priority:** High | **Duration:** 2-3 days
 
@@ -494,7 +499,7 @@ Let's architect a solution!
 
 ---
 
-### Milestone 10.18: Browser Compatibility
+### Milestone 10.19: Browser Compatibility
 
 **Priority:** High | **Duration:** 2 days
 
@@ -521,7 +526,7 @@ Let's architect a solution!
 
 ---
 
-### Milestone 10.19: Security & Privacy Audit
+### Milestone 10.20: Security & Privacy Audit
 
 **Priority:** High | **Duration:** 2 days
 
@@ -543,7 +548,7 @@ Let's architect a solution!
 
 ## Phase 7: Deployment & Launch 🚀
 
-### Milestone 10.20: GitHub Pages Configuration
+### Milestone 10.21: GitHub Pages Configuration
 
 **Priority:** Critical | **Duration:** 1-2 days
 
@@ -563,7 +568,7 @@ Let's architect a solution!
 
 ---
 
-### Milestone 10.21: Monitoring & Analytics
+### Milestone 10.22: Monitoring & Analytics
 
 **Priority:** Medium | **Duration:** 2 days
 
@@ -591,7 +596,7 @@ Let's architect a solution!
 
 ---
 
-### Milestone 10.22: Documentation
+### Milestone 10.23: Documentation
 
 **Priority:** High | **Duration:** 2-3 days
 
@@ -613,7 +618,7 @@ Let's architect a solution!
 
 ## Phase 8: Post-Launch Optimization 📈
 
-### Milestone 10.23: User Feedback Collection
+### Milestone 10.24: User Feedback Collection
 
 **Priority:** High | **Duration:** Ongoing (2 weeks)
 
@@ -633,7 +638,7 @@ Let's architect a solution!
 
 ---
 
-### Milestone 10.24: Prompt Refinement
+### Milestone 10.25: Prompt Refinement
 
 **Priority:** High | **Duration:** 1 week
 
@@ -653,7 +658,7 @@ Let's architect a solution!
 
 ---
 
-### Milestone 10.25: Conversion Optimization
+### Milestone 10.26: Conversion Optimization
 
 **Priority:** High | **Duration:** Ongoing
 
@@ -675,7 +680,7 @@ Let's architect a solution!
 
 ## Future Enhancements 🔮
 
-### Milestone 10.26: Advanced Features (Phase 2)
+### Milestone 10.27: Advanced Features (Phase 2)
 
 **Priority:** Low | **Duration:** TBD
 
@@ -691,7 +696,7 @@ Let's architect a solution!
 
 ---
 
-### Milestone 10.27: Scaling Infrastructure
+### Milestone 10.28: Scaling Infrastructure
 
 **Priority:** Low | **Duration:** TBD
 
@@ -732,7 +737,7 @@ Let's architect a solution!
 
 ## Risk Management ⚠️
 
-### Technical Risks:
+### Technical Risks
 
 1. **Browser Compatibility Issues**
    - Mitigation: Implement fallback messaging, test extensively
@@ -799,6 +804,6 @@ For questions or clarifications, reach out to the VVG Online team at +91 9893261
 
 ---
 
-*Document Version: 1.0*  
-*Created: January 20, 2026*  
+*Document Version: 1.0*
+*Created: January 20, 2026*
 *Status: Draft - Pending Approval*

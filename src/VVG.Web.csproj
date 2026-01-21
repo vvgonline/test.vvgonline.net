@@ -26,9 +26,6 @@
     <PackageReference Include="SpawnDev.BlazorJS.TransformersJS" Version="1.17.0" />
     <PackageReference Include="xunit" Version="2.8.0" />
     <PackageReference Include="Moq" Version="4.20.70" />
-    <!-- Add to .csproj -->
-    <PackageReference Include="Microsoft.ML.OnnxRuntime.Managed" Version="1.19.2" />
-    <PackageReference Include="Microsoft.ML.OnnxRuntime.Web" Version="1.19.2" />
   </ItemGroup>
 
   <ItemGroup>

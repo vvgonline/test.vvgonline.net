@@ -1,5 +1,5 @@
 self.assetsManifest = {
-  "version": "RY9rrvv+",
+  "version": "GVTWgDlm",
   "assets": [
     {
       "hash": "sha256-DubzVRAcefVzrUkPmvmpRqrTxVqS6U7EDctJJVvGgVM=",
@@ -454,16 +454,16 @@ self.assetsManifest = {
       "url": "_framework/System.Xml.XmlSerializer.bfsm7rg8bh.wasm"
     },
     {
-      "hash": "sha256-U3ZrzJ8DSUpho4+QyOOrFjq6pK5YbpQuKVGMr6/niBU=",
-      "url": "_framework/VVG.Web.r2f4tl6xpu.wasm"
+      "hash": "sha256-ltjjdXKxf2vvPASy5UOTT2rA9/7xao+S4uh4qTeZK/4=",
+      "url": "_framework/VVG.Web.iytf6n6g8z.wasm"
     },
     {
       "hash": "sha256-3lCWrko3zwspV40aQhs2S/IMkRSarnHRKIdkHhuXIBA=",
       "url": "_framework/blazor.webassembly.66stpp682q.js"
     },
     {
-      "hash": "sha256-DmAlJptC/fVFztMezb7QI2zCceUyUR6FrEcOc7JoJY4=",
-      "url": "_framework/dotnet.atzj8neubz.js"
+      "hash": "sha256-MhmOnRRRQeZig4nxCzsTDCuAvA3idqDbsMTV0sMKo6Y=",
+      "url": "_framework/dotnet.ampy731gn6.js"
     },
     {
       "hash": "sha256-/I3SDHIle7heAxlUGBrgxax+lkKyWyRLBVEJmTHJSCs=",
@@ -598,6 +598,26 @@ self.assetsManifest = {
       "url": "assets/data/blogs/The-Digital-Marketing-Investment-Imperative.md"
     },
     {
+      "hash": "sha256-X6FYAI2muMOCsII/FUAADqyFDjMmFYqfiLtVAfkif6c=",
+      "url": "assets/data/dataset-manifest.json"
+    },
+    {
+      "hash": "sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+      "url": "assets/data/dataset/docs/about.txt"
+    },
+    {
+      "hash": "sha256-y6+oumIS+Ch6rk4QtOdMZgStBxF0V2Et6vmZ2aHNlyM=",
+      "url": "assets/data/dataset/docs/contact-info.txt"
+    },
+    {
+      "hash": "sha256-DBFgmEUbPRiUkczYDUZRIcP1tukKw/6+uzW4rnTfE6c=",
+      "url": "assets/data/dataset/knowledge/faq.csv"
+    },
+    {
+      "hash": "sha256-WpJUa0MlyrLsUIraf66TKuhMoUq8xnKx/Ct/V87EezQ=",
+      "url": "assets/data/dataset/services/web-development.json"
+    },
+    {
       "hash": "sha256-2Wvou+lYygqNAzxreQrcAmsRh59RfD69Ugna3Hb53F8=",
       "url": "assets/data/facts-figures.json"
     },
@@ -638,7 +658,7 @@ self.assetsManifest = {
       "url": "assets/js/boot-sequence.js"
     },
     {
-      "hash": "sha256-coyXPR43j4wOdDZwoiqADIr2KxlDCPumLlNk5huz4cI=",
+      "hash": "sha256-f/YzfWypdeTFVZN+BiGkBoPmtU7V0s6XyaWDOvY72+A=",
       "url": "assets/js/chat.js"
     },
     {
@@ -674,7 +694,7 @@ self.assetsManifest = {
       "url": "data/twitter-card.json"
     },
     {
-      "hash": "sha256-GKmgORJE6KuktN+68E+Gg9nxQCgJ85Ip0CyQEeOo/58=",
+      "hash": "sha256-baNU5i5QOSAZVNzSsprw072KEEznbHQpaZTfokTQ7V0=",
       "url": "index.html"
     },
     {

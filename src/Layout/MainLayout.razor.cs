@@ -2,9 +2,12 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 
 namespace VVG.Web.Layout
 {
@@ -29,6 +32,8 @@ namespace VVG.Web.Layout
         {
             _dotNetHelper = DotNetObjectReference.Create(this);
             await ThemeService.InitializeThemeAsync();
+            
+            // Add only ONE initial message
             _chatHistory.Add(new ChatMessage { Role = "assistant", Content = "// Connecting to VIKAS AI Agent..." });
 
             // Start both tasks concurrently
@@ -37,11 +42,7 @@ namespace VVG.Web.Layout
 
             await Task.WhenAll(knowledgeBaseTask, initTask);
 
-            // This logic will be moved to the JS callback
-            _isModelLoading = false;
-            _chatHistory.Add(new ChatMessage { Role = "assistant", Content = "// SECURE CONNECTION ESTABLISHED." });
-            _chatHistory.Add(new ChatMessage { Role = "assistant", Content = "// AGENT READY. HOW CAN I ASSIST YOU?" });
-            StateHasChanged();
+            // REMOVED duplicate messages - they're now added only in OnModelReady()
         }
 
         private async Task InitializeChat()
@@ -59,32 +60,140 @@ namespace VVG.Web.Layout
 
         private async Task LoadKnowledgeBase()
         {
-            _systemPrompt = "You are Vikas, a helpful and friendly AI assistant for the VVG Online website. Your goal is to help users by answering questions based *only* on the provided context about blog posts and services. Be concise. If the answer is not in the context, say that you do not have information on that topic. Do not mention the context in your response.";
-
-            var blogFiles = new[]
-            {
-                "Communication-Mastery-for-Digital-Business-Success.md", "Digital-Assets-The-Real-Estate-of-the-Virtual-World.md",
-                "Don-t-Normalize-Common-Things-A-Philosophy-for-Business-Excellence.md", "GST-Rate-Deductions-for-E-commerce-A-Complete-Guide-by-VVG-ONLINE.md",
-                "Key-Performance-Indicators-KPIs.md", "Operating-Model-Design.md", "The-Digital-Marketing-Investment-Imperative.md"
-            };
+            _systemPrompt = "You are Vikas, a helpful AI assistant for VVG Online. Answer questions based ONLY on the provided context. Be concise and helpful.";
 
             var sb = new StringBuilder();
-            sb.AppendLine("### CONTEXT FROM WEBSITE ###");
+            sb.AppendLine("=== VVG ONLINE KNOWLEDGE BASE ===\n");
+            
+            try
+            {
+                // Load manifest
+                var manifestJson = await Http.GetStringAsync("data/dataset-manifest.json");
+                var manifest = JsonSerializer.Deserialize<DatasetManifest>(manifestJson);
+                
+                Console.WriteLine($"Loading manifest version {manifest?.Version}");
+                
+                if (manifest?.Files != null)
+                {
+                    // Load all markdown files
+                    sb.AppendLine("--- BLOG POSTS ---");
+                    foreach (var path in manifest.Files.Markdown)
+                    {
+                        await LoadFile(sb, path, "markdown", 800);
+                    }
+                    
+                    // Load all JSON files
+                    sb.AppendLine("\n--- SERVICES ---");
+                    foreach (var path in manifest.Files.Json)
+                    {
+                        await LoadFile(sb, path, "json", 500);
+                    }
+                    
+                    // Load all CSV files
+                    sb.AppendLine("\n--- KNOWLEDGE DATA ---");
+                    foreach (var path in manifest.Files.Csv)
+                    {
+                        await LoadFile(sb, path, "csv", 500);
+                    }
+                    
+                    // Load all TXT files
+                    sb.AppendLine("\n--- DOCUMENTATION ---");
+                    foreach (var path in manifest.Files.Txt)
+                    {
+                        await LoadFile(sb, path, "txt", 500);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading knowledge base: {ex.Message}");
+                
+                // Fallback to old method if manifest not found
+                await LoadKnowledgeBaseFallback(sb);
+            }
+            
+            sb.AppendLine("\n=== END KNOWLEDGE BASE ===");
+            _knowledgeBaseContext = sb.ToString();
+            
+            Console.WriteLine($"Knowledge base loaded: {_knowledgeBaseContext.Length} characters");
+        }
+
+        private async Task LoadFile(StringBuilder sb, string path, string type, int maxChars = 1000)
+        {
+            try
+            {
+                var content = await Http.GetStringAsync(path);
+                var fileName = Path.GetFileName(path);
+                
+                sb.AppendLine($"\n## {fileName}");
+                
+                // Limit content size for performance
+                if (content.Length > maxChars)
+                {
+                    // For markdown, try to get first complete section
+                    if (type == "markdown")
+                    {
+                        var lines = content.Split('\n');
+                        var truncated = new StringBuilder();
+                        int chars = 0;
+                        
+                        foreach (var line in lines)
+                        {
+                            if (chars + line.Length > maxChars) break;
+                            truncated.AppendLine(line);
+                            chars += line.Length;
+                        }
+                        content = truncated.ToString();
+                    }
+                    else
+                    {
+                        content = content.Substring(0, maxChars) + "...";
+                    }
+                }
+                
+                sb.AppendLine(content);
+                Console.WriteLine($"Loaded: {fileName} ({content.Length} chars)");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to load {path}: {ex.Message}");
+                sb.AppendLine($"[File not found: {Path.GetFileName(path)}]");
+            }
+        }
+
+        // Fallback if manifest doesn't exist
+        private async Task LoadKnowledgeBaseFallback(StringBuilder sb)
+        {
+            var blogFiles = new[]
+            {
+                "Communication-Mastery-for-Digital-Business-Success.md",
+                "Digital-Assets-The-Real-Estate-of-the-Virtual-World.md",
+                "Don-t-Normalize-Common-Things-A-Philosophy-for-Business-Excellence.md",
+                "GST-Rate-Deductions-for-E-commerce-A-Complete-Guide-by-VVG-ONLINE.md",
+                "Key-Performance-Indicators-KPIs.md",
+                "Operating-Model-Design.md",
+                "The-Digital-Marketing-Investment-Imperative.md"
+            };
+
+            sb.AppendLine("--- BLOG POSTS (FALLBACK) ---");
+            
             foreach (var file in blogFiles)
             {
                 try
                 {
                     var content = await Http.GetStringAsync($"assets/data/blogs/{file}");
-                    sb.AppendLine($"--- Content from {file.Replace(".md", "")} ---");
-                    sb.AppendLine(content);
+                    
+                    // Only take first 500 chars
+                    var summary = content.Length > 500 ? content.Substring(0, 500) : content;
+                    
+                    sb.AppendLine($"\n## {file.Replace(".md", "").Replace("-", " ")}");
+                    sb.AppendLine(summary);
                 }
-                catch (System.Exception ex)
+                catch (Exception ex)
                 {
-                    _chatHistory.Add(new ChatMessage { Role = "assistant", Content = $"// Error loading knowledge file: {file}" });
+                    Console.WriteLine($"Error loading {file}: {ex.Message}");
                 }
             }
-            sb.AppendLine("### END OF CONTEXT ###");
-            _knowledgeBaseContext = sb.ToString();
         }
 
         private async Task HandleTerminalInput(KeyboardEventArgs e)
@@ -126,12 +235,16 @@ namespace VVG.Web.Layout
         }
 
         public void ToggleTerminal() => isTerminalOpen = !isTerminalOpen;
+        
         public void HandleKeyDown(KeyboardEventArgs e)
         {
             if (e.Key == "F10") ToggleTerminal();
         }
 
-        public async ValueTask DisposeAsync() { /* Nothing to dispose in this version */ }
+        public async ValueTask DisposeAsync() 
+        {
+            _dotNetHelper?.Dispose();
+        }
 
         // Used for UI binding
         public class ChatMessage
@@ -147,8 +260,35 @@ namespace VVG.Web.Layout
             public string Content { get; set; } = "";
         }
 
-        // Add these methods to MainLayout.razor.cs
+        // Dataset manifest models
+        public class DatasetManifest
+        {
+            [JsonPropertyName("version")]
+            public string Version { get; set; } = "";
+            
+            [JsonPropertyName("lastUpdated")]
+            public string LastUpdated { get; set; } = "";
+            
+            [JsonPropertyName("files")]
+            public FileManifest Files { get; set; } = new();
+        }
 
+        public class FileManifest
+        {
+            [JsonPropertyName("markdown")]
+            public List<string> Markdown { get; set; } = new();
+            
+            [JsonPropertyName("json")]
+            public List<string> Json { get; set; } = new();
+            
+            [JsonPropertyName("csv")]
+            public List<string> Csv { get; set; } = new();
+            
+            [JsonPropertyName("txt")]
+            public List<string> Txt { get; set; } = new();
+        }
+
+        // JSInvokable methods
         [JSInvokable]
         public void UpdateProgress(string message)
         {
@@ -168,6 +308,11 @@ namespace VVG.Web.Layout
         public void OnModelReady()
         {
             _isModelLoading = false;
+            
+            // Clear loading message
+            _chatHistory.RemoveAll(m => m.Content.Contains("Connecting"));
+            
+            // Add ready messages only once (fixes duplicate issue)
             _chatHistory.Add(new ChatMessage { Role = "assistant", Content = "// SECURE CONNECTION ESTABLISHED." });
             _chatHistory.Add(new ChatMessage { Role = "assistant", Content = "// AGENT READY. HOW CAN I ASSIST YOU?" });
             StateHasChanged();

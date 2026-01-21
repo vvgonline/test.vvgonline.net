@@ -47,20 +47,20 @@
     <script type="importmap">{
   "imports": {
     "./_framework/blazor.webassembly.js": "./_framework/blazor.webassembly.66stpp682q.js",
+    "./_framework/dotnet.js": "./_framework/dotnet.atzj8neubz.js",
     "./_framework/dotnet.native.js": "./_framework/dotnet.native.cs8mcre4gh.js",
-    "./_framework/dotnet.runtime.js": "./_framework/dotnet.runtime.0j6ezsi0n0.js",
-    "./_framework/dotnet.js": "./_framework/dotnet.wd3vw1348x.js"
+    "./_framework/dotnet.runtime.js": "./_framework/dotnet.runtime.0j6ezsi0n0.js"
   },
   "scopes": {},
   "integrity": {
     "./_framework/blazor.webassembly.66stpp682q.js": "sha256-3lCWrko3zwspV40aQhs2S/IMkRSarnHRKIdkHhuXIBA=",
     "./_framework/blazor.webassembly.js": "sha256-3lCWrko3zwspV40aQhs2S/IMkRSarnHRKIdkHhuXIBA=",
-    "./_framework/dotnet.js": "sha256-5Bb39+p77IY9cLTMjjft+jvvneYoEMsvkWjnCxRF3as=",
+    "./_framework/dotnet.atzj8neubz.js": "sha256-DmAlJptC/fVFztMezb7QI2zCceUyUR6FrEcOc7JoJY4=",
+    "./_framework/dotnet.js": "sha256-DmAlJptC/fVFztMezb7QI2zCceUyUR6FrEcOc7JoJY4=",
     "./_framework/dotnet.native.cs8mcre4gh.js": "sha256-/I3SDHIle7heAxlUGBrgxax+lkKyWyRLBVEJmTHJSCs=",
     "./_framework/dotnet.native.js": "sha256-/I3SDHIle7heAxlUGBrgxax+lkKyWyRLBVEJmTHJSCs=",
     "./_framework/dotnet.runtime.0j6ezsi0n0.js": "sha256-jCsbbdXoVd1zzGc0fQT2sz4mKuv0ANdurPVGo5Sc2jg=",
-    "./_framework/dotnet.runtime.js": "sha256-jCsbbdXoVd1zzGc0fQT2sz4mKuv0ANdurPVGo5Sc2jg=",
-    "./_framework/dotnet.wd3vw1348x.js": "sha256-5Bb39+p77IY9cLTMjjft+jvvneYoEMsvkWjnCxRF3as="
+    "./_framework/dotnet.runtime.js": "sha256-jCsbbdXoVd1zzGc0fQT2sz4mKuv0ANdurPVGo5Sc2jg="
   }
 }</script>
 </head>
@@ -186,6 +186,14 @@
         }(window.location))
     </script>
     <!-- End GitHub Pages SPA redirect script -->
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.0.0" defer></script>
+    <script src="assets/js/chat.js" crossorigin="anonymous" defer></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.0.0" defer></script>
+    <!-- ONNX Runtime Web -->
+    <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.19.2/dist/ort.min.js" defer></script>
+
+    <script src="assets/js/chat.js" crossorigin="anonymous" defer></script>
 </body>
 
 </html>

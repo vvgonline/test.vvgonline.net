@@ -5,7 +5,7 @@ publishedAt: "2025-11-06"
 tags: ["Business", "Innovation", "Excellence"]
 excerpt: "Explore why questioning common practices is crucial for business innovation and excellence. Learn how to challenge the status quo and drive transformative growth."
 draft: false
-category: "Article"
+category: "Business"
 featured: false
 ---
 Don't Normalize Common Things: A Philosophy for Business Excellence
@@ -13,7 +13,7 @@ Don't Normalize Common Things: A Philosophy for Business Excellence
 Don't Normalize Common Things: A Philosophy for Business Excellence
 ===================================================================
 
-November 06, 2025 | *Article*
+November 06, 2025 | *Business*
 
 Explore why questioning common practices is crucial for business innovation and excellence. Learn
 how to challenge the status quo and drive transformative growth.

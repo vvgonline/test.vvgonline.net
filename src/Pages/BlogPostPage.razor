@@ -29,32 +29,26 @@ else if (!string.IsNullOrEmpty(errorMessage))
 else if (blogPost != null)
 {
     <BlogHero Post="@blogPost" />
-    
+
     @* Main Content with Sidebar Layout *@
     <section class="blog-post-section py-5">
         <div class="container">
-            <div class="row g-4">
+            <div class="row g-2">
                 @* Sidebar *@
-                <div class="col-lg-4">
-                    <BlogPostSidebar 
-                        Post="@blogPost"
-                        HtmlContent="@blogPostHtml"
-                        OnCopyLink="@(async () => await CopyLink())"
-                        OnShare="@(async () => await SharePost())" />
-                </div>
+                @* <div class="col-lg-3">
+                    <BlogPostSidebar Post="@blogPost" HtmlContent="@blogPostHtml"
+                        OnCopyLink="@(async () => await CopyLink())" OnShare="@(async () => await SharePost())" />
+                </div> *@
 
                 @* Main Content *@
-                <div class="col-lg-8">
-                    <BlogContent 
-                        HtmlContent="@blogPostHtml" 
-                        OnCopyLink="@CopyLink" 
-                        OnShare="@SharePost"
+                <div class="col-lg-12">
+                    <BlogContent HtmlContent="@blogPostHtml" OnCopyLink="@CopyLink" OnShare="@SharePost"
                         ShowCopyToast="@showCopyConfirmation" />
                 </div>
             </div>
         </div>
     </section>
-    
+
     <BlogNavigation PreviousPost="@previousPost" NextPost="@nextPost" />
     <BlogCallToAction Post="@blogPost" />
 }
@@ -111,16 +105,16 @@ else if (blogPost != null)
 
             try
             {
-                var fileName = !string.IsNullOrEmpty(blogPost.Filename) 
-                    ? blogPost.Filename 
-                    : Slug;
-                    
+                var fileName = !string.IsNullOrEmpty(blogPost.Filename)
+                ? blogPost.Filename
+                : Slug;
+
                 var markdownContent = await Http.GetStringAsync($"assets/data/blogs/{fileName}.md");
                 markdownContent = RemoveFrontmatter(markdownContent);
-                
+
                 var pipeline = new MarkdownPipelineBuilder()
-                    .UseAdvancedExtensions()
-                    .Build();
+                .UseAdvancedExtensions()
+                .Build();
                 blogPostHtml = Markdown.ToHtml(markdownContent, pipeline);
             }
             catch (HttpRequestException ex)

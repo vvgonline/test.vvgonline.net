@@ -5,14 +5,14 @@ publishedAt: "2025-04-10"
 tags: ["Digital Assets", "Investment", "ROI"]
 excerpt: "In a rapidly digitalizing world, the parallels between owning a piece of property and owning a digital asset become increasingly clear."
 draft: false
-category: "Article"
+category: "Business"
 featured: false
 ---
 
 Digital Assets: The Real Estate of the Virtual World
 ====================================================
 
-April 10, 2025 | *Article*
+April 10, 2025 | *Business*
 
 Digital assets (like websites, mobile apps, and software) are like real estate. The ROI increases
 over time.

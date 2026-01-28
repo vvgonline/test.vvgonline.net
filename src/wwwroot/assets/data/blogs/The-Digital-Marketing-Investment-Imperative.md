@@ -5,14 +5,14 @@ publishedAt: "2025-08-28"
 tags: ["Digital Marketing", "Investment", "Business"]
 excerpt: "Why Investing in Digital Marketing for Your Company Today is Cheaper Than It Ever Will Be."
 draft: false
-category: "Article"
+category: "Marketing"
 featured: false
 ---
 
 The Digital Marketing Investment Imperative
 ===========================================
 
-August 28, 2025 | *Article*
+August 28, 2025 | *Marketing*
 
 Why Investing in Digital Marketing for Your Company Today is Cheaper Than It Ever Will Be.
 

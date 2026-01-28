@@ -5,14 +5,14 @@ publishedAt: "2025-04-17"
 tags: ["Business", "Management", "Strategy"]
 excerpt: "Think about the operating model holistically, as many decisions to structure, processes and people will be critical and link to value delivery"
 draft: false
-category: "Article"
+category: "Business"
 featured: false
 ---
 
 Operating Model Design
 ======================
 
-April 17, 2025 | *Article*
+April 17, 2025 | *Business*
 
 Think about the operating model holistically, as many decisions to
 structure, processes and people will be critical and link to value delivery

@@ -15,9 +15,7 @@
 
 .sidebar-card {
   background: linear-gradient(135deg, #1a1a1a 0%, #242424 100%);
-  border: 1px solid #333;
-  border-radius: 0.5rem;
-  overflow: hidden;
+  border: 1px solid #fb3;
   transition: all 0.3s ease;
 }
 

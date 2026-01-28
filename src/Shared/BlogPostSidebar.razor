@@ -86,29 +86,10 @@
     <!-- Table of Contents (Sticky) -->
     @if (!string.IsNullOrEmpty(HtmlContent))
     {
-        <div class="sidebar-card toc-card sticky-top">
+        @* <div class="sidebar-card toc-card sticky-top">
             <TableOfContents HtmlContent="@HtmlContent" />
-        </div>
+        </div> *@
     }
-
-    <!-- Share & Actions -->
-    <div class="sidebar-card actions-card">
-        <div class="card-header">
-            <i class="bi bi-share"></i> SHARE
-        </div>
-        <div class="card-body">
-            <button class="btn btn-sm btn-outline-primary w-100 mb-2" 
-                    @onclick="async () => await OnCopyLink.InvokeAsync()"
-                    title="Copy post link to clipboard">
-                <i class="bi bi-link-45deg"></i> COPY LINK
-            </button>
-            <button class="btn btn-sm btn-outline-primary w-100" 
-                    @onclick="async () => await OnShare.InvokeAsync()"
-                    title="Share post">
-                <i class="bi bi-share"></i> SHARE
-            </button>
-        </div>
-    </div>
 </aside>
 
 @code {

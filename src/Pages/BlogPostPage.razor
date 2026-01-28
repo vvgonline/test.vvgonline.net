@@ -29,11 +29,32 @@ else if (!string.IsNullOrEmpty(errorMessage))
 else if (blogPost != null)
 {
     <BlogHero Post="@blogPost" />
-    <BlogContent 
-        HtmlContent="@blogPostHtml" 
-        OnCopyLink="@CopyLink" 
-        OnShare="@SharePost"
-        ShowCopyToast="@showCopyConfirmation" />
+    
+    @* Main Content with Sidebar Layout *@
+    <section class="blog-post-section py-5">
+        <div class="container">
+            <div class="row g-4">
+                @* Sidebar *@
+                <div class="col-lg-4">
+                    <BlogPostSidebar 
+                        Post="@blogPost"
+                        HtmlContent="@blogPostHtml"
+                        OnCopyLink="@(async () => await CopyLink())"
+                        OnShare="@(async () => await SharePost())" />
+                </div>
+
+                @* Main Content *@
+                <div class="col-lg-8">
+                    <BlogContent 
+                        HtmlContent="@blogPostHtml" 
+                        OnCopyLink="@CopyLink" 
+                        OnShare="@SharePost"
+                        ShowCopyToast="@showCopyConfirmation" />
+                </div>
+            </div>
+        </div>
+    </section>
+    
     <BlogNavigation PreviousPost="@previousPost" NextPost="@nextPost" />
     <BlogCallToAction Post="@blogPost" />
 }

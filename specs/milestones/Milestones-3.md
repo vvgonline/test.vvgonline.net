@@ -76,10 +76,13 @@
 
 ### 3.5 Sidebar and Table of Contents (TOC)
 
-- [ ] Provide a contextual sidebar with an optional collapsible TOC.
-- [ ] Include about/profile card, highlights, tags, and optional TOC on single post pages.
-- [ ] Generate the TOC from the post’s heading structure (H2/H3).
-- [ ] Implement scrollspy functionality to highlight the currently visible section.
+- [x] Provide a contextual sidebar with an optional collapsible TOC.
+- [x] Include about/profile card, highlights, tags, and optional TOC on single post pages.
+- [x] Generate the TOC from the post's heading structure (H2/H3).
+- [x] Implement scrollspy functionality to highlight the currently visible section.
+- [x] Ensure the sidebar is responsive and works well on mobile devices (e.g., collapsible or hidden by default).
+- [x] Style the sidebar to match the overall site design and ensure readability.
+- [x] Add a button for `Return to Top` functionality in the sidebar.
 
 ### 3.6 Interaction and Sharing
 

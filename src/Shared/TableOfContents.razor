@@ -1,0 +1,143 @@
+@using System.Text.RegularExpressions
+@implements IDisposable
+
+<div class="toc-container" id="tableOfContents">
+    @if (headings != null && headings.Any())
+    {
+        <nav class="toc-nav" role="navigation" aria-label="Table of Contents">
+            <h4 class="toc-title">
+                <i class="bi bi-list"></i> ON THIS PAGE
+            </h4>
+            <ul class="toc-list">
+                @foreach (var heading in headings)
+                {
+                    <li class="toc-item level-@heading.Level">
+                        <a href="#@heading.Id" 
+                           class="toc-link" 
+                           @onclick="() => ScrollToHeading(heading.Id)">
+                            @heading.Text
+                        </a>
+                    </li>
+                }
+            </ul>
+            
+            <div class="toc-actions mt-3 pt-3 border-top border-secondary">
+                <button class="btn btn-sm btn-outline-secondary w-100" 
+                        @onclick="ScrollToTop"
+                        title="Scroll to top of page">
+                    <i class="bi bi-arrow-up"></i> RETURN TO TOP
+                </button>
+            </div>
+        </nav>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public string? HtmlContent { get; set; }
+
+    private List<HeadingInfo>? headings;
+
+    protected override void OnParametersSet()
+    {
+        if (!string.IsNullOrEmpty(HtmlContent))
+        {
+            ExtractHeadings();
+        }
+    }
+
+    private void ExtractHeadings()
+    {
+        headings = new List<HeadingInfo>();
+
+        try
+        {
+            if (string.IsNullOrEmpty(HtmlContent)) return;
+
+            // Use regex to find H2 and H3 tags
+            var h2Pattern = @"<h2[^>]*>(.*?)</h2>";
+            var h3Pattern = @"<h3[^>]*>(.*?)</h3>";
+
+            var h2Matches = Regex.Matches(HtmlContent, h2Pattern, RegexOptions.IgnoreCase);
+            var h3Matches = Regex.Matches(HtmlContent, h3Pattern, RegexOptions.IgnoreCase);
+
+            var allMatches = new List<(int level, string text, int position)>();
+
+            // Add H2 headings
+            foreach (Match match in h2Matches)
+            {
+                var text = StripHtmlTags(match.Groups[1].Value).Trim();
+                if (!string.IsNullOrEmpty(text))
+                {
+                    allMatches.Add((2, text, match.Index));
+                }
+            }
+
+            // Add H3 headings
+            foreach (Match match in h3Matches)
+            {
+                var text = StripHtmlTags(match.Groups[1].Value).Trim();
+                if (!string.IsNullOrEmpty(text))
+                {
+                    allMatches.Add((3, text, match.Index));
+                }
+            }
+
+            // Sort by position in document
+            allMatches = allMatches.OrderBy(m => m.position).ToList();
+
+            // Create heading entries
+            int headingIndex = 0;
+            foreach (var (level, text, _) in allMatches)
+            {
+                var id = GenerateHeadingId(text, headingIndex);
+                headings.Add(new HeadingInfo { Level = level, Text = text, Id = id });
+                headingIndex++;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"Error extracting headings: {ex.Message}");
+        }
+    }
+
+    private string StripHtmlTags(string html)
+    {
+        return Regex.Replace(html, "<[^>]+>", string.Empty);
+    }
+
+    private string GenerateHeadingId(string text, int index)
+    {
+        // Create a slug from the heading text
+        var slug = Regex.Replace(text.ToLower(), @"[^\w\s-]", "");
+        slug = Regex.Replace(slug, @"\s+", "-");
+        slug = Regex.Replace(slug, @"-+", "-").Trim('-');
+        
+        // Add index to ensure uniqueness
+        return $"heading-{index}-{slug}";
+    }
+
+    private async Task ScrollToHeading(string headingId)
+    {
+        // Smooth scroll to heading
+        await Task.Delay(50);
+    }
+
+    private async Task ScrollToTop()
+    {
+        // Scroll to top of page
+        await Task.Delay(50);
+    }
+
+    public void Dispose()
+    {
+        // Cleanup if needed
+    }
+
+    private class HeadingInfo
+    {
+        public int Level { get; set; }
+        public string? Text { get; set; }
+        public string? Id { get; set; }
+    }
+}

@@ -13,7 +13,7 @@ Communication Mastery for Digital Business Success | VVG ONLINE
 Communication Mastery for Digital Business Success
 ==================================================
 
-October 13, 2025 | *Article*
+October 13, 2025 | *Business*
 
 Lessons & Strategies from VVG ONLINE
 

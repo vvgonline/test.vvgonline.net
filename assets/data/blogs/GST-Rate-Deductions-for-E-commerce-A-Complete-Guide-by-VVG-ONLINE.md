@@ -5,7 +5,7 @@ publishedAt: "2025-09-04"
 tags: ["GST", "E-commerce", "Tax"]
 excerpt: "The recent Goods and Services Tax (GST) rate deductions in India are transforming the e-commerce landscape, offering significant opportunities for businesses to enhance profitability and achieve strategic growth."
 draft: false
-category: "Article"
+category: "Business"
 featured: false
 ---
 GST Rate Deductions for E-commerce: A Complete Guide by VVG ONLINE
@@ -13,7 +13,7 @@ GST Rate Deductions for E-commerce: A Complete Guide by VVG ONLINE
 GST Rate Deductions for E-commerce: A Complete Guide by VVG ONLINE
 ==================================================================
 
-September 04, 2025 | *Article*
+September 04, 2025 | *Business*
 
 The recent Goods and Services Tax (GST) rate deductions in India are transforming the e-commerce
 landscape, offering significant opportunities for businesses to enhance profitability and achieve

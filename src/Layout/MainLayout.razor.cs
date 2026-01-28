@@ -235,7 +235,7 @@ namespace VVG.Web.Layout
         }
 
         public void ToggleTerminal() => isTerminalOpen = !isTerminalOpen;
-        
+
         public void HandleKeyDown(KeyboardEventArgs e)
         {
             if (e.Key == "F10") ToggleTerminal();

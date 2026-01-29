@@ -103,5 +103,41 @@
     "category": "Marketing",
     "featured": false,
     "filename": "The-Digital-Marketing-Investment-Imperative"
+  },
+  {
+    "title": "Capability Building",
+    "date": "2026-01-29",
+    "author": "Vikas Gupta",
+    "filename": "capability-building"
+  },
+  {
+    "title": "Design Thinking Workshops",
+    "date": "2026-01-29",
+    "author": "Vikas Gupta",
+    "filename": "design-thinking-workshops"
+  },
+  {
+    "title": "Digital Transformation",
+    "date": "2026-01-29",
+    "author": "Vikas Gupta",
+    "filename": "digital-transformation"
+  },
+  {
+    "title": "IT Management Solutions",
+    "date": "2026-01-29",
+    "author": "Vikas Gupta",
+    "filename": "it-management-solutions"
+  },
+  {
+    "title": "Strategic Digital Marketing",
+    "date": "2026-01-29",
+    "author": "Vikas Gupta",
+    "filename": "strategic-digital-marketing"
+  },
+  {
+    "title": "Strategy & Innovation",
+    "date": "2026-01-29",
+    "author": "Vikas Gupta",
+    "filename": "strategy-and-innovation"
   }
 ]

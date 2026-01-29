@@ -317,5 +317,13 @@ namespace VVG.Web.Layout
             _chatHistory.Add(new ChatMessage { Role = "assistant", Content = "// AGENT READY. HOW CAN I ASSIST YOU?" });
             StateHasChanged();
         }
+
+        [JSInvokable]
+        public void OnSystemPromptReady(string prompt)
+        {
+            _systemPrompt = prompt;
+            Console.WriteLine("System prompt received from JavaScript.");
+            StateHasChanged();
+        }
     }
 }

@@ -158,7 +158,7 @@ public enum ChatState
 
 **Priority:** High | **Duration:** 3-4 days
 
-#### Tasks:
+#### Tasks
 
 - [ ] Build message list display with scroll
 - [ ] Create input field with Enter key handling
@@ -180,10 +180,12 @@ public enum ChatState
 
 **Priority:** Critical | **Duration:** 4-5 days
 
-#### Tasks:
+#### Tasks
 
-- [ ] Define Vikas Model persona and identity
-- [ ] Create knowledge base covering 6 service categories:
+- [ ] Define Vikas Model persona and identity in .md format at `src/wwwroot/assets/data/dataset/prompts/`
+- [ ] Craft system prompt emphasizing VVG Online's expertise
+- [ ] Highlight key services and value propositions
+- [ ] Create knowledge base covering [6 service categories and Sub-categories](../../src/wwwroot/assets/data/services.json):
   - Strategy & Innovation
   - Digital Transformation
   - Capability Building
@@ -191,8 +193,21 @@ public enum ChatState
   - Design Thinking Workshops
   - IT Management Solutions
 - [ ] Implement few-shot examples for each service
+- [ ] create .md files for each service category in `src/wwwroot/assets/data/blogs/` in blog format. for [reference](../../src/wwwroot/assets/data/blogs/Communication-Mastery-for-Digital-Business-Success.md)
+- [ ] create .csv files for knowledge base in `src/wwwroot/assets/data/dataset/knowledge/` for digital business consulting services with facts and figures.
+- [ ] create .txt files for few-shot examples in `src/wwwroot/assets/data/dataset/docs/` for digital business consulting services with Q&A format. Atleast 100 examples.
+- [ ] create .json file for system prompt in `src/wwwroot/assets/data/dataset/services/` for digital business consulting services with structure. for [reference](../../src/wwwroot/assets/data/dataset/services/web-development.json)
+- [ ] Build conversation constraints and guardrails
+- [ ] Develop response constraints (visionary tone, consultative style)
+- [ ] Set constraints for visionary, consultative tone, and use-case-specific language
+- [ ] Create goal/problem detection prompts
+- [ ] Create clarification prompts
 - [ ] Build "polite redirect" guardrails for off-topic queries
 - [ ] Create goal extraction templates (Leads/Conversion/Revenue)
+- [ ] Test prompt effectiveness with sample conversations
+- [ ] Iterate based on test results
+- [ ] Finalize system prompt JSON structure
+- [ ]  update the `src/wwwroot/assets/js/chat.js` to load the system prompt from the .md, .txt, .csv, or .json files in `src/wwwroot/assets/data/dataset/` and `src/wwwroot/assets/data/blogs/` during model initialization.
 
 **Deliverables:**
 

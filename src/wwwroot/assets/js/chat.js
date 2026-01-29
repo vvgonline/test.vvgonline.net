@@ -21,6 +21,9 @@ window.transformersChat = {
             await this.dotnetHelper.invokeMethodAsync('UpdateProgress', '// Loading AI model...');
             await this.loadModel();
 
+            await this.dotnetHelper.invokeMethodAsync('UpdateProgress', '// Loading system prompt...');
+            await this.loadSystemPrompt();
+
             console.log("Model ready");
             await this.dotnetHelper.invokeMethodAsync('OnModelReady');
 
@@ -215,6 +218,50 @@ window.transformersChat = {
         }
     },
 
+    async loadSystemPrompt() {
+        try {
+            let systemPrompt = "";
+            const personaUrl = 'assets/data/dataset/prompts/Vikas-Model-Persona.md';
+            const knowledgeUrl = 'assets/data/dataset/knowledge/digital-business-consulting.csv';
+            const qnaUrl = 'assets/data/dataset/docs/digital-business-consulting-qna.txt';
+            const servicesUrl = 'assets/data/dataset/services/digital-business-consulting.json';
+            const blogUrls = [
+                'assets/data/blogs/strategy-and-innovation.md',
+                'assets/data/blogs/digital-transformation.md',
+                'assets/data/blogs/capability-building.md',
+                'assets/data/blogs/strategic-digital-marketing.md',
+                'assets/data/blogs/design-thinking-workshops.md',
+                'assets/data/blogs/it-management-solutions.md'
+            ];
+
+            const [
+                persona,
+                knowledge,
+                qna,
+                services,
+                ...blogs
+            ] = await Promise.all([
+                fetch(personaUrl).then(res => res.text()),
+                fetch(knowledgeUrl).then(res => res.text()),
+                fetch(qnaUrl).then(res => res.text()),
+                fetch(servicesUrl).then(res => res.json()),
+                ...blogUrls.map(url => fetch(url).then(res => res.text()))
+            ]);
+
+            systemPrompt += `Persona:\n${persona}\n\n`;
+            systemPrompt += `Knowledge Base:\n${knowledge}\n\n`;
+            systemPrompt += `Q&A Examples:\n${qna}\n\n`;
+            systemPrompt += `Services:\n${JSON.stringify(services, null, 2)}\n\n`;
+            systemPrompt += `Blog Content:\n${blogs.join('\n\n')}`;
+
+            console.log("System prompt loaded");
+            await this.dotnetHelper.invokeMethodAsync('OnSystemPromptReady', systemPrompt);
+        } catch (error) {
+            console.error("System prompt loading failed:", error);
+            await this.dotnetHelper.invokeMethodAsync('UpdateProgress', `// Error: ${error.message}`);
+        }
+    },
+
     async generate(messages) {
         if (!this.session) {
             return '// Error: Model not initialized';
@@ -229,16 +276,26 @@ window.transformersChat = {
 
             const userQuestion = userMessage.content;
             console.log('Processing question:', userQuestion);
+            const lowerQ = userQuestion.toLowerCase();
 
-            // Get context from system message
+            // First, try to get a direct, high-quality answer from canned responses
+            const defaultResponse = this.getDefaultResponse(lowerQ);
+            if (defaultResponse) {
+                return defaultResponse;
+            }
+
+            // If no direct answer, get context from system message
             const systemMessage = messages.find(m => m.role === 'system');
             const context = systemMessage ? systemMessage.content : '';
 
-            // Simple keyword-based response (embedding model doesn't generate text)
-            // For text generation, we'd need a different model
-            const response = this.generateKeywordResponse(userQuestion, context);
+            // Use keyword search on the context as a fallback
+            const keywordResponse = this.generateKeywordResponse(userQuestion, context);
+            if(keywordResponse) {
+                return keywordResponse;
+            }
 
-            return response;
+            // If still no response, return the generic fallback
+            return "I can help you with VVG Online services:\n✓ Web Development\n✓ Digital Marketing\n✓ Business Consulting\n\nWhat would you like to know?";
 
         } catch (error) {
             console.error('Generation error:', error);
@@ -247,9 +304,6 @@ window.transformersChat = {
     },
 
     generateKeywordResponse(question, context) {
-        const lowerQ = question.toLowerCase();
-        const lowerContext = context.toLowerCase();
-
         // Search context for relevant information
         const lines = context.split('\n');
         const relevantLines = [];
@@ -269,12 +323,11 @@ window.transformersChat = {
 
         // If we found relevant context, use it
         if (relevantLines.length > 0) {
-            const response = relevantLines.slice(0, 5).join('\n');
-            return response || this.getDefaultResponse(lowerQ);
+            return relevantLines.slice(0, 5).join('\n');
         }
 
-        // Fallback to keyword matching
-        return this.getDefaultResponse(lowerQ);
+        // If no relevant lines found, return null
+        return null;
     },
 
     getDefaultResponse(lowerQ) {
@@ -294,7 +347,7 @@ window.transformersChat = {
             return "We provide custom pricing based on your project requirements. Contact us at +91 9893261959 for a detailed quote.";
         }
 
-        return "I can help you with VVG Online services:\n✓ Web Development\n✓ Digital Marketing\n✓ Business Consulting\n\nWhat would you like to know?";
+        return null;
     },
 
     formatMessages(messages) {

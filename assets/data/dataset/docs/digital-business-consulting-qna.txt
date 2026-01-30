@@ -366,6 +366,3 @@ A: Through a "capability integration framework" that: 1) Maps existing processes
 
 Q: What is the role of technology in modern digital consulting?
 A: Technology is the *enabler* that allows us to: 1) Capture user empathy data, 2) Track capability coverage in real-time, 3) Monitor ROI. However, 80% of failures stem from ignoring human factors and empathy.
-`>>
-
- Would you like me to add any specific details about digital consulting frameworks or expand on certain topics?

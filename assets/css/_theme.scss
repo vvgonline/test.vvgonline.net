@@ -15,47 +15,8 @@ body {
   background-color: var(--bg);
   color: var(--text);
   transition: background 0.3s; // Smooth transition for background changes
-  font-family: "IBM Plex Mono", monospace; // Monospaced font for terminal look
   line-height: 1.6;
   padding-top: 32px;
-}
-
-*,
-header,
-main {
-  outline: none; // Remove default outline on focus
-}
-
-// Hero section styles
-.hero-title {
-  font-size: 4.5rem;
-  line-height: 0.95;
-  margin-bottom: 2rem;
-  text-shadow: 0 0 5px var(--accent); // Subtle shadow for the title
-}
-.hero {
-  min-height: 80vh; // Minimum height of the hero section
-  display: flex;
-  align-items: center;
-}
-
-// Workflow container and node styles
-.workflow-container {
-  display: flex;
-  gap: 1rem;
-}
-.workflow-node {
-  border: 1px solid var(--text);
-  padding: 15px;
-  background: var(--card-bg);
-}
-
-// Footer styling
-footer {
-  border-top: 1px solid var(--text);
-  padding: 4rem 0;
-  margin-top: 4rem;
-  color: var(--text);
 }
 
 // Terminal card styles
@@ -90,29 +51,6 @@ footer {
   margin-right: 10px;
 }
 
-// Blinking cursor animation
-@keyframes blink-caret {
-  from,
-  to {
-    border-color: transparent;
-  }
-  50% {
-    border-color: var(--accent);
-  } // Green caret blinking
-}
-
-.blink {
-  animation: blinker 1s step-start infinite;
-  color: var(--accent);
-}
-
-.blinking-cursor::after {
-  content: "_";
-  animation: blink-caret 1s step-end infinite; // Continuous blinking
-  margin-left: 5px;
-  color: var(--accent);
-}
-
 // Responsive adjustments for smaller screens
 @media (max-width: 768px) {
   .hero-title {
@@ -136,11 +74,6 @@ select,
 button,
 .badge {
   border-radius: 0 !important; // Remove border radius for a clean look
-}
-
-a {
-  color: var(--text) !important; // Link color
-  text-decoration: none !important; // No underline for links
 }
 
 .nav-logo {

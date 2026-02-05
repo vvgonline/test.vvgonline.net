@@ -1,22 +1,35 @@
-// Blog specific styles
+// =================================================================================
+// BLOG
+// =================================================================================
+//
+// This file contains the styles specific to the blog section of the website.
+// By keeping them in a separate file, we keep our codebase organized and modular.
 
 .blog-filters {
-    // Styling for the blog filters container
+    /**
+     * The container for the blog filters.
+     * We give it a background color and a border to make it stand out.
+     */
     background-color: var(--card-bg);
     padding: 1rem;
     border: 1px solid var(--text);
     margin-bottom: 2rem;
 
     .card {
-        // Styling for cards within the featured insights section
+        /**
+         * The card within the featured insights section has a special border color
+         * to draw attention to it.
+         */
         border-color: var(--accent);
     }
 }
 
 .pagination {
-    // Styling for pagination controls
+    /**
+     * The pagination controls for the blog.
+     * We style the page links to match the overall theme.
+     */
     .page-item .page-link {
-        // Styling for individual page links
         background-color: var(--card-bg);
         border: 1px solid var(--text);
         color: var(--text);
@@ -24,27 +37,34 @@
         border-radius: 0;
 
         &:hover {
-            // Hover state for page links
+            /**
+             * On hover, we change the background and text color to provide feedback.
+             */
             background-color: var(--accent);
-            color: #000;
+            color: var(--text);
         }
     }
 
     .page-item.active .page-link {
-        // Styling for active page link
+        /**
+         * The active page link has a different background and text color to indicate
+         * the current page.
+         */
         background-color: var(--accent);
         border-color: var(--accent);
-        color: #000;
+        color: var(--text);
     }
 }
 
 .insight-tag {
-    // Styling for insight tags
+    /**
+     * The insight tags are clickable, so we change the cursor to a pointer.
+     * On hover, we change the background and text color to provide feedback.
+     */
     cursor: pointer;
 
     &:hover {
-        // Hover state for insight tags
         background: var(--accent);
-        color: #000;
+        color: var(--text);
     }
 }

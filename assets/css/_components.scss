@@ -20,8 +20,12 @@
   transition: all 0.2s;
 
   &:hover {
-    background-color: #111119;
-    color: #ffdd33;
+    /**
+     * On hover, we invert the colors to provide clear feedback to the user.
+     * The background becomes dark, and the text takes on the accent color.
+     */
+    background-color: var(--text);
+    color: var(--accent);
   }
 }
 
@@ -34,16 +38,6 @@
   color: var(--text);
 }
 
-// --- Hero Title ---
-// The main heading for the hero section.
-.hero-title {
-  font-size: 4.5rem;
-  line-height: 0.95;
-  margin-bottom: 2rem;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-}
-
 // --- Accent Box ---
 // A simple highlighted box.
 .accent-box {
@@ -53,7 +47,7 @@
 
   &:hover {
     animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
-    background: #000;
+    background: var(--text);
     color: var(--accent);
   }
 }
@@ -67,7 +61,7 @@
   background: var(--card-bg);
   color: var(--text);
   padding: 2px 8px;
-  border: 1px solid #000;
+  border: 1px solid var(--text);
 }
 
 // --- Navigation Logo ---
@@ -180,6 +174,11 @@
 }
 
 // --- AI Terminal ---
+/**
+ * The AI terminal is a chat interface that is fixed to the bottom right of the screen.
+ * It has a dark, semi-transparent background to give it a futuristic feel.
+ * The accent color is used for the border and the text.
+ */
 #ai-terminal {
   position: fixed;
   bottom: 20px;
@@ -208,7 +207,7 @@
 
 .terminal-header {
   background: var(--accent);
-  color: #000;
+  color: var(--text);
   padding: 8px 15px;
   display: flex;
   justify-content: space-between;
@@ -231,13 +230,13 @@
 }
 
 .system-msg {
-  color: #888;
+  color: gray;
   font-size: 11px;
   margin-bottom: 5px;
 }
 
 .user-msg {
-  color: #fff;
+  color: var(--text);
   margin-bottom: 10px;
 }
 
@@ -263,13 +262,17 @@
 #user-input {
   background: transparent;
   border: none;
-  color: #fff;
+  color: var(--text);
   width: 100%;
   outline: none;
   font-family: inherit;
 }
 
 // --- Terminal Style Tags (Oh My Posh) ---
+/**
+ * These styles are inspired by the "Oh My Posh" terminal prompt.
+ * We use them to create a stylish and informative tag.
+ */
 .terminal-tag-group {
   display: inline-flex;
   align-items: stretch;
@@ -287,8 +290,8 @@
 }
 
 .tag-user {
-  background: #000;
-  color: #fff;
+  background: var(--text);
+  color: var(--bg);
   clip-path: polygon(0% 0%, 90% 0%, 100% 50%, 90% 100%, 0% 100%);
   padding-right: 25px;
   z-index: 2;
@@ -296,57 +299,15 @@
 
 .tag-path {
   background: var(--accent);
-  color: #000;
+  color: var(--text);
   margin-left: -10px; /* Overlap */
   padding-left: 20px;
   clip-path: polygon(0% 0%, 95% 0%, 100% 50%, 95% 100%, 0% 100%, 8% 50%);
   z-index: 1;
 }
 
-// --- Terminal Card from _theme.scss ---
-.terminal-card {
-  background-color: var(--card-bg);
-  border: 1px solid var(--accent);
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 0 15px rgba(255, 221, 51, 0.1);
-}
-
-.terminal-card-title {
-  color: var(--accent);
-  font-weight: bold;
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
-
-  &::before {
-    content: "[service]~# ";
-    color: var(--text);
-  }
-}
-
-.terminal-card ul {
-  list-style-type: none;
-  padding-left: 0;
-
-  li::before {
-    content: ">";
-    color: var(--accent);
-    margin-right: 10px;
-  }
-}
-
 // --- Responsive Adjustments for Components ---
-@media (max-width: 1024px) {
-  .hero-title {
-    font-size: 3.5rem;
-  }
-}
-
 @media (max-width: 768px) {
-  .hero-title {
-    font-size: 2.5rem;
-  }
-
   .workflow-container {
     flex-direction: column;
     gap: 30px;
@@ -392,10 +353,6 @@
 }
 
 @media (max-width: 480px) {
-  .hero-title {
-    font-size: 1.75rem;
-  }
-
   #ai-terminal {
     width: 95vw;
     right: 2.5vw;

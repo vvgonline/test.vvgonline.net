@@ -9,12 +9,8 @@
 // --- Blinking Class ---
 // Apply this class to any element to make it blink. It uses the `blinker`
 // animation we defined in `_animations.scss`.
-.blink, .tw-cursor {
+.tw-cursor {
   animation: blinker 1s step-start infinite;
-}
-
-.blink {
-  color: var(--text);
 }
 
 .code-blink {
@@ -43,7 +39,7 @@ a:not(.no-cursor):hover::after {
 // theme. For example, we make sure `.bg-light` uses our theme's card
 // background color.
 .bg-light {
-  background: var(--card-bg) !important;
+  background: var(--card-bg);
 }
 
 // --- Social Links ---
@@ -55,15 +51,16 @@ a:not(.no-cursor):hover::after {
 
 // --- Icons ---
 // Ensures all Bootstrap Icons (`.bi`) use our accent color.
+// We avoid using `!important` here to prevent specificity issues.
 .bi {
-  color: var(--accent) !important;
+  color: var(--accent);
 }
 
 // --- Responsive Borders ---
 // These rules ensure that our grid borders look correct on mobile.
 .section-border {
   border: 1px solid var(--text);
-  border-radius: 0 !important;
+  border-radius: 0;
   margin-bottom: -1px; /* Overlap borders for clean grid */
 }
 

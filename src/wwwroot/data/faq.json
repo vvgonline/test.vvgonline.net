@@ -1,0 +1,72 @@
+{
+  "faqs": [
+    {
+      "id": 1,
+      "question": "What is Digital Business Consulting?",
+      "answer": "Digital Business Consulting (DBC) refers to professional services provided to businesses and organizations through technology platforms that help them enhance their digital capabilities, improve customer experiences, and drive growth. DBC typically involves technology solutions, digital marketing optimization, data analysis and insights, customized solutions, market research, and user experience design.",
+      "category": "Services"
+    },
+    {
+      "id": 2,
+      "question": "How does VVG ONLINE approach digital transformation?",
+      "answer": "We follow our core principle: Decode, Design, Deliver. We decode the complex digital landscape to understand your unique challenges, design bespoke strategies that are both ambitious and achievable, and deliver transformative results that create lasting value. We don't just advise; we build capabilities that empower your organization to thrive.",
+      "category": "Approach"
+    },
+    {
+      "id": 3,
+      "question": "What services does VVG ONLINE offer?",
+      "answer": "We offer comprehensive digital business consulting services including: Technology Solutions to transform existing systems, Digital Marketing & Social Media Optimization, Data Analysis and Insights using advanced analytics, Customized Solutions tailored to your specific needs, Market Research & Analysis, and User Experience (UX) Design to enhance digital experiences.",
+      "category": "Services"
+    },
+    {
+      "id": 4,
+      "question": "What makes VVG ONLINE different from other consulting firms?",
+      "answer": "We operate on three key principles: Strategic Foresight (building solutions for tomorrow's challenges), Radical Transparency (open communication and full visibility into our methodologies), and Integrated Partnership (we're partners, not vendors - we embed with your teams and share our knowledge).",
+      "category": "About Us"
+    },
+    {
+      "id": 5,
+      "question": "What platforms do you work with?",
+      "answer": "We work across various digital platforms including online platforms (websites, blogs, social media), professional service platforms, and we collaborate with other businesses to provide tailored solutions. Our expertise spans web technologies, cloud platforms, data analytics tools, and modern development frameworks.",
+      "category": "Technology"
+    },
+    {
+      "id": 6,
+      "question": "How do you ensure project success?",
+      "answer": "We ensure success through radical transparency, providing clear and honest communication throughout the project. We offer full visibility into our methodologies, progress, and results. Trust is our most important metric, and we prioritize long-term sustainability over short-term gains.",
+      "category": "Process"
+    },
+    {
+      "id": 7,
+      "question": "Do you work with startups or only established businesses?",
+      "answer": "We work with both startups and established businesses. Our solutions are customized to each organization's specific needs and challenges, whether you're a startup looking to build your digital foundation or an enterprise seeking to transform existing systems.",
+      "category": "About Us"
+    },
+    {
+      "id": 8,
+      "question": "What is your engagement model?",
+      "answer": "We believe in Integrated Partnership. We're not vendors; we're partners who deeply integrate with your team and align our goals with your business objectives. We succeed when you succeed. Our engagements are designed to build capabilities within your organization that last beyond our direct involvement.",
+      "category": "Process"
+    },
+    {
+      "id": 9,
+      "question": "How long does a typical project take?",
+      "answer": "Project timelines vary based on scope and complexity. During our initial consultation, we'll assess your needs and provide a realistic timeline. We focus on delivering value incrementally rather than waiting for a big-bang release, ensuring you see progress throughout the engagement.",
+      "category": "Process"
+    },
+    {
+      "id": 10,
+      "question": "How can I get started with VVG ONLINE?",
+      "answer": "Getting started is simple. Contact us through our website, and we'll schedule an initial consultation to understand your vision, challenges, and goals. From there, we'll propose a tailored approach that aligns with your business objectives and timeline.",
+      "category": "Getting Started"
+    }
+  ],
+  "categories": [
+    "Services",
+    "Approach",
+    "About Us",
+    "Technology",
+    "Process",
+    "Getting Started"
+  ]
+}

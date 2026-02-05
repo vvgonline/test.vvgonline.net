@@ -80,19 +80,6 @@
   }
 }
 
-// --- Blinking Caret Animation ---
-// A more specific blinking animation for a text input cursor (caret).
-// It animates the border color to simulate a blinking vertical bar.
-@keyframes blink-caret {
-  from,
-  to {
-    border-color: transparent;
-  }
-  50% {
-    border-color: var(--accent);
-  }
-}
-
 // --- Border Animation ---
 // Animates a border from left to right, giving a nice hover effect.
 @keyframes borderAnimateLR {

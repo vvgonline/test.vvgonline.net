@@ -54,7 +54,7 @@
     </div>
 </section>
 
-<section class="py-5">
+<section class="py-5" id="faq-section">
     <div class="container">
         <div class="text-center mb-5">
             <div class="terminal-tag-group justify-content-center">
@@ -67,8 +67,8 @@
 
         @if (faqData != null && faqData.Faqs != null)
         {
-            <div class="mb-4 text-center">
-                <div class="btn-group" role="group" aria-label="FAQ Categories">
+            <div class="mb-4 text-center" id="faq-categories">
+                <div class="d-flex flex-wrap justify-content-center gap-2" role="group" aria-label="FAQ Categories">
                     <button type="button" class="btn @(selectedCategory == "All" ? "btn-vvg" : "btn-outline-secondary")" @onclick="@(() => FilterByCategory("All"))">All</button>
                     @foreach (var category in faqData.Categories ?? new List<string>())
                     {

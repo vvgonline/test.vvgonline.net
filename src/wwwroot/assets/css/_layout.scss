@@ -88,17 +88,6 @@ main {
   align-items: center;
 }
 
-// Workflow container and node styles
-.workflow-container {
-  display: flex;
-  gap: 1rem;
-}
-.workflow-node {
-  border: 1px solid var(--text);
-  padding: 15px;
-  background: var(--card-bg);
-}
-
 // --- Footer ---
 // The footer of our site.
 footer {

@@ -37,6 +37,13 @@ h1:focus {
   outline: none;
 }
 
+a {
+  // Links are a fundamental part of the web, so we give them a base style.
+  // We set the color to the primary text color, and remove the underline.
+  color: var(--text);
+  text-decoration: none;
+}
+
 blockquote,
 code,
 pre,

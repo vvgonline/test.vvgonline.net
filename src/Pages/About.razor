@@ -1,5 +1,7 @@
 @page "/About"
 @inject VVG.Web.Services.MetadataService MetadataService
+@inject HttpClient Http
+@using System.Text.Json
 
 <PageTitle>About Us</PageTitle>
 
@@ -52,6 +54,65 @@
     </div>
 </section>
 
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <div class="terminal-tag-group justify-content-center">
+                <div class="tag-segment tag-user">// Frequently_Asked</div>
+                <div class="tag-segment tag-path">// Questions</div>
+            </div>
+            <h2 class="display-5">Frequently Asked Questions</h2>
+            <p class="lead opacity-75 mt-3">Everything you need to know about VVG ONLINE and our services.</p>
+        </div>
+
+        @if (faqData != null && faqData.Faqs != null)
+        {
+            <div class="mb-4 text-center">
+                <div class="btn-group" role="group" aria-label="FAQ Categories">
+                    <button type="button" class="btn @(selectedCategory == "All" ? "btn-vvg" : "btn-outline-secondary")" @onclick="() => FilterByCategory(\"All\")">All</button>
+                    @foreach (var category in faqData.Categories ?? new List<string>())
+                    {
+                        <button type="button" class="btn @(selectedCategory == category ? "btn-vvg" : "btn-outline-secondary")" @onclick="() => FilterByCategory(category)">@category</button>
+                    }
+                </div>
+            </div>
+
+            <div class="accordion" id="faqAccordion">
+                @foreach (var faq in GetFilteredFaqs())
+                {
+                    <div class="accordion-item mb-3">
+                        <h3 class="accordion-header" id="heading@(faq.Id)">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse@(faq.Id)" aria-expanded="false" aria-controls="collapse@(faq.Id)">
+                                <strong>@faq.Question</strong>
+                            </button>
+                        </h3>
+                        <div id="collapse@(faq.Id)" class="accordion-collapse collapse" aria-labelledby="heading@(faq.Id)" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                <p class="mb-2">@faq.Answer</p>
+                                <small class="text-muted"><span class="badge bg-secondary">@faq.Category</span></small>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else if (isLoading)
+        {
+            <div class="text-center">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading FAQs...</span>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info text-center" role="alert">
+                FAQs are currently unavailable. Please check back later.
+            </div>
+        }
+    </div>
+</section>
+
 <section class="container py-5">
     <div class="text-center">
         <h2 class="display-4">Ready to Build What's Next?</h2>
@@ -62,6 +123,24 @@
 
 
 @code {
+    private FaqData? faqData;
+    private string selectedCategory = "All";
+    private bool isLoading = true;
+
+    public class FaqData
+    {
+        public List<Faq>? Faqs { get; set; }
+        public List<string>? Categories { get; set; }
+    }
+
+    public class Faq
+    {
+        public int Id { get; set; }
+        public string Question { get; set; } = string.Empty;
+        public string Answer { get; set; } = string.Empty;
+        public string Category { get; set; } = string.Empty;
+    }
+
     protected override async Task OnInitializedAsync()
     {
         await MetadataService.SetPageMetadata(new PageMetadata
@@ -69,19 +148,59 @@
             Title = "About VVG ONLINE",
             Description = "Learn about VVG ONLINE's mission, philosophy, and our commitment to driving digital transformation and innovation.",
             Keywords = "about us, digital consulting, innovation, strategy, technology consulting",
-            Image = "https://test.vvgonline.net/assets/images/banners/about.png",
+            Image = "https://test.vvgonline.net/assets/images/twitter-cards/vvg-online-about-twitter-card.png",
             OgType = "website",
             OgTitle = "About VVG ONLINE",
             OgDescription = "We are a strategic partner in navigating the complexities of the digital age. Learn more about our mission and philosophy.",
-            OgImage = "https://test.vvgonline.net/assets/images/banners/about.png",
+            OgImage = "https://test.vvgonline.net/assets/images/twitter-cards/vvg-online-about-twitter-card.png",
             OgUrl = "https://test.vvgonline.net/About",
 
             TwitterCard = "summary_large_image",
-            TwitterSite = "@vvgonline",
-            TwitterCreator = "@vvgonline",
+            TwitterSite = "@vvgonlinedotnet",
+            TwitterCreator = "@vvgonlinedotnet",
             TwitterTitle = "About VVG ONLINE",
             TwitterDescription = "Learn about our mission to decode the complex digital landscape, design bespoke strategies, and deliver transformative results.",
             TwitterImage = "https://test.vvgonline.net/assets/images/twitter-cards/vvg-online-about-twitter-card.png"
         });
+
+        await LoadFaqData();
+    }
+
+    private async Task LoadFaqData()
+    {
+        try
+        {
+            isLoading = true;
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            faqData = await Http.GetFromJsonAsync<FaqData>("data/faq.json", options);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading FAQ data: {ex.Message}");
+            faqData = null;
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private void FilterByCategory(string category)
+    {
+        selectedCategory = category;
+    }
+
+    private IEnumerable<Faq> GetFilteredFaqs()
+    {
+        if (faqData?.Faqs == null)
+            return Enumerable.Empty<Faq>();
+
+        if (selectedCategory == "All")
+            return faqData.Faqs;
+
+        return faqData.Faqs.Where(f => f.Category == selectedCategory);
     }
 }

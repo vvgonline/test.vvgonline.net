@@ -68,31 +68,25 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var defaultMetadata = await MetadataService.GetMetadataAsync();
-        var defaultTwitterCard = await MetadataService.GetTwitterCardAsync();
-        var defaultOpenGraph = await MetadataService.GetOpenGraphAsync();
-        var defaultJsonLd = await MetadataService.GetJsonLdAsync();
-
-        MetadataService.SetPageMetadata(new PageMetadata
+        await MetadataService.SetPageMetadata(new PageMetadata
         {
-            Title = "Services - VVG ONLINE",
-            Description = "Digital consulting services to transform your business.",
-            Keywords = "services, strategy, innovation, digital transformation",
-            Image = "https://github.com/vvgonline/test.vvgonline.net/assets/images//twitter-cards/vvg-online-home-twitter-card.png?raw=true",
-
-            OgType = defaultOpenGraph?.Type ?? "website",
+            Title = "Our Services - VVG ONLINE",
+            Description = "Comprehensive digital business consulting services including technology solutions, digital marketing, data analytics, UX design, and customized strategies to transform your enterprise.",
+            Keywords = "digital services, technology solutions, digital marketing, data analytics, UX design, consulting services, digital transformation, VVG ONLINE",
+            Image = "https://test.vvgonline.net/assets/images/twitter-cards/vvg-online-home-twitter-card.png",
+            
+            OgType = "website",
             OgTitle = "Services - VVG ONLINE",
-            OgDescription = "Digital consulting services to transform your business.",
-            OgImage = "https://github.com/vvgonline/test.vvgonline.net/assets/images//twitter-cards/vvg-online-home-twitter-card.png?raw=true",
-            OgUrl = defaultOpenGraph?.Url ?? "https://test.vvgonline.net/services",
+            OgDescription = "Explore our comprehensive digital business consulting services designed to transform your enterprise through innovation and strategic guidance.",
+            OgImage = "https://test.vvgonline.net/assets/images/twitter-cards/vvg-online-home-twitter-card.png",
+            OgUrl = "https://test.vvgonline.net/Services",
 
-            TwitterCard = defaultTwitterCard?.Card ?? "summary_large_image",
-            TwitterSite = defaultTwitterCard?.Site ?? "@vvgonline",
-            TwitterCreator = defaultTwitterCard?.Creator ?? "@vvgonline",
+            TwitterCard = "summary_large_image",
+            TwitterSite = "@vvgonlinedotnet",
+            TwitterCreator = "@vvgonlinedotnet",
             TwitterTitle = "Services - VVG ONLINE",
-            TwitterDescription = "Digital consulting services to transform your business.",
-            TwitterImage = "https://github.com/vvgonline/test.vvgonline.net/assets/images//twitter-cards/vvg-online-home-twitter-card.png?raw=true",
-            JsonLd = defaultJsonLd
+            TwitterDescription = "Comprehensive digital business consulting services to transform your enterprise.",
+            TwitterImage = "https://test.vvgonline.net/assets/images/twitter-cards/vvg-online-home-twitter-card.png"
         });
 
         var doc = await Http.GetFromJsonAsync<ServiceDoc>("assets/data/services.json");

@@ -1,5 +1,5 @@
 self.assetsManifest = {
-  "version": "gaMWynf3",
+  "version": "pzAz1p2Q",
   "assets": [
     {
       "hash": "sha256-DubzVRAcefVzrUkPmvmpRqrTxVqS6U7EDctJJVvGgVM=",
@@ -454,16 +454,16 @@ self.assetsManifest = {
       "url": "_framework/System.l9jolnojrw.wasm"
     },
     {
-      "hash": "sha256-4SZVEW+bznGWFmJcW9MeedZMf4IVVvE55y7VpreV/hE=",
-      "url": "_framework/VVG.Web.nauzlwyq0c.wasm"
+      "hash": "sha256-IY1qTEccFBK84XUL+6uC9Up8StYqZ/EPZBejdofyRn0=",
+      "url": "_framework/VVG.Web.j71j6osc27.wasm"
     },
     {
       "hash": "sha256-3lCWrko3zwspV40aQhs2S/IMkRSarnHRKIdkHhuXIBA=",
       "url": "_framework/blazor.webassembly.66stpp682q.js"
     },
     {
-      "hash": "sha256-QE2kV40yAgg/PzIt5SnzuwT2m+FMqM2PTdR5gs/Fp3c=",
-      "url": "_framework/dotnet.8m63ld0eyd.js"
+      "hash": "sha256-70vi6YndOiH3pZJWIC3UtChudec7Tvyr3nOEagDJF18=",
+      "url": "_framework/dotnet.53imne0lcl.js"
     },
     {
       "hash": "sha256-zE11fbcG2CeLl1Zi+NJgMOfWpdjuUWNte+icrtAO58I=",
@@ -718,6 +718,10 @@ self.assetsManifest = {
       "url": "data/blog-index.json"
     },
     {
+      "hash": "sha256-2I1Q8nd2G8kop2EC/MJugYQPZzmBjb5st06zHO45Z5Q=",
+      "url": "data/faq.json"
+    },
+    {
       "hash": "sha256-03WfsfFhLjgARrmUlZ16wsyg0cMC5dyfj8TMmpCZvpM=",
       "url": "data/json-ld.json"
     },
@@ -734,7 +738,7 @@ self.assetsManifest = {
       "url": "data/twitter-card.json"
     },
     {
-      "hash": "sha256-HfZ2o8fEw1eSxlwCP/bWudkJcSC8l5Gs3zFzppxRSFI=",
+      "hash": "sha256-HJuVUFaFMhEhoKTgfnXo01nLDA4CPe0dUO6eSjIDP6s=",
       "url": "index.html"
     },
     {

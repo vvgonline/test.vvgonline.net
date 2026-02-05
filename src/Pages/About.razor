@@ -69,10 +69,11 @@
         {
             <div class="mb-4 text-center">
                 <div class="btn-group" role="group" aria-label="FAQ Categories">
-                    <button type="button" class="btn @(selectedCategory == "All" ? "btn-vvg" : "btn-outline-secondary")" @onclick="() => FilterByCategory(\"All\")">All</button>
+                    <button type="button" class="btn @(selectedCategory == "All" ? "btn-vvg" : "btn-outline-secondary")" @onclick="@(() => FilterByCategory("All"))">All</button>
                     @foreach (var category in faqData.Categories ?? new List<string>())
                     {
-                        <button type="button" class="btn @(selectedCategory == category ? "btn-vvg" : "btn-outline-secondary")" @onclick="() => FilterByCategory(category)">@category</button>
+                        var cat = category;
+                        <button type="button" class="btn @(selectedCategory == cat ? "btn-vvg" : "btn-outline-secondary")" @onclick="@(() => FilterByCategory(cat))">@cat</button>
                     }
                 </div>
             </div>

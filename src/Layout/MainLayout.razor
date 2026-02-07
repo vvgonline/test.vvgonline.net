@@ -12,7 +12,7 @@
             </article>
         </main>
 
-        <div id="ai-terminal" class="@(isTerminalOpen ? "" : "terminal-closed")">
+        @* <div id="ai-terminal" class="@(isTerminalOpen ? "" : "terminal-closed")">
             <div class="terminal-header" @onclick="ToggleTerminal">
                 <span class="terminal-title">
                     <i class="text-accent bi bi-robot me-2"></i>
@@ -40,18 +40,18 @@
                 </div>
                 <div class="terminal-input-area">
                     <span class="terminal-prompt">&gt;</span>
-                    <input @bind="_userInput" 
-                           @bind:event="oninput" 
+                    <input @bind="_userInput"
+                           @bind:event="oninput"
                            @onkeydown="HandleTerminalInput"
-                           class="terminal-input" 
-                           type="text" 
-                           id="user-input" 
+                           class="terminal-input"
+                           type="text"
+                           id="user-input"
                            placeholder="Ask Vikas AI..."
-                           autocomplete="off" 
+                           autocomplete="off"
                            disabled="@_isModelLoading" />
                 </div>
             </div>
-        </div>
+        </div> *@
         <div id="canvas-container"></div>
     </div>
 </CascadingValue>
